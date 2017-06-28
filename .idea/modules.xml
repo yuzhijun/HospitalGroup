@@ -8,6 +8,8 @@
       <module fileurl="file://$PROJECT_DIR$/lrouter-annotation/lrouter-annotation.iml" filepath="$PROJECT_DIR$/lrouter-annotation/lrouter-annotation.iml" />
       <module fileurl="file://$PROJECT_DIR$/lrouter-api/lrouter-api.iml" filepath="$PROJECT_DIR$/lrouter-api/lrouter-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/lrouter-compiler/lrouter-compiler.iml" filepath="$PROJECT_DIR$/lrouter-compiler/lrouter-compiler.iml" />
+      <module fileurl="file://$PROJECT_DIR$/module_appointment/module_appointment.iml" filepath="$PROJECT_DIR$/module_appointment/module_appointment.iml" />
+      <module fileurl="file://$PROJECT_DIR$/module_queue/module_queue.iml" filepath="$PROJECT_DIR$/module_queue/module_queue.iml" />
     </modules>
   </component>
 </project>

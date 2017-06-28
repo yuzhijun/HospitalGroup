@@ -13,6 +13,8 @@
             <option value="$PROJECT_DIR$/lrouter-annotation" />
             <option value="$PROJECT_DIR$/lrouter-api" />
             <option value="$PROJECT_DIR$/lrouter-compiler" />
+            <option value="$PROJECT_DIR$/module_appointment" />
+            <option value="$PROJECT_DIR$/module_queue" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
