@@ -25,6 +25,7 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
     @Inject
     public MainController(ApiService apiService, SecondController secondController){
         super();
+
         mApiService = Preconditions.checkNotNull(apiService, "ApiService cannot be null");
         mSecondController = Preconditions.checkNotNull(secondController, "secondController cannot be null");
     }
