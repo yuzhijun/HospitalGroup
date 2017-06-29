@@ -8,4 +8,5 @@ import com.lenovohit.lrouter_api.core.LocalRouterService;
  */
 @Service(name = "com.lenovohit.hospitalgroup:module_queue")
 public class QueueRouterConnectService extends LocalRouterService {
+    int a=0;
 }
