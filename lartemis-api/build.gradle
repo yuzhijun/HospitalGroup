@@ -41,4 +41,8 @@ dependencies {
     // google工具库
     compile 'com.google.guava:guava:18.0'
     compile 'com.ashokvarma.android:bottom-navigation-bar:2.0.1'
+    //下拉刷新
+    compile 'in.srain.cube:ultra-ptr:1.0.11'
+    //RecyclerView封装库
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.22'
 }

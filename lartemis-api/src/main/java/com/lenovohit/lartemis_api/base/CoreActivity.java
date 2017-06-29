@@ -76,6 +76,14 @@ public abstract class CoreActivity<UC> extends BaseActivity<UC> {
 
         getLayoutInflater().inflate(getLayoutId(),this.mLLContent);
     }
+
+    protected void addFragment(int containerViewId, Fragment fragment , String tag) {
+        final FragmentTransaction fragmentTransaction = this.getSupportFragmentManager().beginTransaction();
+
+        fragmentTransaction.add(containerViewId, fragment , tag);
+        fragmentTransaction.commit();
+    }
+
     protected void isShowToolBar(boolean isShow){
         mToolbar.setVisibility(isShow ? View.VISIBLE : View.GONE);
     }

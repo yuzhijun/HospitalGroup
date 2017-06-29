@@ -37,6 +37,7 @@ public class MainActivity extends CoreActivity<MainController.MainUiCallbacks> i
     @Override
     public void initView(@Nullable Bundle savedInstanceState) {
         ButterKnife.bind(this);
+        isShowToolBar(false);
         mFragmentManager = getSupportFragmentManager();
 
         mMainHomeFragment = (MainHomeFragment) mFragmentManager.findFragmentByTag("home_fg");

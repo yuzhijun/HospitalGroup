@@ -17,6 +17,7 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        maven { url "https://jitpack.io" }
     }
     tasks.withType(Javadoc) { //兼容中文
         options.addStringOption('Xdoclint:none','-quiet')
