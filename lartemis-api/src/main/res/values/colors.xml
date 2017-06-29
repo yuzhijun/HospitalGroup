@@ -14,4 +14,6 @@
     <color name="original_border_color">#F18459</color>
     <color name="grey_normal_bg">#EEEEEE</color>
 
+    <color name="search_corner_bg">#ddBBBABA</color>
+
 </resources>

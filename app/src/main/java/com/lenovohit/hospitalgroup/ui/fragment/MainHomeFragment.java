@@ -36,6 +36,6 @@ public class MainHomeFragment extends CoreFragment<MainController.MainUiCallback
 
     @Override
     public void showToast() {
-
+        
     }
 }
