@@ -3,12 +3,20 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/HospitalGroup.iml" filepath="$PROJECT_DIR$/HospitalGroup.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HospitalGroup.iml" filepath="$PROJECT_DIR$/HospitalGroup.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/lartemis-api/lartemis-api.iml" filepath="$PROJECT_DIR$/lartemis-api/lartemis-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lartemis-api/lartemis-api.iml" filepath="$PROJECT_DIR$/lartemis-api/lartemis-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lrouter-annotation/lrouter-annotation.iml" filepath="$PROJECT_DIR$/lrouter-annotation/lrouter-annotation.iml" />
       <module fileurl="file://$PROJECT_DIR$/lrouter-annotation/lrouter-annotation.iml" filepath="$PROJECT_DIR$/lrouter-annotation/lrouter-annotation.iml" />
       <module fileurl="file://$PROJECT_DIR$/lrouter-api/lrouter-api.iml" filepath="$PROJECT_DIR$/lrouter-api/lrouter-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lrouter-api/lrouter-api.iml" filepath="$PROJECT_DIR$/lrouter-api/lrouter-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lrouter-compiler/lrouter-compiler.iml" filepath="$PROJECT_DIR$/lrouter-compiler/lrouter-compiler.iml" />
       <module fileurl="file://$PROJECT_DIR$/lrouter-compiler/lrouter-compiler.iml" filepath="$PROJECT_DIR$/lrouter-compiler/lrouter-compiler.iml" />
       <module fileurl="file://$PROJECT_DIR$/module_appointment/module_appointment.iml" filepath="$PROJECT_DIR$/module_appointment/module_appointment.iml" />
+      <module fileurl="file://$PROJECT_DIR$/module_appointment/module_appointment.iml" filepath="$PROJECT_DIR$/module_appointment/module_appointment.iml" />
+      <module fileurl="file://$PROJECT_DIR$/module_queue/module_queue.iml" filepath="$PROJECT_DIR$/module_queue/module_queue.iml" />
       <module fileurl="file://$PROJECT_DIR$/module_queue/module_queue.iml" filepath="$PROJECT_DIR$/module_queue/module_queue.iml" />
     </modules>
   </component>
