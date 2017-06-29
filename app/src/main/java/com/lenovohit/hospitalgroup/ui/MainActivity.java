@@ -12,6 +12,10 @@ import com.lenovohit.lartemis_api.base.BaseController;
 import com.lenovohit.lartemis_api.base.CoreActivity;
 import com.lenovohit.lartemis_api.core.LArtemis;
 import com.lenovohit.lartemis_api.ui.controller.MainController;
+import com.lenovohit.lrouter_api.base.LRouterAppcation;
+import com.lenovohit.lrouter_api.core.LRouterRequest;
+import com.lenovohit.lrouter_api.core.LocalRouter;
+import com.lenovohit.lrouter_api.core.callback.IRequestCallBack;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,7 +36,29 @@ public class MainActivity extends CoreActivity<MainController.MainUiCallbacks> i
         btnNetWork.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getCallbacks().getWeatherInfo();
+//                getCallbacks().getWeatherInfo();
+                try{
+                    LocalRouter.ListenerFutureTask response = LocalRouter.getInstance(LRouterAppcation.getInstance())
+                            .navigation(MainActivity.this, LRouterRequest.getInstance(MainActivity.this)
+                                    .processName("com.lenovohit.hospitalgroup:module_appointment")
+                                    .provider("AppoinmentProvider")
+                                    .action("TestAction")
+                                    .param("1", "Hello")
+                                    .param("2", "Thread"))
+                            .setCallBack(new IRequestCallBack() {
+                                @Override
+                                public void onSuccess(final String result) {
+                                    Toast.makeText(MainActivity.this,result,Toast.LENGTH_SHORT).show();
+                                }
+
+                                @Override
+                                public void onFailure(Exception e) {
+
+                                }
+                            });
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         });
     }

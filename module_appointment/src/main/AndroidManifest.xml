@@ -7,8 +7,8 @@
                  android:label="@string/app_name"
                  android:supportsRtl="true"
     >
-        <service android:name=".exposure.AppoinmentRouterConnectService"
-                 android:process=":module_appointment"/>
+        <activity android:name=".ui.AppointmentMainActivity" android:process=":module_appointment"/>
+        <service android:name=".exposure.AppoinmentRouterConnectService" android:process=":module_appointment"/>
     </application>
 
 </manifest>

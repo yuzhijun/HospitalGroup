@@ -2,12 +2,15 @@
 
           package="com.lenovohit.lrouter_api"
 >
-
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <application android:allowBackup="true"
                  android:label="@string/app_name"
                  android:supportsRtl="true"
     >
-
+        <service
+            android:name=".core.RemoteRouterService"
+            android:process="com.lenovohit.yuzhijun.RemoteRouter" />
     </application>
 
 </manifest>
