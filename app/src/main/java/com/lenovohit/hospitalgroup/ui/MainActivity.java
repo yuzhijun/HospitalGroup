@@ -29,6 +29,7 @@ public class MainActivity extends CoreActivity<MainController.MainUiCallbacks> i
     @Override
     public void initView(@Nullable Bundle savedInstanceState) {
         ButterKnife.bind(this);
+        setRightTitleColor(R.color.black);
     }
 
     @Override

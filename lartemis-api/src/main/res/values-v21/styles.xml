@@ -10,6 +10,9 @@
         <item name="android:windowActionBar">false</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:statusBarColor">@color/colorPrimary</item>
     </style>
 
 
@@ -41,6 +44,10 @@
     <style name="greyTextStyleSmaller">
         <item name="android:textSize">@dimen/font_smaller</item>
         <item name="android:textColor">@color/grey_text_color_normal</item>
+    </style>
+    <style name="colorPrimaryTextStyleSmall">
+        <item name="android:textSize">@dimen/font_small</item>
+        <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
 </resources>

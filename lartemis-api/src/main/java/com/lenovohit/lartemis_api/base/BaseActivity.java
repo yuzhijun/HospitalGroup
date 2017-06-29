@@ -66,4 +66,5 @@ public abstract class BaseActivity<UC> extends AppCompatActivity implements Base
     protected final MainController getMainController() {
         return mMainController;
     }
+
 }
