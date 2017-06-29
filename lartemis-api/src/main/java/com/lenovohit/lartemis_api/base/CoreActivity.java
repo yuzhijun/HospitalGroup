@@ -3,6 +3,8 @@ package com.lenovohit.lartemis_api.base;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 
 import com.lenovohit.lartemis_api.annotation.ContentView;
 
@@ -32,5 +34,12 @@ public abstract class CoreActivity<UC> extends BaseActivity<UC> {
             }
         }
         return 0;
+    }
+
+    protected void addFragment(int containerViewId, Fragment fragment , String tag) {
+        final FragmentTransaction fragmentTransaction = this.getSupportFragmentManager().beginTransaction();
+
+        fragmentTransaction.add(containerViewId, fragment , tag);
+        fragmentTransaction.commit();
     }
 }

@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
 
-    <Button
-        android:id="@+id/btnNetWork"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="测试网络访问"
-        android:textColor="@android:color/black"
+    <com.ashokvarma.bottomnavigation.BottomNavigationBar
+        android:layout_alignParentBottom="true"
+        android:id="@+id/bottom_navigation_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:bnbAutoHideEnabled="true"
         />
 
-</LinearLayout>
+    <FrameLayout
+        android:layout_above="@+id/bottom_navigation_bar"
+        android:id="@+id/main_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </FrameLayout>
+
+</RelativeLayout>
