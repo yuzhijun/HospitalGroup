@@ -5,6 +5,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +48,12 @@ public abstract class CoreActivity<UC> extends BaseActivity<UC> {
             }
         }
         return 0;
+    }
+    protected void addFragment(int containerViewId, Fragment fragment , String tag) {
+        final FragmentTransaction fragmentTransaction = this.getSupportFragmentManager().beginTransaction();
+
+        fragmentTransaction.add(containerViewId, fragment , tag);
+        fragmentTransaction.commit();
     }
 
     /**
