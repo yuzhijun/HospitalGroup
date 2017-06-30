@@ -41,7 +41,7 @@
                 android:id="@+id/ivStature"
                 android:layout_width="52dp"
                 android:layout_height="73dp"
-                android:src="@mipmap/xm"
+                android:src="@mipmap/lx_ani_header_view_doctor"
                 />
             <ImageView
                 android:id="@+id/ivBox"
@@ -50,7 +50,7 @@
                 android:layout_centerVertical="true"
                 android:layout_width="18dp"
                 android:layout_height="15dp"
-                android:src="@mipmap/xk"
+                android:src="@mipmap/lx_ani_header_view_box"
                 />
             <ImageView
                 android:visibility="gone"
