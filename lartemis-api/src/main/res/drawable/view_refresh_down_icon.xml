@@ -2,12 +2,15 @@
 <animation-list xmlns:android="http://schemas.android.com/apk/res/android"
     android:oneshot="false">
     <item
-        android:drawable="@mipmap/xn"
-        android:duration="60" />
+        android:drawable="@mipmap/lx_ani_header_view_frame1"
+        android:duration="45" />
     <item
-        android:drawable="@mipmap/xo"
-        android:duration="60" />
+        android:drawable="@mipmap/lx_ani_header_view_frame2"
+        android:duration="45" />
     <item
-        android:drawable="@mipmap/xp"
-        android:duration="60" />
+        android:drawable="@mipmap/lx_ani_header_view_frame3"
+        android:duration="45" />
+    <item
+        android:drawable="@mipmap/lx_ani_header_view_frame4"
+        android:duration="45" />
 </animation-list>
