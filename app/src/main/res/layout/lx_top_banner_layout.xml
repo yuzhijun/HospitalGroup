@@ -10,7 +10,7 @@
         android:layout_height="160dp"
         app:banner_indicatorGravity="bottom|right"
         app:banner_pointContainerBackground="@color/transparent"
-        app:banner_pageChangeDuration="3500"
+        app:banner_pageChangeDuration="4500"
         app:banner_placeholderDrawable="@mipmap/lx_banner_main_page"
         app:banner_tipTextSize="12sp"
         app:banner_transitionEffect="defaultEffect" />

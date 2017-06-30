@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.FrameLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lenovohit.hospitalgroup.R;
@@ -35,6 +36,9 @@ public class MainHomeFragment extends CoreFragment<MainController.MainUiCallback
     LXHeaderView lx_header_view_rotate;
     @BindView(R.id.rvMainHome)
     RecyclerView rvMainHome;
+    @BindView(R.id.home_title_bar_layout)
+    FrameLayout homeTitleBarLayout;
+    private int distanceY;
     private HomeMultipleRecycleAdapter adapter;
     private List<HomePage> mHomePages = new ArrayList<>();
 
@@ -106,7 +110,16 @@ public class MainHomeFragment extends CoreFragment<MainController.MainUiCallback
 
     @Override
     public void onPositionChange(int currentPosY) {
-
+        if (currentPosY > 0) {
+            if (homeTitleBarLayout.getVisibility() == View.VISIBLE) {
+                homeTitleBarLayout.setVisibility(View.GONE);
+            }
+        } else {
+            if (homeTitleBarLayout.getVisibility() == View.GONE) {
+                homeTitleBarLayout.setVisibility(View.VISIBLE);
+                distanceY = 0;
+            }
+        }
     }
 
     @Override
