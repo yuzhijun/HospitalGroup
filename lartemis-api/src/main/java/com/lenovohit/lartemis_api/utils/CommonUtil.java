@@ -1,5 +1,6 @@
 package com.lenovohit.lartemis_api.utils;
 
+import android.content.Context;
 import android.support.design.widget.Snackbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -94,4 +95,8 @@ public class CommonUtil {
         snackbar.show();
     }
 
+    public static int dip2px(Context context, float dipValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dipValue * scale + 0.5f);
+    }
 }

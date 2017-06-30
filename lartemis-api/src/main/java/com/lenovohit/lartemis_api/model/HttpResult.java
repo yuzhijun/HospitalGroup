@@ -7,33 +7,32 @@ package com.lenovohit.lartemis_api.model;
  * Created by yuzhijun on 2016/3/29.
  */
 public class HttpResult<T> {
-    private int code;
+    private int HasError;
+    private String ErrorMessage;
+    private T Data;
 
-    private T data;
-
-    private T resultList;
-
-    public int getCode() {
-        return code;
+    public int getHasError() {
+        return HasError;
     }
 
-    public void setCode(int code) {
-        this.code = code;
+    public void setHasError(int hasError) {
+        HasError = hasError;
     }
+
+    public String getErrorMessage() {
+        return ErrorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        ErrorMessage = errorMessage;
+    }
+
 
     public T getData() {
-        return data;
+        return Data;
     }
 
     public void setData(T data) {
-        data = data;
-    }
-
-    public T getResultList() {
-        return resultList;
-    }
-
-    public void setResultList(T resultList) {
-        this.resultList = resultList;
+        Data = data;
     }
 }

@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
@@ -96,10 +95,6 @@ public class MainActivity extends CoreActivity<MainController.MainUiCallbacks> i
         return  LArtemis.getInstance().getMainController();
     }
 
-    @Override
-    public void showToast() {
-        Toast.makeText(this, "返回网络成功", Toast.LENGTH_SHORT).show();
-    }
 
     @Override
     public void onTabSelected(int position) {

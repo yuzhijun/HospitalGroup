@@ -23,7 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 @Module
 public class ApiServiceModule {
-    private static final String BASE_URL =  "http://ip.taobao.com/";
+    private static final String BASE_URL =  "http://10.63.201.105:8003/";
     private static final int DEFAULT_TIMEOUT = 5;
     private static final int READ_TIMEOUT = 3;
 

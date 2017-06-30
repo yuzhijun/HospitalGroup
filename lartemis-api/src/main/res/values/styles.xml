@@ -43,4 +43,9 @@
         <item name="android:textColor">@color/grey_text_color_normal</item>
     </style>
 
+    <style name="blackTextStyleSmaller">
+        <item name="android:textSize">@dimen/font_smaller</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
 </resources>

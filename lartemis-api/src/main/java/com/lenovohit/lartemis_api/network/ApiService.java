@@ -1,12 +1,12 @@
 package com.lenovohit.lartemis_api.network;
 
+import com.lenovohit.lartemis_api.model.HomePage;
 import com.lenovohit.lartemis_api.model.HttpResult;
-import com.lenovohit.lartemis_api.model.Weather;
 
 import javax.inject.Singleton;
 
 import retrofit2.http.GET;
-import retrofit2.http.Query;
+import retrofit2.http.Path;
 import rx.Observable;
 
 /**
@@ -15,6 +15,6 @@ import rx.Observable;
  */
 @Singleton
 public interface ApiService {
-    @GET("service/getIpInfo.php")
-    Observable<HttpResult<Weather>> getWeatherResult(@Query("ip") String ip);
+    @GET("NeweHealthServices/api/User/GetIndexRecommendInfo/{cityID}/{uID}")
+    Observable<HttpResult<HomePage>> getIndexRecommendInfo(@Path("cityID") int cityID,@Path("uID") int uID);
 }
