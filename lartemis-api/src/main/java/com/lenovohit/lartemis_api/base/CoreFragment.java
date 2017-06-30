@@ -112,7 +112,7 @@ public abstract class CoreFragment<UC> extends BaseFragment<UC> {
             mTvRight.setText(title);
         }
         mBtnRight.setVisibility(View.VISIBLE);
-        mBtnRight.setBackgroundResource(icon);
+        mBtnRight.setImageResource(icon);
         ViewGroup.LayoutParams linearParams = mBtnRight.getLayoutParams();
         linearParams.height = DensityUtil.dip2px(getActivity(),26);
         linearParams.width = DensityUtil.dip2px(getActivity(),26);
@@ -139,8 +139,8 @@ public abstract class CoreFragment<UC> extends BaseFragment<UC> {
     }
     protected void setLeftTitleAndIcon(String title,@DrawableRes int icon, View.OnClickListener listener){
         if (title != null && !"".equalsIgnoreCase(title)){
-            mTvRight.setVisibility(View.VISIBLE);
-            mTvRight.setText(title);
+            mTvLeft.setVisibility(View.VISIBLE);
+            mTvLeft.setText(title);
         }
         mBtnLeft.setVisibility(View.VISIBLE);
         mBtnLeft.setBackgroundResource(icon);
