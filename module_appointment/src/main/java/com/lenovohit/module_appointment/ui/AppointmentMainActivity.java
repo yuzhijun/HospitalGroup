@@ -26,9 +26,4 @@ public class AppointmentMainActivity extends CoreActivity<MainController.MainUiC
     protected BaseController getController() {
         return null;
     }
-
-    @Override
-    public void showToast() {
-
-    }
 }

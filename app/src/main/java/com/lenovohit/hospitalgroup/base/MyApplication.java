@@ -1,5 +1,6 @@
 package com.lenovohit.hospitalgroup.base;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.lenovohit.lartemis_api.core.LArtemis;
 import com.lenovohit.lrouter_api.base.LRouterAppcation;
 
@@ -13,6 +14,7 @@ public class MyApplication extends LRouterAppcation {
     public void onCreate() {
         super.onCreate();
         LArtemis.getInstance().init(this);
+        Fresco.initialize(this);
     }
 
     @Override

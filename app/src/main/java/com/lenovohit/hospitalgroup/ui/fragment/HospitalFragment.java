@@ -51,8 +51,4 @@ public class HospitalFragment extends CoreFragment<MainController.MainUiCallback
         return LArtemis.getInstance().getMainController();
     }
 
-    @Override
-    public void showToast() {
-
-    }
 }

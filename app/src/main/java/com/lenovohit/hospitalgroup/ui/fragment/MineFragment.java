@@ -35,8 +35,4 @@ public class MineFragment  extends CoreFragment<MainController.MainUiCallbacks> 
         return  LArtemis.getInstance().getMainController();
     }
 
-    @Override
-    public void showToast() {
-
-    }
 }

@@ -36,8 +36,4 @@ public class PraticalityFragment extends CoreFragment<MainController.MainUiCallb
         return  LArtemis.getInstance().getMainController();
     }
 
-    @Override
-    public void showToast() {
-
-    }
 }
