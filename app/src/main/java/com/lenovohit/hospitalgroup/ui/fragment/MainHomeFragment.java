@@ -23,7 +23,7 @@ public class MainHomeFragment extends CoreFragment<MainController.MainUiCallback
 
     @Override
     protected void initViews(View view,Bundle savedInstanceState) {
-
+        isShowToolBar(false);
     }
 
     @Override

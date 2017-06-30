@@ -11,7 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,15 +19,26 @@ import com.lenovohit.lartemis_api.R;
 import com.lenovohit.lartemis_api.annotation.ContentView;
 import com.lenovohit.lartemis_api.utils.DensityUtil;
 
+import static com.lenovohit.lartemis_api.R.id.btnLeft;
+import static com.lenovohit.lartemis_api.R.id.btnRight;
+import static com.lenovohit.lartemis_api.R.id.llLeft;
+import static com.lenovohit.lartemis_api.R.id.llRight;
+import static com.lenovohit.lartemis_api.R.id.tvLeft;
+import static com.lenovohit.lartemis_api.R.id.tvRight;
+
 /**
  * Created by yuzhijun on 2017/6/16.
  */
 public abstract class CoreActivity<UC> extends BaseActivity<UC> {
-    private TextView tvTitle;
-    private Button btnLeft;
-    private Button btnRight;
+    private TextView mTvTitle;
+    private ImageButton mBtnLeft;
+    private ImageButton mBtnRight;
     private Toolbar mToolbar;
     private LinearLayout mLLContent;
+    private TextView mTvLeft;
+    private TextView mTvRight;
+    private LinearLayout mLlLeft;
+    private LinearLayout mLlRight;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,11 +61,19 @@ public abstract class CoreActivity<UC> extends BaseActivity<UC> {
         return 0;
     }
 
+
+
+    protected void addFragment(int containerViewId, Fragment fragment , String tag) {
+        final FragmentTransaction fragmentTransaction = this.getSupportFragmentManager().beginTransaction();
+
+        fragmentTransaction.add(containerViewId, fragment , tag);
+        fragmentTransaction.commit();
+    }
     /**
      * 1.设置沉浸式
      * 2.初始化toolbar中控件
      */
-    public void setToolbar(){
+    private  void setToolbar(){
         super.setContentView(R.layout.layout_base_activity);
         //用来设置沉浸式状态栏
         ViewGroup contentFrameLayout = (ViewGroup) findViewById(Window.ID_ANDROID_CONTENT);
@@ -63,79 +82,77 @@ public abstract class CoreActivity<UC> extends BaseActivity<UC> {
             parentView.setFitsSystemWindows(true);
         }
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        tvTitle = (TextView) findViewById(R.id.toolbar_title);
-        btnRight = (Button) findViewById(R.id.btnRight);
-        btnLeft = (Button) findViewById(R.id.btnLeft);
+        mTvTitle = (TextView) findViewById(R.id.toolbar_title);
+        mBtnRight = (ImageButton) findViewById(btnRight);
+        mBtnLeft = (ImageButton) findViewById(btnLeft);
         mLLContent= (LinearLayout) findViewById(R.id.content);
-
+        mLlLeft= (LinearLayout) findViewById(llLeft);
+        mLlRight= (LinearLayout) findViewById(llRight);
+        mTvLeft=(TextView) findViewById(tvLeft);
+        mTvRight=(TextView) findViewById(tvRight);
         getLayoutInflater().inflate(getLayoutId(),this.mLLContent);
     }
 
-    protected void addFragment(int containerViewId, Fragment fragment , String tag) {
-        final FragmentTransaction fragmentTransaction = this.getSupportFragmentManager().beginTransaction();
 
-        fragmentTransaction.add(containerViewId, fragment , tag);
-        fragmentTransaction.commit();
-    }
 
     protected void isShowToolBar(boolean isShow){
         mToolbar.setVisibility(isShow ? View.VISIBLE : View.GONE);
     }
     protected void isShowLeft(boolean isShow){
-        btnLeft.setVisibility(isShow ? View.VISIBLE : View.GONE);
+        mBtnLeft.setVisibility(isShow ? View.VISIBLE : View.GONE);
     }
     protected void isShowRight(boolean isShow){
-        btnRight.setVisibility(isShow ? View.VISIBLE : View.GONE);
+        mBtnRight.setVisibility(isShow ? View.VISIBLE : View.GONE);
     }
     protected void setCenterTitle(String title){
-        tvTitle.setText(title == null || "".equalsIgnoreCase(title) ? "" : title);
+        mTvTitle.setText(title == null || "".equalsIgnoreCase(title) ? "" : title);
     }
     protected  void setRightTitle(String title, View.OnClickListener listener){
         if (title != null && !"".equalsIgnoreCase(title)){
-            btnRight.setVisibility(View.VISIBLE);
-            btnRight.setText(title);
-            btnRight.setOnClickListener(listener);
+            mTvRight.setVisibility(View.VISIBLE);
+            mTvRight.setText(title);
+            mLlRight.setOnClickListener(listener);
         }
     }
     protected void setRightIcon(@DrawableRes int icon, View.OnClickListener listener){
-        btnRight.setVisibility(View.VISIBLE);
-        btnRight.setBackgroundResource(icon);
-        ViewGroup.LayoutParams linearParams = btnRight.getLayoutParams();
+        mBtnRight.setVisibility(View.VISIBLE);
+        mBtnRight.setBackgroundResource(icon);
+        ViewGroup.LayoutParams linearParams = mBtnRight.getLayoutParams();
         linearParams.height = DensityUtil.dip2px(this,26);
         linearParams.width = DensityUtil.dip2px(this,26);
-        btnRight.setLayoutParams(linearParams);
-        btnRight.setOnClickListener(listener);
+        mBtnRight.setLayoutParams(linearParams);
+        mLlRight.setOnClickListener(listener);
     }
     protected  void setLeftTitle(String title, View.OnClickListener listener){
         if (title != null && !"".equalsIgnoreCase(title)){
-            btnLeft.setVisibility(View.VISIBLE);
-            btnLeft.setText(title);
-            btnLeft.setOnClickListener(listener);
+            mTvLeft.setVisibility(View.VISIBLE);
+            mTvLeft.setText(title);
+            mLlLeft.setOnClickListener(listener);
         }
     }
     protected  void setLeftTitleColor(int resId){
         int color=getResources().getColor(resId);
-        btnLeft.setVisibility(View.VISIBLE);
-        btnLeft.setTextColor(color);
+        mTvLeft.setVisibility(View.VISIBLE);
+        mTvLeft.setTextColor(color);
     }
     protected  void setRightTitleColor(int resId){
         int color=getResources().getColor(resId);
-        btnLeft.setVisibility(View.VISIBLE);
-        btnLeft.setTextColor(color);
+        mTvRight.setVisibility(View.VISIBLE);
+        mTvRight.setTextColor(color);
     }
     protected void setLeftIcon(@DrawableRes int icon, View.OnClickListener listener){
-        btnLeft.setVisibility(View.VISIBLE);
-        btnLeft.setBackgroundResource(icon);
-        ViewGroup.LayoutParams linearParams = btnLeft.getLayoutParams();
+        mBtnLeft.setVisibility(View.VISIBLE);
+        mBtnLeft.setBackgroundResource(icon);
+        ViewGroup.LayoutParams linearParams = mBtnLeft.getLayoutParams();
         linearParams.height = DensityUtil.dip2px(this,26);
         linearParams.width = DensityUtil.dip2px(this,26);
-        btnLeft.setLayoutParams(linearParams);
-        btnLeft.setOnClickListener(listener);
+        mBtnLeft.setLayoutParams(linearParams);
+        mLlLeft.setOnClickListener(listener);
     }
-    protected Button getLeftButton(){
-        return btnLeft;
+    protected ImageButton getLeftButton(){
+        return mBtnLeft;
     }
-    protected Button getRightButton(){
-        return btnRight;
+    protected ImageButton getRightButton(){
+        return mBtnRight;
     }
 }
