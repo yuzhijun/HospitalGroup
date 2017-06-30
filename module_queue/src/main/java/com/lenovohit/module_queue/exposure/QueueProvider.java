@@ -8,4 +8,5 @@ import com.lenovohit.lrouter_api.core.LRProvider;
  */
 @Provider(name = "QueueProvider")
 public class QueueProvider extends LRProvider{
+
 }

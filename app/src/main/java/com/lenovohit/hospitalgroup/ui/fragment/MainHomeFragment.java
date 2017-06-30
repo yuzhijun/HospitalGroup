@@ -1,30 +1,14 @@
 package com.lenovohit.hospitalgroup.ui.fragment;
 
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lenovohit.hospitalgroup.R;
-import com.lenovohit.hospitalgroup.ui.adapter.HomeMultipleRecycleAdapter;
 import com.lenovohit.lartemis_api.annotation.ContentView;
 import com.lenovohit.lartemis_api.base.BaseController;
 import com.lenovohit.lartemis_api.base.CoreFragment;
 import com.lenovohit.lartemis_api.core.LArtemis;
-import com.lenovohit.lartemis_api.model.HomePage;
 import com.lenovohit.lartemis_api.ui.controller.MainController;
-import com.lenovohit.lartemis_api.utils.CommonUtil;
-import com.lenovohit.lartemis_api.views.LXHeaderView;
-import com.lenovohit.lartemis_api.views.SpaceItemDecoration;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import in.srain.cube.views.ptr.PtrFrameLayout;
-import in.srain.cube.views.ptr.PtrHandler;
 
 /**
  * Created by yuzhijun on 2017/6/29.
@@ -45,7 +29,7 @@ public class MainHomeFragment extends CoreFragment<MainController.MainUiCallback
     @Override
     protected void initViews(View view,Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
-
+        isShowToolBar(false);
         initPtrFrame();
         initRecyclerView();
 
@@ -80,6 +64,7 @@ public class MainHomeFragment extends CoreFragment<MainController.MainUiCallback
         adapter.setOnLoadMoreListener(this,rvMainHome);
         adapter.setEnableLoadMore(true);
         rvMainHome.setAdapter(adapter);
+        isShowToolBar(false);
     }
 
     @Override
