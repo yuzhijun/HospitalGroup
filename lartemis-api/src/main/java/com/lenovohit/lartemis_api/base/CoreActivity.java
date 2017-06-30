@@ -49,12 +49,6 @@ public abstract class CoreActivity<UC> extends BaseActivity<UC> {
         }
         return 0;
     }
-    protected void addFragment(int containerViewId, Fragment fragment , String tag) {
-        final FragmentTransaction fragmentTransaction = this.getSupportFragmentManager().beginTransaction();
-
-        fragmentTransaction.add(containerViewId, fragment , tag);
-        fragmentTransaction.commit();
-    }
 
     /**
      * 1.设置沉浸式

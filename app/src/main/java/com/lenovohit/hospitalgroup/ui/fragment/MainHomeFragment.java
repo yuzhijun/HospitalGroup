@@ -1,6 +1,7 @@
 package com.lenovohit.hospitalgroup.ui.fragment;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.lenovohit.hospitalgroup.R;
 import com.lenovohit.lartemis_api.annotation.ContentView;
@@ -15,12 +16,13 @@ import com.lenovohit.lartemis_api.ui.controller.MainController;
 @ContentView(R.layout.lx_app_mainhome_fragment)
 public class MainHomeFragment extends CoreFragment<MainController.MainUiCallbacks>  implements MainController.MainUi{
 
+
     public static MainHomeFragment newInstance() {
         return new MainHomeFragment();
     }
 
     @Override
-    protected void initViews(Bundle savedInstanceState) {
+    protected void initViews(View view,Bundle savedInstanceState) {
 
     }
 

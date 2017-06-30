@@ -1,6 +1,7 @@
 package com.lenovohit.hospitalgroup.ui.fragment;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.lenovohit.hospitalgroup.R;
 import com.lenovohit.lartemis_api.annotation.ContentView;
@@ -20,7 +21,7 @@ public class PraticalityFragment extends CoreFragment<MainController.MainUiCallb
     }
 
     @Override
-    protected void initViews(Bundle savedInstanceState) {
+    protected void initViews(View view, Bundle savedInstanceState) {
 
     }
 

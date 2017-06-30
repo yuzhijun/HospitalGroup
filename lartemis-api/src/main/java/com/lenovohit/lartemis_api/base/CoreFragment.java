@@ -25,7 +25,7 @@ public abstract class CoreFragment<UC> extends BaseFragment<UC> {
         super.onViewCreated(view, savedInstanceState);
 
         handleArguments(getArguments());
-        initViews(savedInstanceState);
+        initViews(view,savedInstanceState);
     }
 
     @Override
@@ -33,7 +33,7 @@ public abstract class CoreFragment<UC> extends BaseFragment<UC> {
         super.onDestroyView();
     }
 
-    protected abstract void initViews(Bundle savedInstanceState);
+    protected abstract void initViews(View view,Bundle savedInstanceState);
     protected abstract void handleArguments(Bundle arguments);
 
     protected int getLayoutResId() {
