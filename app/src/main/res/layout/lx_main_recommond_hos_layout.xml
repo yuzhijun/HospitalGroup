@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:background="@color/white"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:background="@color/grey_normal_bg"/>
+    <LinearLayout
+        android:id="@+id/llMoreHospital"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/spacing_huge"
+        android:orientation="horizontal">
+        <View
+            android:layout_width="3dp"
+            android:layout_height="15dip"
+            android:layout_marginLeft="5dp"
+            android:layout_gravity="center_vertical"
+            android:background="#f00"></View>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/blackTextStyleSmall"
+            android:text="推荐医院"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/spacing_smaller"
+            android:layout_weight="1"/>
+        <ImageView
+            android:layout_width="@dimen/spacing_normal"
+            android:layout_height="@dimen/spacing_normal"
+            android:src="@mipmap/lx_iv_right_arrow"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="@dimen/spacing_tinyer"/>
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvRecommondHospital"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </android.support.v7.widget.RecyclerView>
+</LinearLayout>

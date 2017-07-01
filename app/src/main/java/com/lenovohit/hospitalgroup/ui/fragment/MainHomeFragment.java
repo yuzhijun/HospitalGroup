@@ -1,10 +1,12 @@
 package com.lenovohit.hospitalgroup.ui.fragment;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import com.lenovohit.hospitalgroup.R;
 import com.lenovohit.hospitalgroup.ui.adapter.HomeMultipleRecycleAdapter;
@@ -24,6 +26,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import in.srain.cube.views.ptr.PtrHandler;
 
@@ -32,12 +35,22 @@ import in.srain.cube.views.ptr.PtrHandler;
  */
 @ContentView(R.layout.lx_app_mainhome_fragment)
 public class MainHomeFragment extends CoreFragment<MainController.MainUiCallbacks>  implements MainController.MainHomeUi,LXHeaderView.RefreshDistanceListener{
+    /**
+     * 改变titlebar中icon颜色时的距离
+     */
+    private static int DISTANCE_WHEN_TO_SELECTED = 40;
     @BindView(R.id.lx_header_view_rotate)
     LXHeaderView lx_header_view_rotate;
     @BindView(R.id.rvMainHome)
     RecyclerView rvMainHome;
+    @BindView(R.id.home_title_bar_bg_view)
+    View home_title_bar_bg_view;
     @BindView(R.id.home_title_bar_layout)
     FrameLayout homeTitleBarLayout;
+    @BindView(R.id.scanning_layout)
+    LinearLayout scanning_layout;
+    @BindView(R.id.advisory_layout)
+    LinearLayout advisory_layout;
     private int distanceY;
     private HomeMultipleRecycleAdapter adapter;
     private List<HomePage> mHomePages = new ArrayList<>();
@@ -61,7 +74,7 @@ public class MainHomeFragment extends CoreFragment<MainController.MainUiCallback
         lx_header_view_rotate.setPtrHandler(new PtrHandler() {
             @Override
             public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
-                return true;
+                return PtrDefaultHandler.checkContentCanBePulledDown(frame, content, header);
             }
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
@@ -78,6 +91,28 @@ public class MainHomeFragment extends CoreFragment<MainController.MainUiCallback
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+                distanceY += dy;
+                if (distanceY > CommonUtil.dip2px(getContext(), 20)) {
+                    home_title_bar_bg_view.setBackgroundColor(getResources().getColor(R.color.white));
+                    if (Build.VERSION.SDK_INT > 10) {
+                        home_title_bar_bg_view.setAlpha(distanceY * 1.0f / CommonUtil.dip2px(getContext(), 160));
+                    }
+                    else {
+                        DISTANCE_WHEN_TO_SELECTED = 20;
+                    }
+                }
+                else {
+                    home_title_bar_bg_view.setBackgroundColor(0);
+                }
+
+                if (distanceY > CommonUtil.dip2px(getContext(), DISTANCE_WHEN_TO_SELECTED) && !scanning_layout.isSelected()) {
+                    scanning_layout.setSelected(true);
+                    advisory_layout.setSelected(true);
+                }
+                else if (distanceY <= CommonUtil.dip2px(getContext(), DISTANCE_WHEN_TO_SELECTED) && scanning_layout.isSelected()) {
+                    scanning_layout.setSelected(false);
+                    advisory_layout.setSelected(false);
+                }
             }
         });
         adapter = new HomeMultipleRecycleAdapter(mHomePages);
@@ -134,6 +169,9 @@ public class MainHomeFragment extends CoreFragment<MainController.MainUiCallback
             HomePage topModule = (HomePage) DeepCopyUtil.copyBySerialize(homePage);
             topModule.setItemType(HomePage.TOP_MODULE);
             mHomePages.add(topModule);
+            HomePage recommendHosModule = (HomePage) DeepCopyUtil.copyBySerialize(homePage);
+            recommendHosModule.setItemType(HomePage.RECOMMOND_HOS);
+            mHomePages.add(recommendHosModule);
             adapter.setNewData(mHomePages);
             lx_header_view_rotate.refreshComplete();
         } catch (Exception e) {
