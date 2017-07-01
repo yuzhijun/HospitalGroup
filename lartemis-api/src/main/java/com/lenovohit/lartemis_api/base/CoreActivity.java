@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.lenovohit.lartemis_api.R;
 import com.lenovohit.lartemis_api.annotation.ContentView;
 import com.lenovohit.lartemis_api.utils.DensityUtil;
+import com.lenovohit.lartemis_api.views.LoadingView;
 
 import static com.lenovohit.lartemis_api.R.id.btnLeft;
 import static com.lenovohit.lartemis_api.R.id.btnRight;
@@ -30,6 +31,9 @@ import static com.lenovohit.lartemis_api.R.id.tvRight;
  * Created by yuzhijun on 2017/6/16.
  */
 public abstract class CoreActivity<UC> extends BaseActivity<UC> {
+    public static CoreActivity currentActivity;
+    private volatile boolean isLoading;
+    private LoadingView progressDialog;
     private TextView mTvTitle;
     private ImageView mBtnLeft;
     private ImageView mBtnRight;
@@ -42,6 +46,7 @@ public abstract class CoreActivity<UC> extends BaseActivity<UC> {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        currentActivity = this;
         setToolbar();
         initView(savedInstanceState);
         initEvent();
@@ -149,6 +154,36 @@ public abstract class CoreActivity<UC> extends BaseActivity<UC> {
         mBtnLeft.setLayoutParams(linearParams);
         mLlLeft.setOnClickListener(listener);
     }
+
+    public void showProgressDialog() {
+        if(!this.isLoading) {
+            this.hideProgressDialog();
+            this.isLoading = true;
+            this.progressDialog = new LoadingView();
+            this.progressDialog.show();
+        }
+    }
+
+    public void hideProgressDialog() {
+        if(this.progressDialog != null) {
+            try {
+                this.progressDialog.dismiss();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            this.progressDialog = null;
+        }
+        this.isLoading = false;
+    }
+
+    public boolean isLoading() {
+        return isLoading;
+    }
+
+    public void setLoading(boolean loading) {
+        isLoading = loading;
+    }
+
     protected ImageView getLeftButton(){
         return mBtnLeft;
     }

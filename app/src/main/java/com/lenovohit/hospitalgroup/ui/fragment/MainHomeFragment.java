@@ -4,7 +4,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
@@ -52,6 +54,7 @@ public class MainHomeFragment extends CoreFragment<MainController.MainUiCallback
     LinearLayout scanning_layout;
     @BindView(R.id.advisory_layout)
     LinearLayout advisory_layout;
+    private View notDataView;
     private int distanceY;
     private HomeMultipleRecycleAdapter adapter;
     private List<HomePage> mHomePages = new ArrayList<>();
@@ -85,7 +88,7 @@ public class MainHomeFragment extends CoreFragment<MainController.MainUiCallback
     }
 
     private void initRecyclerView(){
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(rvMainHome.getContext(),4);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(rvMainHome.getContext(),4 ,GridLayoutManager.VERTICAL, false);
         rvMainHome.setLayoutManager(gridLayoutManager);
         rvMainHome.addItemDecoration(new SpaceItemDecoration(CommonUtil.dip2px(getContext(),3)));
         rvMainHome.setOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -118,6 +121,14 @@ public class MainHomeFragment extends CoreFragment<MainController.MainUiCallback
         });
         adapter = new HomeMultipleRecycleAdapter(mHomePages);
         rvMainHome.setAdapter(adapter);
+
+        notDataView = LayoutInflater.from(rvMainHome.getContext()).inflate(R.layout.lx_empty_view, (ViewGroup) rvMainHome.getParent(), false);
+        notDataView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getCallbacks().getIndexRecommendInfo();
+            }
+        });
     }
 
     @Override
@@ -159,6 +170,7 @@ public class MainHomeFragment extends CoreFragment<MainController.MainUiCallback
     public void getIndexRecommendInfoCallBack(HomePage homePage) {
         if(null == homePage || null == homePage.getTopNews()){
             lx_header_view_rotate.refreshComplete();
+            adapter.setEmptyView(notDataView);
             return;
         }
 

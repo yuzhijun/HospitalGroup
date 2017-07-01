@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="220dp"
@@ -13,11 +14,11 @@
         android:orientation="vertical">
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/ivAppointment"
-            android:layout_width="61dp"
-            android:layout_height="93dp"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/spacing_smaller"
-            app:placeholderImageScaleType="fitXY"
+            android:layout_marginTop="@dimen/spacing_huge"
+            app:placeholderImageScaleType="fitCenter"
             app:placeholderImage="@mipmap/lx_iv_main_order_default"
             />
         <TextView
@@ -34,7 +35,7 @@
             android:id="@+id/tvAppointmentDes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=""
+            tools:text="足不出户 挂号看病"
             style="@style/greyTextStyleSmall"
             android:layout_gravity="center"
             android:gravity="center"
@@ -63,7 +64,7 @@
                 android:layout_height="50dp"
                 android:layout_gravity="center"
                 app:placeholderImageScaleType="fitCenter"
-                app:placeholderImage="@drawable/ic_empty"/>
+                app:placeholderImage="@mipmap/lx_iv_main_register_default"/>
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -83,7 +84,7 @@
                     android:id="@+id/tvTodayAppointmentDes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=""
+                    tools:text="身体不适 轻松挂号"
                     style="@style/greyTextStyleSmall"
                     android:layout_gravity="left"
                     android:gravity="left"
@@ -109,17 +110,17 @@
                 android:orientation="vertical">
                 <com.facebook.drawee.view.SimpleDraweeView
                     android:id="@+id/ivMobileTreatment"
-                    android:layout_width="33dp"
-                    android:layout_height="40dp"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/spacing_smaller"
-                    app:placeholderImageScaleType="fitXY"
-                    app:placeholderImage="@drawable/ic_empty"/>
+                    app:placeholderImageScaleType="fitCenter"
+                    app:placeholderImage="@mipmap/lx_iv_main_queue_default"/>
                 <TextView
                     android:id="@+id/tvMobileTreatment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="在线诊疗"
+                    android:text="排队叫号"
                     style="@style/blackTextStyleSmaller"
                     android:layout_gravity="center"
                     android:gravity="center"
@@ -129,7 +130,7 @@
                     android:id="@+id/tvMobileTreatmentDes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=""
+                    tools:text="候诊排队 自动提醒"
                     style="@style/greyTextStyleSmall"
                     android:layout_gravity="center"
                     android:gravity="center"
@@ -148,12 +149,12 @@
                 android:orientation="vertical">
                 <com.facebook.drawee.view.SimpleDraweeView
                     android:id="@+id/ivReportSearch"
-                    android:layout_width="30dp"
-                    android:layout_height="40dp"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/spacing_smaller"
-                    app:placeholderImageScaleType="fitXY"
-                    app:placeholderImage="@drawable/ic_empty"/>
+                    app:placeholderImageScaleType="fitCenter"
+                    app:placeholderImage="@mipmap/lx_iv_main_report_default"/>
                 <TextView
                     android:id="@+id/tvReportSearch"
                     android:layout_width="wrap_content"
@@ -162,13 +163,13 @@
                     style="@style/blackTextStyleSmaller"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:layout_marginTop="@dimen/spacing_smaller"
+                    android:layout_marginTop="@dimen/spacing_normal"
                     />
                 <TextView
                     android:id="@+id/tvReportSearchDes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=""
+                    tools:text="检查结果 随时解读"
                     style="@style/greyTextStyleSmall"
                     android:layout_gravity="center"
                     android:gravity="center"
