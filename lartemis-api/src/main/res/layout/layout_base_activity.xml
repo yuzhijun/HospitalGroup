@@ -33,14 +33,12 @@
                 android:layout_marginRight="10dp"
                 android:id="@+id/btnRight"
                 style="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
                 android:textColor="@color/white"
-                android:paddingRight="10dp"
                 android:layout_gravity="right"
                 android:gravity="right|center"
                 android:text=""
-                android:scaleType="fitXY"
                 android:clickable="false"
                 android:background="@color/transparent"
                 android:visibility="visible"
@@ -54,11 +52,10 @@
             android:layout_height="30dp"
             android:orientation="horizontal">
             <ImageButton
-                android:layout_marginLeft="10dp"
                 android:id="@+id/btnLeft"
                 style="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
                 android:textColor="@color/white"
                 android:text=""
                 android:clickable="false"
@@ -66,7 +63,6 @@
                 android:gravity="left|center"
                 android:background="@color/transparent"
                 android:visibility="visible"
-                android:scaleType="fitXY"
                 />
             <TextView
                 android:layout_marginLeft="10dp"

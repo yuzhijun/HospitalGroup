@@ -33,7 +33,12 @@ public class HospitalFragment extends CoreFragment<MainController.MainUiCallback
                 CommonUtil.showSnackBar(view,"您点击了搜索按钮");
             }
         });
-        setLeftTitle("全国",null);
+       setLeftTitleAndIcon("全国", R.mipmap.lx_iv_location_icon, new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               CommonUtil.showSnackBar(view,"您点击了定位按钮");
+           }
+       });
     }
 
     @Override

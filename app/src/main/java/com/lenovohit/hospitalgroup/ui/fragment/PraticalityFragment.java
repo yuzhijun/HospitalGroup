@@ -22,7 +22,8 @@ public class PraticalityFragment extends CoreFragment<MainController.MainUiCallb
 
     @Override
     protected void initViews(View view, Bundle savedInstanceState) {
-
+        isShowToolBar(true);
+        setCenterTitle("实用");
     }
 
     @Override
