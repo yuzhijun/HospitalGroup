@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lenovohit.hospitalgroup.R;
 import com.lenovohit.hospitalgroup.ui.adapter.HomeMultipleRecycleAdapter;
 import com.lenovohit.lartemis_api.annotation.ContentView;
@@ -16,6 +15,7 @@ import com.lenovohit.lartemis_api.core.LArtemis;
 import com.lenovohit.lartemis_api.model.HomePage;
 import com.lenovohit.lartemis_api.ui.controller.MainController;
 import com.lenovohit.lartemis_api.utils.CommonUtil;
+import com.lenovohit.lartemis_api.utils.DeepCopyUtil;
 import com.lenovohit.lartemis_api.views.LXHeaderView;
 import com.lenovohit.lartemis_api.views.SpaceItemDecoration;
 
@@ -31,7 +31,7 @@ import in.srain.cube.views.ptr.PtrHandler;
  * Created by yuzhijun on 2017/6/29.
  */
 @ContentView(R.layout.lx_app_mainhome_fragment)
-public class MainHomeFragment extends CoreFragment<MainController.MainUiCallbacks>  implements MainController.MainHomeUi,LXHeaderView.RefreshDistanceListener,BaseQuickAdapter.RequestLoadMoreListener{
+public class MainHomeFragment extends CoreFragment<MainController.MainUiCallbacks>  implements MainController.MainHomeUi,LXHeaderView.RefreshDistanceListener{
     @BindView(R.id.lx_header_view_rotate)
     LXHeaderView lx_header_view_rotate;
     @BindView(R.id.rvMainHome)
@@ -71,7 +71,7 @@ public class MainHomeFragment extends CoreFragment<MainController.MainUiCallback
     }
 
     private void initRecyclerView(){
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(rvMainHome.getContext(),4, GridLayoutManager.VERTICAL, false);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(rvMainHome.getContext(),4);
         rvMainHome.setLayoutManager(gridLayoutManager);
         rvMainHome.addItemDecoration(new SpaceItemDecoration(CommonUtil.dip2px(getContext(),3)));
         rvMainHome.setOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -81,10 +81,7 @@ public class MainHomeFragment extends CoreFragment<MainController.MainUiCallback
             }
         });
         adapter = new HomeMultipleRecycleAdapter(mHomePages);
-        adapter.setOnLoadMoreListener(this,rvMainHome);
-        adapter.setEnableLoadMore(true);
         rvMainHome.setAdapter(adapter);
-        isShowToolBar(false);
     }
 
     @Override
@@ -123,11 +120,6 @@ public class MainHomeFragment extends CoreFragment<MainController.MainUiCallback
     }
 
     @Override
-    public void onLoadMoreRequested() {
-
-    }
-
-    @Override
     public void getIndexRecommendInfoCallBack(HomePage homePage) {
         if(null == homePage || null == homePage.getTopNews()){
             lx_header_view_rotate.refreshComplete();
@@ -136,8 +128,16 @@ public class MainHomeFragment extends CoreFragment<MainController.MainUiCallback
 
         adapter.getData().clear();
         mHomePages.clear();
-        mHomePages.add(homePage);
-        adapter.setNewData(mHomePages);
-        lx_header_view_rotate.refreshComplete();
+        try {
+            homePage.setItemType(HomePage.TOP_BANNER);
+            mHomePages.add(homePage);
+            HomePage topModule = (HomePage) DeepCopyUtil.copyBySerialize(homePage);
+            topModule.setItemType(HomePage.TOP_MODULE);
+            mHomePages.add(topModule);
+            adapter.setNewData(mHomePages);
+            lx_header_view_rotate.refreshComplete();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

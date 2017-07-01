@@ -11,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:actualImageScaleType="fitXY"
-        app:viewAspectRatio="2.32"
+        app:viewAspectRatio="2.0"
+        app:placeholderImageScaleType="fitXY"
         app:placeholderImage="@mipmap/lx_banner_main_page"
       />
 </FrameLayout>

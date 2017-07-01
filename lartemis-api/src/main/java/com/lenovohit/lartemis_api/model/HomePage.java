@@ -2,17 +2,18 @@ package com.lenovohit.lartemis_api.model;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by yuzhijun on 2017/6/30.
  */
 
-public class HomePage implements MultiItemEntity {
-    public static final int TOP_BANNER = 0;//顶部轮询
-    public static final int TOP_MODULE = 1;//顶部模块
-    public static final int RECOMMOND_HOS = 2;//推荐医院
-    public static final int RECOMMOND_DOC = 3;//推荐医生
+public class HomePage implements MultiItemEntity,Serializable {
+    public static final int TOP_BANNER = 1;//顶部轮询
+    public static final int TOP_MODULE = 2;//顶部模块
+    public static final int RECOMMOND_HOS = 3;//推荐医院
+    public static final int RECOMMOND_DOC = 4;//推荐医生
     public int itemType;
 
     private List<Doctor> CollectDoctors;
@@ -79,7 +80,11 @@ public class HomePage implements MultiItemEntity {
         IndexPageModels = indexPageModels;
     }
 
-    public class IIndexPageModel{
+    public void setItemType(int itemType) {
+        this.itemType = itemType;
+    }
+
+    public class IIndexPageModel implements Serializable{
         private String ModuleName;
         private String ModuleCode;
         private String IconURL;
