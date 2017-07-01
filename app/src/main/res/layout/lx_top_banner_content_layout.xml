@@ -10,8 +10,8 @@
         android:id="@+id/sdv_item_fresco_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:actualImageScaleType="fitXY"
         app:viewAspectRatio="2.32"
         app:placeholderImage="@mipmap/lx_banner_main_page"
+        app:placeholderImageScaleType="fitXY"
       />
 </FrameLayout>

@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-    android:id="@+id/llLayout"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/llLayout">
+    <com.lenovohit.lartemis_api.views.DropDownMenu
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:ddmenuTextSize="13sp"
+>
+
+    </com.lenovohit.lartemis_api.views.DropDownMenu>
 </LinearLayout>
