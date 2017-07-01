@@ -6,10 +6,19 @@
     android:layout_height="match_parent"
     android:id="@+id/llLayout">
     <com.lenovohit.lartemis_api.views.DropDownMenu
+        android:id="@+id/dropDown"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:ddmenuTextSize="13sp"
->
+        app:ddtextUnselectedColor="@color/description_gray"
+        app:ddtextSelectedColor="@color/colorPrimary"
+        app:dddividerColor="@color/gray_3"
+        app:ddunderlineColor="@color/grey_line_bg"
+        app:ddmenuSelectedIcon="@mipmap/lx_iv_arrow_up"
+        app:ddmaskColor="@color/translucent_black"
+        app:ddmenuBackgroundColor="@color/white"
+        app:ddmenuUnselectedIcon="@mipmap/lx_iv_arrow_down"
+        >
 
     </com.lenovohit.lartemis_api.views.DropDownMenu>
 </LinearLayout>

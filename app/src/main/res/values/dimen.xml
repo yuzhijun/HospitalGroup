@@ -8,7 +8,6 @@
     <dimen name="font_size_C">18.0sp</dimen>
     <dimen name="font_size_D">20.0sp</dimen>
     <dimen name="font_size_E">22.0sp</dimen>
-    <color name="font_gray">#bfbfbf</color>
     <dimen name="app_interval_5">5dip</dimen>
     <dimen name="app_interval_10">10dip</dimen>
     <dimen name="app_interval_15">15dip</dimen>

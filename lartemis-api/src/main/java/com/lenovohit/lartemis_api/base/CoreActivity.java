@@ -11,7 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -31,8 +31,8 @@ import static com.lenovohit.lartemis_api.R.id.tvRight;
  */
 public abstract class CoreActivity<UC> extends BaseActivity<UC> {
     private TextView mTvTitle;
-    private ImageButton mBtnLeft;
-    private ImageButton mBtnRight;
+    private ImageView mBtnLeft;
+    private ImageView mBtnRight;
     private Toolbar mToolbar;
     private LinearLayout mLLContent;
     private TextView mTvLeft;
@@ -83,8 +83,8 @@ public abstract class CoreActivity<UC> extends BaseActivity<UC> {
         }
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mTvTitle = (TextView) findViewById(R.id.toolbar_title);
-        mBtnRight = (ImageButton) findViewById(btnRight);
-        mBtnLeft = (ImageButton) findViewById(btnLeft);
+        mBtnRight = (ImageView) findViewById(btnRight);
+        mBtnLeft = (ImageView) findViewById(btnLeft);
         mLLContent= (LinearLayout) findViewById(R.id.content);
         mLlLeft= (LinearLayout) findViewById(llLeft);
         mLlRight= (LinearLayout) findViewById(llRight);
@@ -149,10 +149,10 @@ public abstract class CoreActivity<UC> extends BaseActivity<UC> {
         mBtnLeft.setLayoutParams(linearParams);
         mLlLeft.setOnClickListener(listener);
     }
-    protected ImageButton getLeftButton(){
+    protected ImageView getLeftButton(){
         return mBtnLeft;
     }
-    protected ImageButton getRightButton(){
+    protected ImageView getRightButton(){
         return mBtnRight;
     }
 }

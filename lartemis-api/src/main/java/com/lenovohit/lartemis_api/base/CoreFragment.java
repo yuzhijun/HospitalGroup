@@ -8,7 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -30,8 +30,8 @@ import static com.lenovohit.lartemis_api.R.id.tvRight;
 public abstract class CoreFragment<UC> extends BaseFragment<UC> {
 
     private TextView mTvTitle;
-    private ImageButton mBtnLeft;
-    private ImageButton mBtnRight;
+    private ImageView mBtnLeft;
+    private ImageView mBtnRight;
     private Toolbar mToolbar;
     private LinearLayout mLLContent;
     private TextView mTvLeft;
@@ -73,8 +73,8 @@ public abstract class CoreFragment<UC> extends BaseFragment<UC> {
     private  View setToolbar(View view,Bundle bundle){
         mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
         mTvTitle = (TextView) view.findViewById(R.id.toolbar_title);
-        mBtnRight = (ImageButton) view.findViewById(btnRight);
-        mBtnLeft = (ImageButton) view.findViewById(btnLeft);
+        mBtnRight = (ImageView) view.findViewById(btnRight);
+        mBtnLeft = (ImageView) view.findViewById(btnLeft);
         mLLContent= (LinearLayout) view.findViewById(R.id.content);
         mLlLeft= (LinearLayout) view.findViewById(llLeft);
         mLlRight= (LinearLayout) view.findViewById(llRight);
@@ -150,10 +150,10 @@ public abstract class CoreFragment<UC> extends BaseFragment<UC> {
         mBtnLeft.setLayoutParams(linearParams);
         mLlLeft.setOnClickListener(listener);
     }
-    protected ImageButton getLeftButton(){
+    protected ImageView getLeftButton(){
         return mBtnLeft;
     }
-    protected ImageButton getRightButton(){
+    protected ImageView getRightButton(){
         return mBtnRight;
     }
 }

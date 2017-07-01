@@ -14,12 +14,19 @@
     <color name="original_border_color">#F18459</color>
     <color name="grey_normal_bg">#EEEEEE</color>
 
+    <color name="btn_complete_normal_colors">#CF2A27</color>
+    <color name="btn_complete_press_colors">#BE0F0F</color>
+
     <color name="gray_1">#7e7d7d</color>
     <color name="gray_2">#a1a3a6</color>
     <color name="gray_4">#DDDDDD</color>
     <color name="gray_5">#4A4A4A</color>
     <color name="gray_3">#f3f3f3</color>
     <color name="gray_dark">#FF404040</color>
-    <color name="search_corner_bg">#ddBBBABA</color>
+    <color name="font_gray">#bfbfbf</color>
 
+    <color name="description_gray">#666666</color>
+    <color name="search_corner_bg">#ddBBBABA</color>
+    <!-- 半透明黑色-->
+    <color name="translucent_black">#99323232</color>
 </resources>
