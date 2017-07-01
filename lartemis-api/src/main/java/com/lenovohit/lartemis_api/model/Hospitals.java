@@ -1,12 +1,14 @@
 package com.lenovohit.lartemis_api.model;
 
+import java.io.Serializable;
+
 /**
  * 医院列表model
  * 
  * @author yuzhijun
  * @version 创建时间 2015.04.17
  * */
-public class Hospitals {
+public class Hospitals implements Serializable{
 	/**
 	 * HID : 4
 	 * HospitalName : 温附一新院
