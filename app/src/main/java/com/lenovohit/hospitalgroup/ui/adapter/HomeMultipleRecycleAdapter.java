@@ -2,6 +2,8 @@ package com.lenovohit.hospitalgroup.ui.adapter;
 
 import android.net.Uri;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
@@ -11,6 +13,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.lenovohit.hospitalgroup.R;
 import com.lenovohit.lartemis_api.model.HomePage;
 import com.lenovohit.lartemis_api.model.TopNew;
+import com.lenovohit.lartemis_api.views.RecycleViewDivider;
 
 import java.util.List;
 
@@ -28,6 +31,7 @@ public class HomeMultipleRecycleAdapter extends BaseMultiItemQuickAdapter<HomePa
         setSpanSizeLookup(this);
         addItemType(HomePage.TOP_BANNER, R.layout.lx_top_banner_layout);
         addItemType(HomePage.TOP_MODULE, R.layout.lx_top_module_layout);
+        addItemType(HomePage.RECOMMOND_HOS,R.layout.lx_main_recommond_hos_layout);
     }
 
     @Override
@@ -38,6 +42,9 @@ public class HomeMultipleRecycleAdapter extends BaseMultiItemQuickAdapter<HomePa
                break;
            case HomePage.TOP_MODULE:
                 bindToModuleData(helper,item);
+               break;
+           case HomePage.RECOMMOND_HOS:
+               bindToRecommondHosData(helper,item);
                break;
        }
     }
@@ -78,6 +85,15 @@ public class HomeMultipleRecycleAdapter extends BaseMultiItemQuickAdapter<HomePa
         helper.setText(R.id.tvTodayAppointmentDes,item.getIndexPageModels().get(1).getDes());
         helper.setText(R.id.tvMobileTreatmentDes,item.getIndexPageModels().get(2).getDes());
         helper.setText(R.id.tvReportSearchDes,item.getIndexPageModels().get(3).getDes());
+    }
+
+    private void bindToRecommondHosData(BaseViewHolder helper,HomePage homePage){
+        if (homePage.getRecommendHospitals() == null || homePage.getRecommendHospitals().size() <= 0) return;
+        RecyclerView recyclerView = helper.getView(R.id.rvRecommondHospital);
+        recyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
+        recyclerView.addItemDecoration(new RecycleViewDivider(mContext, LinearLayoutManager.VERTICAL));
+        RecommendHosAdapter recommendHosAdapter = new RecommendHosAdapter(R.layout.lx_main_recommond_hos_layout,homePage.getRecommendHospitals());
+        recyclerView.setAdapter(recommendHosAdapter);
     }
 
     @Override

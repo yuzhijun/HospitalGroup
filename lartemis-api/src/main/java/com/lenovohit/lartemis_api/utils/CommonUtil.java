@@ -99,4 +99,12 @@ public class CommonUtil {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dipValue * scale + 0.5f);
     }
+
+    /**
+     * @Params str 要判断是否为空的字符串
+     * @Return boolean 返回是否为空
+     * */
+    public static boolean isStrEmpty(String str) {
+        return str != null && !"".equals(str.trim())?(str = str.replaceAll(" ", "").trim()) == null || "".equals(str.trim()):true;
+    }
 }
