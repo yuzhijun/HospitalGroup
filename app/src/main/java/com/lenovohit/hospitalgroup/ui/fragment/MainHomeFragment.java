@@ -31,6 +31,7 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 import in.srain.cube.views.ptr.PtrHandler;
 
 /**
+ * 首页
  * Created by yuzhijun on 2017/6/29.
  */
 @ContentView(R.layout.lx_app_mainhome_fragment)

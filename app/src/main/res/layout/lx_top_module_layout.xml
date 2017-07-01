@@ -18,7 +18,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/spacing_smaller"
             app:placeholderImageScaleType="fitXY"
-            app:placeholderImage="@drawable/ic_empty"
+            app:placeholderImage="@mipmap/lx_iv_main_order_default"
             />
         <TextView
             android:id="@+id/tvAppointment"
