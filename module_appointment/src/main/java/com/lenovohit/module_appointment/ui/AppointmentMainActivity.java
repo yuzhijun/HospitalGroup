@@ -6,12 +6,18 @@ import android.support.annotation.Nullable;
 import com.lenovohit.lartemis_api.base.BaseController;
 import com.lenovohit.lartemis_api.base.CoreActivity;
 import com.lenovohit.lartemis_api.ui.controller.MainController;
+import com.lenovohit.module_appointment.R;
 
 /**
  * Created by yuzhijun on 2017/6/29.
  */
-
 public class AppointmentMainActivity extends CoreActivity<MainController.MainUiCallbacks> implements MainController.MainUi {
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.lx_appointment_dept_tree_activity;
+    }
+
     @Override
     public void initView(@Nullable Bundle savedInstanceState) {
 

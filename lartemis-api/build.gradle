@@ -51,4 +51,6 @@ dependencies {
     compile 'cn.bingoogolapple:bga-banner:2.1.7@aar'
     //流式布局
     compile 'com.zhy:flowlayout-lib:1.0.3'
+    //百分比布局
+    compile 'com.zhy:percent-support-extends:1.1.1'
 }

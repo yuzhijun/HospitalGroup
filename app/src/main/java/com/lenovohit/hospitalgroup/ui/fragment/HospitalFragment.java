@@ -179,6 +179,7 @@ public class HospitalFragment extends CoreFragment<MainController.MainUiCallback
         hospitalList.clear();
         adapter.setNewData(hospitalList);
         lx_header_view_rotate.refreshComplete();
+
     }
 
     @Override
@@ -207,6 +208,7 @@ public class HospitalFragment extends CoreFragment<MainController.MainUiCallback
         hospitalList.addAll(response.getRecommendHospitals());
         adapter.setNewData(hospitalList);
         lx_header_view_rotate.refreshComplete();
+        adapter.loadMoreEnd();
     }
 
     @Override
@@ -222,6 +224,5 @@ public class HospitalFragment extends CoreFragment<MainController.MainUiCallback
     @Override
     public void onLoadMoreRequested() {
         refreshMainHomeData();
-//        adapter.loadMoreEnd(true);
     }
 }

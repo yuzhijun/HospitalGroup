@@ -22,7 +22,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/blackTextStyleSmall"
+            style="@style/blackTextStyle"
             android:text="推荐医院"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/spacing_smaller"
