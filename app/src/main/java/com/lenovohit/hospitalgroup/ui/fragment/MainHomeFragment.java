@@ -122,7 +122,7 @@ public class MainHomeFragment extends CoreFragment<MainController.MainUiCallback
         });
         adapter = new HomeMultipleRecycleAdapter(mHomePages);
         rvMainHome.setAdapter(adapter);
-
+        adapter.setEmptyView(R.layout.lx_preloading_view_layout, (ViewGroup) rvMainHome.getParent());
         notDataView = LayoutInflater.from(rvMainHome.getContext()).inflate(R.layout.lx_empty_view, (ViewGroup) rvMainHome.getParent(), false);
         notDataView.setOnClickListener(new View.OnClickListener() {
             @Override
