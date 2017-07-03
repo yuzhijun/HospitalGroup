@@ -26,6 +26,7 @@ public class LX_WelcomeActivity extends AppCompatActivity {
                 super.handleMessage(msg);
                 Intent intent = new Intent(LX_WelcomeActivity.this,MainActivity.class);
                 startActivity(intent);
+                finish();
             }
         }.sendEmptyMessageDelayed(1, 1000);
     }
