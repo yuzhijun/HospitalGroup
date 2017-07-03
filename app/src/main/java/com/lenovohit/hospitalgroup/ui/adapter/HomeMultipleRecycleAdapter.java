@@ -5,6 +5,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -44,7 +45,7 @@ public class HomeMultipleRecycleAdapter extends BaseMultiItemQuickAdapter<HomePa
                 bindToModuleData(helper,item);
                break;
            case HomePage.RECOMMOND_HOS:
-               bindToRecommondHosData(helper,item);
+               bindToRecommendHosData(helper,item);
                break;
        }
     }
@@ -87,13 +88,22 @@ public class HomeMultipleRecycleAdapter extends BaseMultiItemQuickAdapter<HomePa
         helper.setText(R.id.tvReportSearchDes,item.getIndexPageModels().get(3).getDes());
     }
 
-    private void bindToRecommondHosData(BaseViewHolder helper,HomePage homePage){
+    private void bindToRecommendHosData(BaseViewHolder helper, HomePage homePage){
         if (homePage.getRecommendHospitals() == null || homePage.getRecommendHospitals().size() <= 0) return;
         RecyclerView recyclerView = helper.getView(R.id.rvRecommondHospital);
+        LinearLayout llMoreHospital = helper.getView(R.id.llMoreHospital);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
         recyclerView.addItemDecoration(new RecycleViewDivider(mContext, LinearLayoutManager.VERTICAL));
         RecommendHosAdapter recommendHosAdapter = new RecommendHosAdapter(R.layout.lx_main_recommond_hos_layout,homePage.getRecommendHospitals());
         recyclerView.setAdapter(recommendHosAdapter);
+        llMoreHospital.setFocusableInTouchMode(true);
+        llMoreHospital.requestFocus();
+        llMoreHospital.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
     @Override

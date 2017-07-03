@@ -17,6 +17,7 @@ import com.lenovohit.lartemis_api.base.BaseController;
 import com.lenovohit.lartemis_api.base.CoreFragment;
 import com.lenovohit.lartemis_api.core.LArtemis;
 import com.lenovohit.lartemis_api.model.HomePage;
+import com.lenovohit.lartemis_api.model.ResponseError;
 import com.lenovohit.lartemis_api.ui.controller.MainController;
 import com.lenovohit.lartemis_api.utils.CommonUtil;
 import com.lenovohit.lartemis_api.utils.DeepCopyUtil;
@@ -190,5 +191,12 @@ public class MainHomeFragment extends CoreFragment<MainController.MainUiCallback
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onResponseError(ResponseError error) {
+        super.onResponseError(error);
+        lx_header_view_rotate.refreshComplete();
+        adapter.setEmptyView(notDataView);
     }
 }
