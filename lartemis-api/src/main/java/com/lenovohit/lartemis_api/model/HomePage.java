@@ -123,4 +123,17 @@ public class HomePage implements MultiItemEntity,Serializable {
             IconURL = iconURL;
         }
     }
+
+    @Override
+    public String toString() {
+        return "HomePage{" +
+                "itemType=" + itemType +
+                ", CollectDoctors=" + CollectDoctors +
+                ", RecommendDoctors=" + RecommendDoctors +
+                ", CollectHospitals=" + CollectHospitals +
+                ", RecommendHospitals=" + RecommendHospitals +
+                ", TopNews=" + TopNews +
+                ", IndexPageModels=" + IndexPageModels +
+                '}';
+    }
 }

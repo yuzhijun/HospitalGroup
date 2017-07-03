@@ -1,19 +1,26 @@
 package com.lenovohit.hospitalgroup.ui.fragment;
 
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.lenovohit.hospitalgroup.R;
+import com.lenovohit.hospitalgroup.ui.adapter.AllHosAdapter;
 import com.lenovohit.lartemis_api.annotation.ContentView;
 import com.lenovohit.lartemis_api.base.BaseController;
 import com.lenovohit.lartemis_api.base.CoreFragment;
 import com.lenovohit.lartemis_api.core.LArtemis;
+import com.lenovohit.lartemis_api.model.HomePage;
+import com.lenovohit.lartemis_api.model.Hospitals;
 import com.lenovohit.lartemis_api.ui.controller.MainController;
 import com.lenovohit.lartemis_api.utils.CommonUtil;
 import com.lenovohit.lartemis_api.views.DropDownMenu;
+import com.lenovohit.lartemis_api.views.LXHeaderView;
+import com.lenovohit.lartemis_api.views.RecycleViewDivider;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -23,13 +30,16 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import in.srain.cube.views.ptr.PtrDefaultHandler;
+import in.srain.cube.views.ptr.PtrFrameLayout;
+import in.srain.cube.views.ptr.PtrHandler;
 
 /**
  * Created by yuzhijun on 2017/6/29.
  */
 @ContentView(R.layout.lx_app_hospital_fragment)
-public class HospitalFragment extends CoreFragment<MainController.MainUiCallbacks> implements MainController.MainUi{
-
+public class HospitalFragment extends CoreFragment<MainController.MainUiCallbacks> implements MainController.MainHomeUi,LXHeaderView.RefreshDistanceListener{
+    LXHeaderView lx_header_view_rotate;
     @BindView(R.id.dropDown)
     DropDownMenu dropDownMenu;
     private List<View>popupViews;
@@ -42,6 +52,11 @@ public class HospitalFragment extends CoreFragment<MainController.MainUiCallback
     private List<String> typeTitleList = new ArrayList<>();
     //第二个下拉矿中的view
     private RecyclerView orderView;
+    private AllHosAdapter adapter;
+
+
+    List<Hospitals> hospitalList = new ArrayList<>();
+    private View notDataView;
 
     public static HospitalFragment newInstance() {
         return new HospitalFragment();
@@ -101,13 +116,42 @@ public class HospitalFragment extends CoreFragment<MainController.MainUiCallback
         propertyView.setAdapter(propertyAdapter);
         typeView.setAdapter(typeAdapter);
 
-
         //第二项的下拉布局
         orderView = (RecyclerView)LayoutInflater.from(getActivity()).inflate(R.layout.lx_dropdown_hospital_order_view,null);
         popupViews.add(orderView);
 
         //添加dropDownView下边的布局
         View inflate = LayoutInflater.from(getActivity()).inflate(R.layout.lx_dropdown_hospital_arrow_view, null);
+        RecyclerView recyclerView = (RecyclerView) inflate.findViewById(R.id.AllHosRecyclerView);
+        adapter = new AllHosAdapter(R.layout.lx_recommond_hos_view_item,hospitalList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext(),LinearLayoutManager.VERTICAL,false));
+        recyclerView.addItemDecoration(new RecycleViewDivider(recyclerView.getContext(), LinearLayoutManager.VERTICAL));
+        recyclerView.setAdapter(adapter);
+        getCallbacks().getIndexRecommendInfo();
+
+        //下拉刷新
+        lx_header_view_rotate= (LXHeaderView) inflate.findViewById(R.id.lx_header_view_rotate);
+        lx_header_view_rotate.setOnRefreshDistanceListener(this);
+        lx_header_view_rotate.setPtrHandler(new PtrHandler() {
+            @Override
+            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+                return PtrDefaultHandler.checkContentCanBePulledDown(frame, content, header);
+            }
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {
+                refreshMainHomeData();
+            }
+        });
+
+        //没有数据时的布局,以及点击重试
+        notDataView = LayoutInflater.from(recyclerView.getContext()).inflate(R.layout.lx_empty_view, (ViewGroup) recyclerView.getParent(), false);
+        notDataView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getCallbacks().getHospitalsList();
+            }
+        });
+
         dropDownMenu.setDropDownMenu(titleList,popupViews,inflate);
 
     }
@@ -122,4 +166,42 @@ public class HospitalFragment extends CoreFragment<MainController.MainUiCallback
         return LArtemis.getInstance().getMainController();
     }
 
+    public void getHospitalListCallBack(List<Hospitals> list) {
+        if (list==null||list.size()==0){
+            adapter.setEmptyView(notDataView);
+            lx_header_view_rotate.refreshComplete();
+            return;
+        }
+        hospitalList.clear();
+        adapter.setNewData(hospitalList);
+        lx_header_view_rotate.refreshComplete();
+    }
+
+    @Override
+    public void onPositionChange(int currentPosY) {
+
+    }
+    //下拉刷新主页数据
+    private void refreshMainHomeData(){
+        lx_header_view_rotate.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                getCallbacks().getIndexRecommendInfo();
+            }
+        },1000);
+    }
+
+    @Override
+    public void getIndexRecommendInfoCallBack(HomePage response) {
+        if(null == response || null == response.getTopNews()){
+            lx_header_view_rotate.refreshComplete();
+            adapter.setEmptyView(notDataView);
+            return;
+        }
+        adapter.getData().clear();
+        hospitalList.clear();
+        hospitalList.addAll(response.getRecommendHospitals());
+        adapter.setNewData(hospitalList);
+        lx_header_view_rotate.refreshComplete();
+    }
 }

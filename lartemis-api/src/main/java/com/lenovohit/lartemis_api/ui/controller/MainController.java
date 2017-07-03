@@ -3,10 +3,14 @@ package com.lenovohit.lartemis_api.ui.controller;
 import com.google.common.base.Preconditions;
 import com.lenovohit.lartemis_api.base.BaseController;
 import com.lenovohit.lartemis_api.model.HomePage;
+import com.lenovohit.lartemis_api.model.Hospitals;
+import com.lenovohit.lartemis_api.model.HttpResult;
 import com.lenovohit.lartemis_api.model.ResponseError;
 import com.lenovohit.lartemis_api.network.ApiService;
 import com.lenovohit.lartemis_api.network.HttpResultFunc;
 import com.lenovohit.lartemis_api.network.RequestCallBack;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -56,6 +60,11 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
             public void getIndexRecommendInfo() {
               getIndexRecommendInfoData(ui);
             }
+
+            @Override
+            public void getHospitalsList() {
+                getIndexHospitalsInfoData(ui);
+            }
         };
     }
 
@@ -78,9 +87,28 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
                     }
                 });
     }
+    //获取所有医院列表
+    private void getIndexHospitalsInfoData(final MainUi ui){
+        mApiService.getIndexHospitalList()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new RequestCallBack<HttpResult<List<Hospitals>>>() {
+                    @Override
+                    public void onResponse(HttpResult<List<Hospitals>> response) {
+                        if (ui instanceof HospitalUi){
+                            ((HospitalUi)ui).getHospitalListCallBack((List<Hospitals>) response);
+                        }
+                    }
 
+                    @Override
+                    public void onFailure(ResponseError error) {
+
+                    }
+                });
+    }
     public interface MainUiCallbacks{//给UI界面调用
         void getIndexRecommendInfo();
+        void getHospitalsList();
     }
 
     public interface MainUi extends BaseController.Ui<MainUiCallbacks> {
@@ -89,6 +117,10 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
 
     public interface MainHomeUi extends MainUi{
         void getIndexRecommendInfoCallBack(HomePage response);
+    }
+    public interface HospitalUi extends MainUi{
+        //获取所有的医院列表
+        void getHospitalListCallBack(List<Hospitals>list);
     }
 
     public SecondController getSecondController() {
