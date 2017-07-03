@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lenovohit.hospitalgroup.R;
 import com.lenovohit.hospitalgroup.ui.adapter.AllHosAdapter;
 import com.lenovohit.lartemis_api.annotation.ContentView;
@@ -16,6 +17,7 @@ import com.lenovohit.lartemis_api.base.CoreFragment;
 import com.lenovohit.lartemis_api.core.LArtemis;
 import com.lenovohit.lartemis_api.model.HomePage;
 import com.lenovohit.lartemis_api.model.Hospitals;
+import com.lenovohit.lartemis_api.model.ResponseError;
 import com.lenovohit.lartemis_api.ui.controller.MainController;
 import com.lenovohit.lartemis_api.utils.CommonUtil;
 import com.lenovohit.lartemis_api.views.DropDownMenu;
@@ -38,7 +40,7 @@ import in.srain.cube.views.ptr.PtrHandler;
  * Created by yuzhijun on 2017/6/29.
  */
 @ContentView(R.layout.lx_app_hospital_fragment)
-public class HospitalFragment extends CoreFragment<MainController.MainUiCallbacks> implements MainController.MainHomeUi,LXHeaderView.RefreshDistanceListener{
+public class HospitalFragment extends CoreFragment<MainController.MainUiCallbacks> implements MainController.MainHomeUi,LXHeaderView.RefreshDistanceListener, BaseQuickAdapter.RequestLoadMoreListener {
     LXHeaderView lx_header_view_rotate;
     @BindView(R.id.dropDown)
     DropDownMenu dropDownMenu;
@@ -124,6 +126,8 @@ public class HospitalFragment extends CoreFragment<MainController.MainUiCallback
         View inflate = LayoutInflater.from(getActivity()).inflate(R.layout.lx_dropdown_hospital_arrow_view, null);
         RecyclerView recyclerView = (RecyclerView) inflate.findViewById(R.id.AllHosRecyclerView);
         adapter = new AllHosAdapter(R.layout.lx_recommond_hos_view_item,hospitalList);
+        adapter.setOnLoadMoreListener(this);
+        adapter.setEnableLoadMore(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext(),LinearLayoutManager.VERTICAL,false));
         recyclerView.addItemDecoration(new RecycleViewDivider(recyclerView.getContext(), LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(adapter);
@@ -151,7 +155,6 @@ public class HospitalFragment extends CoreFragment<MainController.MainUiCallback
                 getCallbacks().getHospitalsList();
             }
         });
-
         dropDownMenu.setDropDownMenu(titleList,popupViews,inflate);
 
     }
@@ -203,5 +206,20 @@ public class HospitalFragment extends CoreFragment<MainController.MainUiCallback
         hospitalList.addAll(response.getRecommendHospitals());
         adapter.setNewData(hospitalList);
         lx_header_view_rotate.refreshComplete();
+    }
+
+    @Override
+    public void onResponseError(ResponseError error) {
+        super.onResponseError(error);
+        lx_header_view_rotate.refreshComplete();
+        adapter.setEmptyView(notDataView);
+        //将错误显示到界面中去
+        TextView tvTitle = (TextView) notDataView.findViewById(R.id.tvTitle);
+        tvTitle.setText(error.getMessage());
+    }
+
+    @Override
+    public void onLoadMoreRequested() {
+        refreshMainHomeData();
     }
 }
