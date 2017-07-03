@@ -28,7 +28,7 @@ import static com.lenovohit.lartemis_api.R.id.tvRight;
  * Created by yuzhijun on 2017/6/27.
  */
 public abstract class CoreFragment<UC> extends BaseFragment<UC> {
-
+    public static int ivBack=R.mipmap.lx_iv_top_back;
     private TextView mTvTitle;
     private ImageView mBtnLeft;
     private ImageView mBtnRight;
@@ -114,8 +114,8 @@ public abstract class CoreFragment<UC> extends BaseFragment<UC> {
         mBtnRight.setVisibility(View.VISIBLE);
         mBtnRight.setImageResource(icon);
         ViewGroup.LayoutParams linearParams = mBtnRight.getLayoutParams();
-        linearParams.height = DensityUtil.dip2px(getActivity(),26);
-        linearParams.width = DensityUtil.dip2px(getActivity(),26);
+        linearParams.height = DensityUtil.dip2px(getActivity(),15);
+        linearParams.width = DensityUtil.dip2px(getActivity(),15);
         mBtnRight.setLayoutParams(linearParams);
         mLlRight.setOnClickListener(listener);
     }
@@ -145,8 +145,8 @@ public abstract class CoreFragment<UC> extends BaseFragment<UC> {
         mBtnLeft.setVisibility(View.VISIBLE);
         mBtnLeft.setBackgroundResource(icon);
         ViewGroup.LayoutParams linearParams = mBtnLeft.getLayoutParams();
-        linearParams.height = DensityUtil.dip2px(getActivity(),26);
-        linearParams.width = DensityUtil.dip2px(getActivity(),26);
+        linearParams.height = DensityUtil.dip2px(getActivity(),15);
+        linearParams.width = DensityUtil.dip2px(getActivity(),15);
         mBtnLeft.setLayoutParams(linearParams);
         mLlLeft.setOnClickListener(listener);
     }

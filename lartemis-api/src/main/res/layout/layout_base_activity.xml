@@ -5,7 +5,7 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:background="@color/colorPrimary"
        >
         <!--自定义toolbar的title 和btnRight -->
@@ -24,7 +24,8 @@
                 android:lines="1"
                 android:ellipsize="end"
                 android:text=""
-                android:textSize="@dimen/spacing_normal"
+                android:maxEms="5"
+                android:textSize="@dimen/spacing_small"
                 android:layout_gravity="left|center_vertical"
                 android:scrollHorizontally="true"
                 android:textColor="@color/white"
@@ -51,7 +52,7 @@
                 android:id="@+id/btnLeft"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                android:scaleType="centerInside"
+                android:scaleType="fitXY"
                 android:clickable="false"
                 />
             <TextView
@@ -62,8 +63,9 @@
                 android:layout_height="wrap_content"
                 android:lines="1"
                 android:ellipsize="end"
+                android:maxEms="5"
                 android:text=""
-                android:textSize="@dimen/spacing_normal"
+                android:textSize="@dimen/spacing_small"
                 android:layout_gravity="left|center_vertical"
                 android:scrollHorizontally="true"
                 android:textColor="@color/white"
@@ -76,7 +78,9 @@
             android:layout_height="wrap_content"
             android:lines="1"
             android:ellipsize="end"
+            android:maxEms="5"
             android:text=""
+            android:textSize="@dimen/spacing_normal"
             android:scrollHorizontally="true"
             android:textColor="@color/white"
             android:layout_gravity="center" />

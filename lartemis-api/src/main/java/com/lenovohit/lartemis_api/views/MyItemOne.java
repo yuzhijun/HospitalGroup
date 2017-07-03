@@ -3,6 +3,7 @@ package com.lenovohit.lartemis_api.views;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,7 +22,7 @@ public class MyItemOne extends LinearLayout {
     private ImageView ivRowOneICO;
     private TextView txRowOneContent;
     private TextView txRowOneSelect;
-
+    private ImageView ivTopLine;
     public MyItemOne(Context context) {
         super(context);
     }
@@ -34,6 +35,7 @@ public class MyItemOne extends LinearLayout {
         ivRowOneICO = (ImageView) findViewById(R.id.ivRowOneICO);
         txRowOneContent = (TextView) findViewById(R.id.txRowOneContent);
         txRowOneSelect = (TextView) findViewById(R.id.txRowOneSelect);
+        ivTopLine=(ImageView) findViewById(R.id.ivTopLine);
     }
 
 
@@ -57,6 +59,13 @@ public class MyItemOne extends LinearLayout {
         }else{
             txRowOneSelect.setVisibility(VISIBLE);
             txRowOneSelect.setText(selectName);
+        }
+    }
+    public void isShowingTopLine(boolean b){
+        if (b){
+            ivTopLine.setVisibility(View.VISIBLE);
+        }else {
+            ivTopLine.setVisibility(View.GONE);
         }
     }
 

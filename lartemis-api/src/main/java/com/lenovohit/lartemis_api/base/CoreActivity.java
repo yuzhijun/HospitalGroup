@@ -32,6 +32,7 @@ import static com.lenovohit.lartemis_api.R.id.tvRight;
  */
 public abstract class CoreActivity<UC> extends BaseActivity<UC> {
     public static CoreActivity currentActivity;
+    public static int ivBack=R.mipmap.lx_iv_top_back;
     private volatile boolean isLoading;
     private LoadingView progressDialog;
     private TextView mTvTitle;
