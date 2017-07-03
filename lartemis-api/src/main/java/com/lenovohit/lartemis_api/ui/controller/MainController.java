@@ -2,7 +2,6 @@ package com.lenovohit.lartemis_api.ui.controller;
 
 import com.google.common.base.Preconditions;
 import com.lenovohit.lartemis_api.base.BaseController;
-import com.lenovohit.lartemis_api.base.CoreActivity;
 import com.lenovohit.lartemis_api.model.HomePage;
 import com.lenovohit.lartemis_api.model.Hospitals;
 import com.lenovohit.lartemis_api.model.HttpResult;
@@ -70,7 +69,6 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
     }
 
     private void getIndexRecommendInfoData(final MainUi ui){
-        CoreActivity.currentActivity.showProgressDialog();
         mApiService.getIndexRecommendInfo(31,0)
                 .map(new HttpResultFunc<HomePage>())
                 .subscribeOn(Schedulers.io())
@@ -80,20 +78,17 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
                     public void onResponse(HomePage response) {
                         if (ui instanceof MainHomeUi){
                             ((MainHomeUi)ui).getIndexRecommendInfoCallBack(response);
-                            CoreActivity.currentActivity.hideProgressDialog();
                         }
                     }
 
                     @Override
                     public void onFailure(ResponseError error) {
                         ui.onResponseError(error);
-                        CoreActivity.currentActivity.hideProgressDialog();
                     }
                 });
     }
     //获取所有医院列表
     private void getIndexHospitalsInfoData(final MainUi ui){
-        CoreActivity.currentActivity.showProgressDialog();
         mApiService.getIndexHospitalList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -102,13 +97,11 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
                     public void onResponse(HttpResult<List<Hospitals>> response) {
                         if (ui instanceof HospitalUi){
                             ((HospitalUi)ui).getHospitalListCallBack((List<Hospitals>) response);
-                            CoreActivity.currentActivity.hideProgressDialog();
                         }
                     }
 
                     @Override
                     public void onFailure(ResponseError error) {
-                        CoreActivity.currentActivity.hideProgressDialog();
                     }
                 });
     }

@@ -126,8 +126,9 @@ public class HospitalFragment extends CoreFragment<MainController.MainUiCallback
         View inflate = LayoutInflater.from(getActivity()).inflate(R.layout.lx_dropdown_hospital_arrow_view, null);
         RecyclerView recyclerView = (RecyclerView) inflate.findViewById(R.id.AllHosRecyclerView);
         adapter = new AllHosAdapter(R.layout.lx_recommond_hos_view_item,hospitalList);
+        adapter.setEmptyView(R.layout.lx_preloading_view_layout, (ViewGroup) recyclerView.getParent());
         adapter.setOnLoadMoreListener(this);
-        adapter.setEnableLoadMore(true);
+        adapter.setEnableLoadMore(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext(),LinearLayoutManager.VERTICAL,false));
         recyclerView.addItemDecoration(new RecycleViewDivider(recyclerView.getContext(), LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(adapter);
@@ -221,5 +222,6 @@ public class HospitalFragment extends CoreFragment<MainController.MainUiCallback
     @Override
     public void onLoadMoreRequested() {
         refreshMainHomeData();
+//        adapter.loadMoreEnd(true);
     }
 }

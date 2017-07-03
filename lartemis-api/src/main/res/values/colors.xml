@@ -15,6 +15,7 @@
     <color name="grey_normal_bg">#EEEEEE</color>
     <color name="app_line_colors">#cccccc</color>
     <color name="app_item_press_colors">#b3b3b3</color>
+    <color name="bottom_text_normal_colors">#6B6B6B</color>
 
     <color name="btn_complete_normal_colors">#CF2A27</color>
     <color name="btn_complete_press_colors">#BE0F0F</color>
