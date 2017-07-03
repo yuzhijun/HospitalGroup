@@ -131,11 +131,8 @@ public class MainActivity extends CoreActivity<MainController.MainUiCallbacks> i
     }
 
     /** 
-
       * 菜单、返回键响应 
-
       */
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event){
         if(keyCode == KeyEvent.KEYCODE_BACK) {

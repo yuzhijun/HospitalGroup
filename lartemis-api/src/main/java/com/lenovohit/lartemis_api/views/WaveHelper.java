@@ -34,7 +34,7 @@ public class WaveHelper {
         ObjectAnimator waveShiftAnim = ObjectAnimator.ofFloat(
                 mWaveView, "waveShiftRatio", 0f, 1f);
         waveShiftAnim.setRepeatCount(ValueAnimator.INFINITE);
-        waveShiftAnim.setDuration(1000);
+        waveShiftAnim.setDuration(3000);
         waveShiftAnim.setInterpolator(new LinearInterpolator());
         animators.add(waveShiftAnim);
 
@@ -51,7 +51,7 @@ public class WaveHelper {
 //        ObjectAnimator amplitudeAnim = ObjectAnimator.ofFloat(
 //                mWaveView, "amplitudeRatio", 0.0001f, 0.05f);
         ObjectAnimator amplitudeAnim = ObjectAnimator.ofFloat(
-                mWaveView, "amplitudeRatio", 0.03f, 0.05f);
+                mWaveView, "amplitudeRatio", 0.01f, 0.07f);
         amplitudeAnim.setRepeatCount(ValueAnimator.INFINITE);
         amplitudeAnim.setRepeatMode(ValueAnimator.REVERSE);
         amplitudeAnim.setDuration(5000);

@@ -17,8 +17,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-import static com.lenovohit.hospitalgroup.R.id.waveView;
-
 /**
  * Created by yuzhijun on 2017/6/29.
  */
@@ -35,7 +33,7 @@ public class MineFragment extends CoreFragment<MainController.MainUiCallbacks> i
     MyItemOne lrvMyFK;
     @BindView(R.id.btnConfig)
     MyItemOne btnConfig;
-    @BindView(waveView)
+    @BindView(R.id.waveView)
     WaveView mWaveView;
     @BindView(R.id.lrvFocusDoctor)
     MyItemOne lrvFocusDoctor;
@@ -60,11 +58,8 @@ public class MineFragment extends CoreFragment<MainController.MainUiCallbacks> i
         lrvDingDan.setItemInfo(R.mipmap.lx_iv_mobile_treatment_history, "诊疗记录", "");
         lrvMyFK.setItemInfo(R.mipmap.lx_iv_my_opinion, "我的反馈", "");
         btnConfig.setItemInfo(R.mipmap.lx_iv_my_setting, "设置", "");
-        mWaveView.setShowWave(true);
         mWaveHelper = new WaveHelper(mWaveView);
         mWaveView.setShapeType(WaveView.ShapeType.SQUARE);
-        mWaveView.setAmplitudeRatio(0.5f);
-        mWaveView.setWaterLevelRatio(2.0f);
         mWaveHelper.start();
     }
 
@@ -85,6 +80,4 @@ public class MineFragment extends CoreFragment<MainController.MainUiCallbacks> i
         unbinder.unbind();
         mWaveHelper.cancel();
     }
-
-
 }
