@@ -2,14 +2,23 @@ package com.lenovohit.lartemis_api.ui.controller;
 
 import com.google.common.base.Preconditions;
 import com.lenovohit.lartemis_api.base.BaseController;
+import com.lenovohit.lartemis_api.model.Hospitals;
+import com.lenovohit.lartemis_api.model.ResponseError;
 import com.lenovohit.lartemis_api.network.ApiService;
+import com.lenovohit.lartemis_api.network.HttpResultFunc;
+import com.lenovohit.lartemis_api.network.RequestCallBack;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
 /**
+ * 预约挂号控制器
  * Created by yuzhijun on 2017/6/27.
  */
-
 public class AppointmentController extends BaseController<AppointmentController.AppointmentUi,AppointmentController.AppointmentUiCallbacks> {
     private ApiService mApiService;
 
@@ -35,14 +44,29 @@ public class AppointmentController extends BaseController<AppointmentController.
     }
 
     @Override
-    protected AppointmentUiCallbacks createUiCallbacks(AppointmentUi ui) {
+    protected AppointmentUiCallbacks createUiCallbacks(final AppointmentUi ui) {
         return new AppointmentUiCallbacks() {
-
+            @Override
+            public void getSearchHospital(String key) {
+                mApiService.getSearchHospitalList(key)
+                        .map(new HttpResultFunc<List<Hospitals>>())
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new RequestCallBack<List<Hospitals>>() {
+                            @Override
+                            public void onResponse(List<Hospitals> response) {
+                                ((AppointmentHosUi)ui).getSearchHospitalCallBack(response);
+                            }
+                            @Override
+                            public void onFailure(ResponseError error) {
+                            }
+                        });
+            }
         };
     }
 
     public interface AppointmentUiCallbacks{//给UI界面调用
-
+        void getSearchHospital(String key);//根据搜索的key获取医院
     }
 
     public interface AppointmentUi extends BaseController.Ui<AppointmentController.AppointmentUiCallbacks> {
@@ -51,5 +75,9 @@ public class AppointmentController extends BaseController<AppointmentController.
 
     public interface AppointmentMainUi extends AppointmentUi{
 
+    }
+
+    public interface AppointmentHosUi extends AppointmentUi{
+        void getSearchHospitalCallBack(List<Hospitals> response);
     }
 }

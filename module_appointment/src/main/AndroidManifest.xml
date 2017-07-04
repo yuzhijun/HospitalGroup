@@ -4,7 +4,13 @@
     <application android:allowBackup="true"
                  android:label="@string/app_name"
                  android:supportsRtl="true">
-        <activity android:name=".ui.AppointmentMainActivity"
+        <activity android:name=".ui.LX_AppointmentMainActivity"
+                  android:configChanges="orientation|keyboardHidden"
+                  android:screenOrientation="portrait"
+                  android:launchMode="singleTask"
+                  android:process=":module_appointment"/>
+
+        <activity android:name=".ui.LX_AppointmentHosActivity"
                   android:configChanges="orientation|keyboardHidden"
                   android:screenOrientation="portrait"
                   android:launchMode="singleTask"

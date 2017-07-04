@@ -15,6 +15,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -26,10 +27,12 @@ public interface ApiService {
     @GET("NeweHealthServices/api/User/GetIndexRecommendInfo/{cityID}/{uID}")
     Observable<HttpResult<HomePage>> getIndexRecommendInfo(@Path("cityID") int cityID,@Path("uID") int uID);
     @GET("NeweHealthServices/api/Hospital/UserLocationHospitals")
-    Observable<HttpResult<List<Hospitals>>>getIndexHospitalList();
+    Observable<HttpResult<List<Hospitals>>> getIndexHospitalList();
     @GET("NeweHealthServices/api/User/LoginInfo/{phoneNumber}/{smsCode}")
-    Observable<HttpResult<User>>getLoginData(@Path("phoneNumber")String phoneNumber,@Path("smsCode")String smsCode);
+    Observable<HttpResult<User>> getLoginData(@Path("phoneNumber")String phoneNumber,@Path("smsCode")String smsCode);
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST("NeweHealthServices/api/User/SendSMSCode")
-    Observable<HttpResult<Result>>getLoginCode(@Field("PhoneNumber")String PhoneNumber, @Field("TempCode")String TempCode);
+    Observable<HttpResult<Result>> getLoginCode(@Field("PhoneNumber")String PhoneNumber, @Field("TempCode")String TempCode);
+    @GET("NeweHealthServices/api/Hospital/SearchHospitals")
+    Observable<HttpResult<List<Hospitals>>> getSearchHospitalList(@Query("key") String key);
 }

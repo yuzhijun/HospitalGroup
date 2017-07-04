@@ -29,7 +29,7 @@
     <color name="font_gray">#bfbfbf</color>
 
     <color name="description_gray">#666666</color>
-    <color name="search_corner_bg">#ddBBBABA</color>
+    <color name="search_corner_bg">#80BBBABA</color>
     <!-- 半透明黑色-->
     <color name="translucent_black">#99323232</color>
 </resources>
