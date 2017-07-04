@@ -2,13 +2,17 @@ package com.lenovohit.lartemis_api.ui.controller;
 
 import com.google.common.base.Preconditions;
 import com.lenovohit.lartemis_api.base.BaseController;
+import com.lenovohit.lartemis_api.base.CoreActivity;
 import com.lenovohit.lartemis_api.model.HomePage;
 import com.lenovohit.lartemis_api.model.Hospitals;
 import com.lenovohit.lartemis_api.model.HttpResult;
 import com.lenovohit.lartemis_api.model.ResponseError;
+import com.lenovohit.lartemis_api.model.Result;
+import com.lenovohit.lartemis_api.model.User;
 import com.lenovohit.lartemis_api.network.ApiService;
 import com.lenovohit.lartemis_api.network.HttpResultFunc;
 import com.lenovohit.lartemis_api.network.RequestCallBack;
+import com.lenovohit.lartemis_api.utils.Constants;
 
 import java.util.List;
 
@@ -65,6 +69,16 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
             public void getHospitalsList() {
                 getIndexHospitalsInfoData(ui);
             }
+
+            @Override
+            public void getLoginData() {
+                getIndexLoginUserData(ui);
+            }
+
+            @Override
+            public void getLoginCode() {
+                getIndexLoginCodeData(ui);
+            }
         };
     }
 
@@ -89,6 +103,7 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
     }
     //获取所有医院列表
     private void getIndexHospitalsInfoData(final MainUi ui){
+
         mApiService.getIndexHospitalList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -105,9 +120,58 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
                     }
                 });
     }
+    //登录时 获取登录信息
+    private void getIndexLoginUserData(final MainUi ui){
+        if (ui instanceof LoginUi) {
+            CoreActivity.currentActivity.showProgressDialog();
+            mApiService.getLoginData(((LoginUi) ui).getUserPhone(),((LoginUi) ui).getUserCode())
+                    .map(new HttpResultFunc<User>())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                   .subscribe(new RequestCallBack<User>() {
+                       @Override
+                       public void onResponse(User response) {
+                           ((LoginUi) ui).getLoginDataCallBack(response);
+                           CoreActivity.currentActivity.hideProgressDialog();
+                       }
+
+                       @Override
+                       public void onFailure(ResponseError error) {
+                           CoreActivity.currentActivity.hideProgressDialog();
+    //                       Log.e("tag",error.getMessage());
+                       }
+                   });
+        }
+    }
+    //登录时 获取验证码
+    private void getIndexLoginCodeData(final MainUi ui){
+        if (ui instanceof LoginUi) {
+            CoreActivity.currentActivity.showProgressDialog();
+            mApiService.getLoginCode(((LoginUi) ui).getUserPhone(), Constants.SMS_TEMP_CODE)
+                    .map(new HttpResultFunc<Result>())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new RequestCallBack<Result>() {
+                @Override
+                public void onResponse(Result response) {
+                    ((LoginUi) ui).getLoginCodeCallBack(response);
+                    CoreActivity.currentActivity.hideProgressDialog();
+                }
+
+                @Override
+                public void onFailure(ResponseError error) {
+                    CoreActivity.currentActivity.hideProgressDialog();
+//                    Log.e("tag",error.getMessage());
+                }
+            });
+        }
+
+    }
     public interface MainUiCallbacks{//给UI界面调用
         void getIndexRecommendInfo();
         void getHospitalsList();
+        void getLoginData();
+        void getLoginCode();
     }
 
     public interface MainUi extends BaseController.Ui<MainUiCallbacks> {
@@ -120,6 +184,13 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
     public interface HospitalUi extends MainUi{
         //获取所有的医院列表
         void getHospitalListCallBack(List<Hospitals>list);
+    }
+    public interface  LoginUi extends MainUi{
+        //登录接口
+        void getLoginDataCallBack(User user);
+        void getLoginCodeCallBack(Result result);
+        String getUserPhone();
+        String getUserCode();
     }
 
     public SecondController getSecondController() {

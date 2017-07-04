@@ -117,15 +117,20 @@ public abstract class CoreActivity<UC> extends BaseActivity<UC> {
         if (title != null && !"".equalsIgnoreCase(title)){
             mTvRight.setVisibility(View.VISIBLE);
             mTvRight.setText(title);
+            mBtnRight.setVisibility(View.GONE);
             mLlRight.setOnClickListener(listener);
         }
     }
-    protected void setRightIcon(@DrawableRes int icon, View.OnClickListener listener){
+    protected void setRightTitleAndIcon(String title,@DrawableRes int icon, View.OnClickListener listener){
+        if (title != null && !"".equalsIgnoreCase(title)){
+            mTvRight.setVisibility(View.VISIBLE);
+            mTvRight.setText(title);
+        }
         mBtnRight.setVisibility(View.VISIBLE);
-        mBtnRight.setBackgroundResource(icon);
+        mBtnRight.setImageResource(icon);
         ViewGroup.LayoutParams linearParams = mBtnRight.getLayoutParams();
-        linearParams.height = DensityUtil.dip2px(this,26);
-        linearParams.width = DensityUtil.dip2px(this,26);
+        linearParams.height = DensityUtil.dip2px(this,15);
+        linearParams.width = DensityUtil.dip2px(this,15);
         mBtnRight.setLayoutParams(linearParams);
         mLlRight.setOnClickListener(listener);
     }
@@ -133,6 +138,7 @@ public abstract class CoreActivity<UC> extends BaseActivity<UC> {
         if (title != null && !"".equalsIgnoreCase(title)){
             mTvLeft.setVisibility(View.VISIBLE);
             mTvLeft.setText(title);
+            mBtnLeft.setVisibility(View.GONE);
             mLlLeft.setOnClickListener(listener);
         }
     }
@@ -146,12 +152,16 @@ public abstract class CoreActivity<UC> extends BaseActivity<UC> {
         mTvRight.setVisibility(View.VISIBLE);
         mTvRight.setTextColor(color);
     }
-    protected void setLeftIcon(@DrawableRes int icon, View.OnClickListener listener){
+    protected void setLeftTitleAndIcon(String title,@DrawableRes int icon, View.OnClickListener listener){
+        if (title != null && !"".equalsIgnoreCase(title)){
+            mTvLeft.setVisibility(View.VISIBLE);
+            mTvLeft.setText(title);
+        }
         mBtnLeft.setVisibility(View.VISIBLE);
         mBtnLeft.setBackgroundResource(icon);
         ViewGroup.LayoutParams linearParams = mBtnLeft.getLayoutParams();
-        linearParams.height = DensityUtil.dip2px(this,26);
-        linearParams.width = DensityUtil.dip2px(this,26);
+        linearParams.height = DensityUtil.dip2px(this,15);
+        linearParams.width = DensityUtil.dip2px(this,15);
         mBtnLeft.setLayoutParams(linearParams);
         mLlLeft.setOnClickListener(listener);
     }
@@ -191,4 +201,69 @@ public abstract class CoreActivity<UC> extends BaseActivity<UC> {
     protected ImageView getRightButton(){
         return mBtnRight;
     }
+//    public static int getIdByName(String var0, CommonUtil.ClassType var1) {
+//        String var2 = LArtemis.getInstance().getApplication().getPackageName();
+//        int var4 = 0;
+//        String var5 = "";
+//        switch($SWITCH_TABLE$com$mg$core$base$BaseActivity$ClassType()[var1.ordinal()]) {
+//            case 1:
+//                var5 = "id";
+//                break;
+//            case 2:
+//                var5 = "layout";
+//                break;
+//            case 3:
+//                var5 = "string";
+//                break;
+//            case 4:
+//                var5 = "drawable";
+//                break;
+//            case 5:
+//                var5 = "color";
+//                break;
+//            case 6:
+//                var5 = "anim";
+//                break;
+//            case 7:
+//                var5 = "style";
+//        }
+//
+//        try {
+//            Class[] var8 = Class.forName(var2 + ".R").getClasses();
+//            Class var9 = null;
+//
+//            int var3;
+//            for(var3 = 0; var3 < var8.length; ++var3) {
+//                if(var8[var3].getName().split("\\$")[1].equals(var5)) {
+//                    var9 = var8[var3];
+//                    break;
+//                }
+//            }
+//
+//            if(var9 != null) {
+//                try {
+//                    var4 = var9.getField(var0).getInt(var9);
+//                } catch (Exception var6) {
+//                    if(var5.equals("drawable")) {
+//                        var5 = "mipmap";
+//
+//                        for(var3 = 0; var3 < var8.length; ++var3) {
+//                            if(var8[var3].getName().split("\\$")[1].equals(var5)) {
+//                                var9 = var8[var3];
+//                                break;
+//                            }
+//                        }
+//
+//                        if(var9 != null) {
+//                            var4 = var9.getField(var0).getInt(var9);
+//                        }
+//                    }
+//                }
+//            }
+//        } catch (Exception var7) {
+//            var7.printStackTrace();
+//        }
+//
+//        return var4;
+//    }
 }

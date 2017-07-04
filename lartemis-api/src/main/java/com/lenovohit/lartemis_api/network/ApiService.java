@@ -3,12 +3,16 @@ package com.lenovohit.lartemis_api.network;
 import com.lenovohit.lartemis_api.model.HomePage;
 import com.lenovohit.lartemis_api.model.Hospitals;
 import com.lenovohit.lartemis_api.model.HttpResult;
+import com.lenovohit.lartemis_api.model.Result;
+import com.lenovohit.lartemis_api.model.User;
 
 import java.util.List;
 
 import javax.inject.Singleton;
 
+import retrofit2.http.Field;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import rx.Observable;
 
@@ -22,4 +26,8 @@ public interface ApiService {
     Observable<HttpResult<HomePage>> getIndexRecommendInfo(@Path("cityID") int cityID,@Path("uID") int uID);
     @GET("NeweHealthServices/api/Hospital/UserLocationHospitals")
     Observable<HttpResult<List<Hospitals>>>getIndexHospitalList();
+    @GET("NeweHealthServices/api/User/LoginInfo/{phoneNumber}/{smsCode}")
+    Observable<HttpResult<User>>getLoginData(@Path("phoneNumber")String phoneNumber,@Path("smsCode")String smsCode);
+    @POST("NeweHealthServices/api/User/SendSMSCode")
+    Observable<HttpResult<Result>>getLoginCode(@Field("PhoneNumber")String PhoneNumber, @Field("TempCode")String TempCode);
 }

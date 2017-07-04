@@ -13,4 +13,8 @@ public class Constants {
         public static final int HTTP_NETWORK_ERROR = 700;
         public static final int HTTP_UNKNOWN_ERROR = 800;
     }
+    //短信模板编号默认模板001，003为验证现在的手机号码002验证原来的手机号码004新增就诊者
+    public static final String SMS_TEMP_CODE = "001";
+    public static final String SMS_NOW_CODE = "003";
+    public static final String SMS_ADD_PERSON = "004";
 }

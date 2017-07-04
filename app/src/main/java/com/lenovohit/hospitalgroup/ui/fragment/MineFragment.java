@@ -1,14 +1,23 @@
 package com.lenovohit.hospitalgroup.ui.fragment;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.lenovohit.hospitalgroup.R;
+import com.lenovohit.hospitalgroup.ui.LX_LoginActivity;
+import com.lenovohit.hospitalgroup.ui.LX_UserInfoActivity;
 import com.lenovohit.lartemis_api.annotation.ContentView;
 import com.lenovohit.lartemis_api.base.BaseController;
 import com.lenovohit.lartemis_api.base.CoreFragment;
 import com.lenovohit.lartemis_api.core.LArtemis;
+import com.lenovohit.lartemis_api.data.UserData;
+import com.lenovohit.lartemis_api.model.User;
 import com.lenovohit.lartemis_api.ui.controller.MainController;
+import com.lenovohit.lartemis_api.utils.CommonUtil;
 import com.lenovohit.lartemis_api.views.MyItemOne;
 import com.lenovohit.lartemis_api.views.WaveHelper;
 import com.lenovohit.lartemis_api.views.WaveView;
@@ -41,8 +50,18 @@ public class MineFragment extends CoreFragment<MainController.MainUiCallbacks> i
     MyItemOne lrvFocusDoctor;
     @BindView(R.id.lrvFocusHospital)
     MyItemOne lrvFocusHospital;
+
     Unbinder unbinder;
+    @BindView(R.id.llMineEdit)
+    LinearLayout llMineEdit;
+    Unbinder unbinder1;
+    @BindView(R.id.ivUserAvatar)
+    SimpleDraweeView ivUserAvatar;
+    @BindView(R.id.tvUserName)
+    TextView tvUserName;
+    Unbinder unbinder2;
     private WaveHelper mWaveHelper;
+    private User tempUser;
 
     public static MineFragment newInstance() {
         return new MineFragment();
@@ -52,20 +71,22 @@ public class MineFragment extends CoreFragment<MainController.MainUiCallbacks> i
     protected void initViews(View view, Bundle savedInstanceState) {
         isShowToolBar(false);
         unbinder = ButterKnife.bind(this, view);
-        lrvFocusDoctor.setItemInfo(R.mipmap.lx_iv_focus_doctor,"关注的医生","");
-        lrvFocusDoctor.isShowingTopLine(false);
-        lrvFocusHospital.setItemInfo(R.mipmap.lx_iv_focus_hospital,"关注的医院","");
-        lrvSwitchPatient.setItemInfo(R.mipmap.lx_iv_my_switch_patient, "患者管理", "");
-        lrvYuYue.setItemInfo(R.mipmap.lx_iv_my_appointment, "预约历史", "");
-        lrvDingDan.setItemInfo(R.mipmap.lx_iv_mobile_treatment_history, "诊疗记录", "");
-        lrvMyFK.setItemInfo(R.mipmap.lx_iv_my_opinion, "我的反馈", "");
-        btnConfig.setItemInfo(R.mipmap.lx_iv_my_setting, "设置", "");
-        mWaveView.setShowWave(true);
-        mWaveHelper = new WaveHelper(mWaveView);
-        mWaveView.setShapeType(WaveView.ShapeType.SQUARE);
-        mWaveView.setAmplitudeRatio(0.5f);
-        mWaveView.setWaterLevelRatio(2.0f);
-        mWaveHelper.start();
+        tempUser = UserData.getTempUser();
+        setNameAndAvatar();
+        setItemInfos();
+        setWaveView();
+        //点击编辑跳转到个人设置activity中,需要先判断当前用户是否登录
+        llMineEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (UserData.getTempUser() == null) {
+                    //跳转到登录页面
+                    LX_LoginActivity.startLoginActivity(getActivity());
+                } else {
+                    LX_UserInfoActivity.startUserInfoActivity(getActivity());
+                }
+            }
+        });
     }
 
     @Override
@@ -86,5 +107,28 @@ public class MineFragment extends CoreFragment<MainController.MainUiCallbacks> i
         mWaveHelper.cancel();
     }
 
+    private void setWaveView() {
+        mWaveView.setShowWave(true);
+        mWaveHelper = new WaveHelper(mWaveView);
+        mWaveView.setShapeType(WaveView.ShapeType.SQUARE);
+        mWaveView.setAmplitudeRatio(0.3f);
+        mWaveView.setWaterLevelRatio(2f);
+        mWaveHelper.start();
+    }
 
+    private void setItemInfos() {
+        lrvFocusDoctor.isShowingTopLine(false);
+        lrvFocusDoctor.setItemInfo(R.mipmap.lx_iv_focus_doctor, "关注的医生", tempUser == null || tempUser.getCollectDoctors() == null || tempUser.getCollectDoctors().size() == 0 ? "0" : tempUser.getCollectDoctors().size() + "");
+        lrvFocusHospital.setItemInfo(R.mipmap.lx_iv_focus_hospital, "关注的医院", tempUser == null || tempUser.getCollectHospitals() == null || tempUser.getCollectHospitals().size() == 0 ? "0" : tempUser.getCollectHospitals().size() + "");
+        lrvSwitchPatient.setItemInfo(R.mipmap.lx_iv_my_switch_patient, "患者管理", tempUser == null || CommonUtil.isStrEmpty(tempUser.getBaseInfo().getName()) ? "" : tempUser.getBaseInfo().getName());
+        lrvYuYue.setItemInfo(R.mipmap.lx_iv_my_appointment, "预约历史", "");
+        lrvDingDan.setItemInfo(R.mipmap.lx_iv_mobile_treatment_history, "诊疗记录", "");
+        lrvMyFK.setItemInfo(R.mipmap.lx_iv_my_opinion, "我的反馈", "");
+        btnConfig.setItemInfo(R.mipmap.lx_iv_my_setting, "设置", "");
+    }
+    private void setNameAndAvatar(){
+        tvUserName.setText(tempUser == null || tempUser.getBaseInfo() == null || CommonUtil.isStrEmpty(tempUser.getBaseInfo().getName())?"未登录":tempUser.getBaseInfo().getName());
+       if (tempUser!=null&&tempUser.getBaseInfo()!=null&&!CommonUtil.isStrEmpty(tempUser.getBaseInfo().getPhotoUrl()))
+        ivUserAvatar.setImageURI(Uri.parse(tempUser.getBaseInfo().getPhotoUrl()));
+    }
 }

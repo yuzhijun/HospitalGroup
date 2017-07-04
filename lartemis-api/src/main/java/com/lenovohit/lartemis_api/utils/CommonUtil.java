@@ -1,6 +1,7 @@
 package com.lenovohit.lartemis_api.utils;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.design.widget.Snackbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -11,6 +12,9 @@ import android.widget.TextView;
 
 import com.lenovohit.lartemis_api.R;
 import com.lenovohit.lartemis_api.core.LArtemis;
+
+import java.util.Date;
+import java.util.regex.Pattern;
 
 /**
  * Created by Administrator on 2017-06-29.
@@ -50,7 +54,6 @@ public class CommonUtil {
      * @param view  只要是界面中的view即可
      * @param text  snackbar中的提示内容
      * @param bgColor 背景颜色，设置成0为默认颜色，即程序基色。
-     * @param resId  图片id
      */
     public static void showSnackBarToIcon(final  View view,String text,int bgColor,int type){
         Snackbar snackbar = Snackbar.make(view, null, Snackbar.LENGTH_LONG);
@@ -107,4 +110,52 @@ public class CommonUtil {
     public static boolean isStrEmpty(String str) {
         return str != null && !"".equals(str.trim())?(str = str.replaceAll(" ", "").trim()) == null || "".equals(str.trim()):true;
     }
+
+    /**
+     *
+     * @param var0  手机号
+     * @return  p   判断此手机号是否正确
+     * */
+    public static boolean isMobileNO(String var0) {
+        return Pattern.compile("[1][34578]\\d{9}").matcher(var0).matches();
+    }
+
+    /**
+     * 判断对象是否为空
+     * @param var0
+     * @return
+     */
+    public static boolean isNotEmpty(Object var0) {
+        return var0 != null;
+    }
+    public static Date AddTimeforNow2() {
+        Date var0 = new Date();
+        return new Date(var0.getTime() + 99000L);
+    }
+
+    public static void getShardPStringByKey(String var0) {
+//        return LArtemis.getInstance().getApplication().getSharedPreferences(getString(BaseActivity.getIdByName("app_name", ClassType.string)), 0).getString(var0, "");
+    }
+
+    public static void setShardPString(String var0, String var1) {
+        SharedPreferences.Editor var2;
+//        (var2 = LArtemis.getInstance().getApplication().getSharedPreferences(getString(BaseActivity.getIdByName("app_name", ClassType.string)), 0).edit()).putString(var0, var1);
+//        var2.commit();
+    }
+    public static String getString(int var0) {
+        return LArtemis.getInstance().getApplication().getString(var0);
+    }
+    public static enum ClassType {
+        id,
+        layout,
+        string,
+        drawable,
+        color,
+        anim,
+        style;
+
+        private ClassType() {
+        }
+    }
+
 }
