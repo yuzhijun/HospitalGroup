@@ -224,7 +224,7 @@ public class WaveView extends View {
         Canvas canvas = new Canvas(bitmap);
 
         Paint wavePaint = new Paint();
-        wavePaint.setStrokeWidth(2);
+        wavePaint.setStrokeWidth(1.6f);
         wavePaint.setAntiAlias(true);
 
         // Draw default waves into the bitmap

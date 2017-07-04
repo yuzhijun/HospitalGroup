@@ -51,7 +51,7 @@ public class WaveHelper {
 //        ObjectAnimator amplitudeAnim = ObjectAnimator.ofFloat(
 //                mWaveView, "amplitudeRatio", 0.0001f, 0.05f);
         ObjectAnimator amplitudeAnim = ObjectAnimator.ofFloat(
-                mWaveView, "amplitudeRatio", 0.01f, 0.07f);
+                mWaveView, "amplitudeRatio", 0.03f, 0.07f);
         amplitudeAnim.setRepeatCount(ValueAnimator.INFINITE);
         amplitudeAnim.setRepeatMode(ValueAnimator.REVERSE);
         amplitudeAnim.setDuration(5000);
