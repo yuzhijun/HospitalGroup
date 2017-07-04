@@ -21,6 +21,8 @@ public class AppointmentMainActivity extends CoreActivity<AppointmentController.
 
     @Override
     public void initView(@Nullable Bundle savedInstanceState) {
+        isShowToolBar(true);
+        setCenterTitle("手机预约");
 
     }
 
