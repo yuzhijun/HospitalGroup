@@ -51,12 +51,10 @@ public class MineFragment extends CoreFragment<MainController.MainUiCallbacks> i
     Unbinder unbinder;
     @BindView(R.id.llMineEdit)
     LinearLayout llMineEdit;
-    Unbinder unbinder1;
     @BindView(R.id.ivUserAvatar)
     SimpleDraweeView ivUserAvatar;
     @BindView(R.id.tvUserName)
     TextView tvUserName;
-    Unbinder unbinder2;
     private WaveHelper mWaveHelper;
     private User tempUser;
 
@@ -108,8 +106,6 @@ public class MineFragment extends CoreFragment<MainController.MainUiCallbacks> i
         mWaveView.setShowWave(true);
         mWaveHelper = new WaveHelper(mWaveView);
         mWaveView.setShapeType(WaveView.ShapeType.SQUARE);
-        mWaveView.setAmplitudeRatio(0.3f);
-        mWaveView.setWaterLevelRatio(2f);
         mWaveHelper.start();
     }
 

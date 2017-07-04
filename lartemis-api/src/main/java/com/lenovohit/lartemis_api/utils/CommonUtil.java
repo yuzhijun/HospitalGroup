@@ -145,17 +145,5 @@ public class CommonUtil {
     public static String getString(int var0) {
         return LArtemis.getInstance().getApplication().getString(var0);
     }
-    public static enum ClassType {
-        id,
-        layout,
-        string,
-        drawable,
-        color,
-        anim,
-        style;
-
-        private ClassType() {
-        }
-    }
 
 }
