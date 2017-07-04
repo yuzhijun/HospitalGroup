@@ -23,6 +23,7 @@ public class MyItemOne extends LinearLayout {
     private TextView txRowOneContent;
     private TextView txRowOneSelect;
     private ImageView ivTopLine;
+    private LinearLayout llRoot;
     public MyItemOne(Context context) {
         super(context);
     }
@@ -36,6 +37,7 @@ public class MyItemOne extends LinearLayout {
         txRowOneContent = (TextView) findViewById(R.id.txRowOneContent);
         txRowOneSelect = (TextView) findViewById(R.id.txRowOneSelect);
         ivTopLine=(ImageView) findViewById(R.id.ivTopLine);
+        llRoot= (LinearLayout) findViewById(R.id.llRoot);
     }
 
 
@@ -68,5 +70,7 @@ public class MyItemOne extends LinearLayout {
             ivTopLine.setVisibility(View.GONE);
         }
     }
-
+    public void setItemClickListener(OnClickListener listener){
+        llRoot.setOnClickListener(listener);
+    }
 }

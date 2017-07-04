@@ -12,7 +12,6 @@ import com.lenovohit.lartemis_api.model.User;
 import com.lenovohit.lartemis_api.network.ApiService;
 import com.lenovohit.lartemis_api.network.HttpResultFunc;
 import com.lenovohit.lartemis_api.network.RequestCallBack;
-import com.lenovohit.lartemis_api.utils.Constants;
 
 import java.util.List;
 
@@ -71,17 +70,22 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
             }
 
             @Override
-            public void getLoginData() {
-                getIndexLoginUserData(ui);
+            public void getLoginData(String phoneNumber, String code) {
+                getIndexLoginUserData(ui,phoneNumber,code);
             }
 
             @Override
-            public void getLoginCode() {
-                getIndexLoginCodeData(ui);
+            public void getLoginCode(String phoneNumber, String mode) {
+                getIndexLoginCodeData(ui,phoneNumber,mode);
+            }
+
+            @Override
+            public void editUserInfo(String uid, String name, String sex, String IDCard) {
+                editUserInfoData(ui,uid,name,sex,IDCard);
             }
         };
     }
-
+    //获取首页信息
     private void getIndexRecommendInfoData(final MainUi ui){
         mApiService.getIndexRecommendInfo(31,0)
                 .map(new HttpResultFunc<HomePage>())
@@ -117,14 +121,15 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
 
                     @Override
                     public void onFailure(ResponseError error) {
+                        ui.onResponseError(error);
                     }
                 });
     }
     //登录时 获取登录信息
-    private void getIndexLoginUserData(final MainUi ui){
+    private void getIndexLoginUserData(final MainUi ui,String phoneNumber,String code){
         if (ui instanceof LoginUi) {
             CoreActivity.currentActivity.showProgressDialog();
-            mApiService.getLoginData(((LoginUi) ui).getUserPhone(),((LoginUi) ui).getUserCode())
+            mApiService.getLoginData(phoneNumber,code)
                     .map(new HttpResultFunc<User>())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -132,6 +137,9 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
                        @Override
                        public void onResponse(User response) {
                            ((LoginUi) ui).getLoginDataCallBack(response);
+                            if (response!=null){
+                                getIndexLoginValidateData(ui,response);
+                            }
                            CoreActivity.currentActivity.hideProgressDialog();
                        }
 
@@ -139,15 +147,16 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
                        public void onFailure(ResponseError error) {
                            CoreActivity.currentActivity.hideProgressDialog();
     //                       Log.e("tag",error.getMessage());
+                           ui.onResponseError(error);
                        }
                    });
         }
     }
     //登录时 获取验证码
-    private void getIndexLoginCodeData(final MainUi ui){
+    private void getIndexLoginCodeData(final MainUi ui,String phoneNumber,String mode){
         if (ui instanceof LoginUi) {
             CoreActivity.currentActivity.showProgressDialog();
-            mApiService.getLoginCode(((LoginUi) ui).getUserPhone(), Constants.SMS_TEMP_CODE)
+            mApiService.getLoginCode(phoneNumber, mode)
                     .map(new HttpResultFunc<Result>())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -162,16 +171,67 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
                 public void onFailure(ResponseError error) {
                     CoreActivity.currentActivity.hideProgressDialog();
 //                    Log.e("tag",error.getMessage());
+                    ui.onResponseError(error);
                 }
             });
+        }
+
+    }
+    //登录时 验证手机
+    private void getIndexLoginValidateData(final MainUi ui,User user){
+        if (ui instanceof LoginUi) {
+            CoreActivity.currentActivity.showProgressDialog();
+            mApiService.getLoginValidate(user.getBaseInfo().getUID(),"1",user.getBaseInfo().getPhoneNumber(),"android",user.getBaseInfo().getPhoneNumber())
+                    .map(new HttpResultFunc<Result>())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new RequestCallBack<Result>() {
+                        @Override
+                        public void onResponse(Result response) {
+                            ((LoginUi) ui).getLoginValidateCallBack(response);
+
+                            CoreActivity.currentActivity.hideProgressDialog();
+                        }
+
+                        @Override
+                        public void onFailure(ResponseError error) {
+                            CoreActivity.currentActivity.hideProgressDialog();
+                            //                       Log.e("tag",error.getMessage());
+                            ui.onResponseError(error);
+                        }
+                    });
+        }
+    }
+    //编辑用户信息
+    public void editUserInfoData(final MainUi ui,String uid,String name,String sex,String IDCard){
+        if (ui instanceof UserInfoEditUi){
+            CoreActivity.currentActivity.showProgressDialog();
+            mApiService.editUserInfo(uid,name,sex,IDCard)
+                    .map(new HttpResultFunc<Result>())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new RequestCallBack<Result>() {
+                        @Override
+                        public void onResponse(Result response) {
+                            ((UserInfoEditUi) ui).editUserInfoCallBack(response);
+                            CoreActivity.currentActivity.hideProgressDialog();
+                        }
+
+                        @Override
+                        public void onFailure(ResponseError error) {
+                            CoreActivity.currentActivity.hideProgressDialog();
+                            ui.onResponseError(error);
+                        }
+                    });
         }
 
     }
     public interface MainUiCallbacks{//给UI界面调用
         void getIndexRecommendInfo();
         void getHospitalsList();
-        void getLoginData();
-        void getLoginCode();
+        void getLoginData(String phoneNumber,String code);
+        void getLoginCode(String phoneNumber,String mode);
+        void editUserInfo(String uid,String name,String sex,String IDCard);
     }
 
     public interface MainUi extends BaseController.Ui<MainUiCallbacks> {
@@ -189,8 +249,11 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
         //登录接口
         void getLoginDataCallBack(User user);
         void getLoginCodeCallBack(Result result);
-        String getUserPhone();
-        String getUserCode();
+        void getLoginValidateCallBack(Result result);
+    }
+    public interface  UserInfoEditUi extends MainUi{
+       //修改个人信息接口
+        void editUserInfoCallBack(Result result);
     }
 
     public AppointmentController getAppointmentController() {

@@ -17,4 +17,6 @@ public class Constants {
     public static final String SMS_TEMP_CODE = "001";
     public static final String SMS_NOW_CODE = "003";
     public static final String SMS_ADD_PERSON = "004";
+    //sp文件中的key变量
+    public static final String SP_USER_INFO="user";
 }

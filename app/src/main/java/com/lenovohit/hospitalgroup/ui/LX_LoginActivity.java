@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.gson.Gson;
 import com.lenovohit.hospitalgroup.R;
 import com.lenovohit.lartemis_api.annotation.ContentView;
 import com.lenovohit.lartemis_api.base.BaseController;
@@ -20,11 +21,13 @@ import com.lenovohit.lartemis_api.model.Result;
 import com.lenovohit.lartemis_api.model.User;
 import com.lenovohit.lartemis_api.ui.controller.MainController;
 import com.lenovohit.lartemis_api.utils.CommonUtil;
+import com.lenovohit.lartemis_api.utils.Constants;
 
 import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by Administrator on 2017-07-04.
@@ -40,6 +43,8 @@ public class LX_LoginActivity extends CoreActivity<MainController.MainUiCallback
     @BindView(R.id.btnGetUser)
     Button btnGetUser;
 private TimeCount time;
+    private Unbinder bind;
+
     @Override
     protected BaseController getController() {
         return LArtemis.getInstance().getMainController();
@@ -47,7 +52,7 @@ private TimeCount time;
 
     @Override
     public void initView(@Nullable Bundle savedInstanceState) {
-        ButterKnife.bind(this);
+        bind = ButterKnife.bind(this);
         isShowToolBar(true);
         setCenterTitle("用户登录");
         setLeftTitleAndIcon("返回", ivBack, new View.OnClickListener() {
@@ -71,7 +76,7 @@ private TimeCount time;
                 }else if (CommonUtil.isStrEmpty(getUserCode())){
                     CommonUtil.showSnackBar(edtCode,"请输入验证码");
                 }else {
-                    getCallbacks().getLoginData();
+                    getCallbacks().getLoginData(getUserPhone(),getUserCode());
                 }
             }
         });
@@ -85,10 +90,10 @@ private TimeCount time;
                 }else {
                     btnCode.setBackgroundResource(R.drawable.btn_gray_button);
                     btnCode.setEnabled(false);
-                    time = new TimeCount(99000, 1000);
+                    time = new TimeCount(59000, 1000);
                     time.start();// 开始计时
                     UserData.setGetYZMDateTime(CommonUtil.AddTimeforNow2());
-                    getCallbacks().getLoginCode();
+                    getCallbacks().getLoginCode(getUserPhone(), Constants.SP_USER_INFO);
                 }
             }
         });
@@ -99,18 +104,28 @@ private TimeCount time;
     }
 
 
-
+    /**
+     * 登录按钮的回调
+     * @param user
+     */
     @Override
     public void getLoginDataCallBack(User user) {
         if (CommonUtil.isNotEmpty(user)){
             UserData.setTempUser(user);
             LX_UserInfoActivity.startUserInfoActivity(LX_LoginActivity.this);
+            Gson gson=new Gson();
+            String s = gson.toJson(user);
+            CommonUtil.setShardPString("user",s);
             finish();
         }else {
             CommonUtil.showSnackBar(edtCode,"验证码错误或过期");
         }
     }
 
+    /**
+     * 验证码的回调
+     * @param result
+     */
     @Override
     public void getLoginCodeCallBack(Result result) {
         if (CommonUtil.isNotEmpty(result)){
@@ -125,12 +140,26 @@ private TimeCount time;
         }
     }
 
+    /**
+     * 验证手机的回调，放置在登录按钮的回调中
+     * @param result
+     */
     @Override
+    public void getLoginValidateCallBack(Result result) {
+        if (CommonUtil.isNotEmpty(result) && result.getState() > 0 && CommonUtil.isNotEmpty(UserData.getTempUser())){
+            UserData.setGetYZMDateTime(null);
+            btnCode.setText("重新获取验证码");
+            btnCode.setEnabled(true);
+            btnCode.setBackgroundResource(R.drawable.lx_btn_complete_select);
+        }else{
+            CommonUtil.showSnackBar(edtCode,"抱歉,登录失败啦,请重新登录");
+        }
+    }
+
     public String getUserPhone() {
        return edtPhone.getText().toString().trim();
     }
 
-    @Override
     public String getUserCode() {
         return edtCode.getText().toString().trim();
     }
@@ -177,7 +206,13 @@ private TimeCount time;
                 time.start();// 开始计时
             }
         } else {
-            time = new TimeCount(99000, 1000);
+            time = new TimeCount(59000, 1000);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+//        bind.unbind();
     }
 }

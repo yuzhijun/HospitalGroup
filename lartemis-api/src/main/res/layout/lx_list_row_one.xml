@@ -3,6 +3,7 @@
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:background="@drawable/lx_list_item_select"
+                android:id="@+id/llRoot"
               android:orientation="vertical">
 
     <ImageView

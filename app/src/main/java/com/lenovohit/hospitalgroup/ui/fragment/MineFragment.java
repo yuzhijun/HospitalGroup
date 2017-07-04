@@ -55,6 +55,8 @@ public class MineFragment extends CoreFragment<MainController.MainUiCallbacks> i
     SimpleDraweeView ivUserAvatar;
     @BindView(R.id.tvUserName)
     TextView tvUserName;
+    @BindView(R.id.tvUserPhone)
+    TextView tvUserPhone;
     private WaveHelper mWaveHelper;
     private User tempUser;
 
@@ -66,9 +68,6 @@ public class MineFragment extends CoreFragment<MainController.MainUiCallbacks> i
     protected void initViews(View view, Bundle savedInstanceState) {
         isShowToolBar(false);
         unbinder = ButterKnife.bind(this, view);
-        tempUser = UserData.getTempUser();
-        setNameAndAvatar();
-        setItemInfos();
         setWaveView();
         //点击编辑跳转到个人设置activity中,需要先判断当前用户是否登录
         llMineEdit.setOnClickListener(new View.OnClickListener() {
@@ -119,9 +118,24 @@ public class MineFragment extends CoreFragment<MainController.MainUiCallbacks> i
         lrvMyFK.setItemInfo(R.mipmap.lx_iv_my_opinion, "我的反馈", "");
         btnConfig.setItemInfo(R.mipmap.lx_iv_my_setting, "设置", "");
     }
-    private void setNameAndAvatar(){
-        tvUserName.setText(tempUser == null || tempUser.getBaseInfo() == null || CommonUtil.isStrEmpty(tempUser.getBaseInfo().getName())?"未登录":tempUser.getBaseInfo().getName());
-       if (tempUser!=null&&tempUser.getBaseInfo()!=null&&!CommonUtil.isStrEmpty(tempUser.getBaseInfo().getPhotoUrl()))
-        ivUserAvatar.setImageURI(Uri.parse(tempUser.getBaseInfo().getPhotoUrl()));
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        tempUser = UserData.getTempUser();
+        setItemInfos();
+        if (tempUser != null) {
+            User.UserBaseInfo baseInfo = tempUser.getBaseInfo();
+            if (baseInfo != null) {
+                tvUserName.setText(CommonUtil.isStrEmpty(baseInfo.getName()) ? "" : CommonUtil.getStarString(baseInfo.getName(),0,1));
+                tvUserPhone.setText(CommonUtil.isStrEmpty(baseInfo.getPhoneNumber())?"":CommonUtil.getStarString(baseInfo.getPhoneNumber(),0,baseInfo.getPhoneNumber().length()-3));
+                if (!CommonUtil.isStrEmpty(baseInfo.getPhotoUrl()))
+                    ivUserAvatar.setImageURI(Uri.parse(baseInfo.getPhotoUrl()));
+            }
+        } else {
+            tvUserName.setText("未登录");
+            tvUserPhone.setText("");
+            ivUserAvatar.setImageResource(R.mipmap.lx_iv_icon_doctor);
+        }
     }
 }

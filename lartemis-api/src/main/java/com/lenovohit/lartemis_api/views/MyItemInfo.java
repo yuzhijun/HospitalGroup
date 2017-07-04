@@ -3,6 +3,8 @@ package com.lenovohit.lartemis_api.views;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,6 +21,8 @@ public class MyItemInfo extends LinearLayout {
 
     private TextView txRowTitle;
     private TextView txRowContent;
+    private ImageView ivRight;
+    private LinearLayout llRoot;
     public MyItemInfo(Context context) {
         super(context);
     }
@@ -30,12 +34,22 @@ public class MyItemInfo extends LinearLayout {
 
         txRowTitle = (TextView) findViewById(R.id.tvRowThreeTitle);
         txRowContent = (TextView) findViewById(R.id.tvRowThreeContent);
+        ivRight= (ImageView) findViewById(R.id.ivRight);
+        llRoot= (LinearLayout) findViewById(R.id.llRoot);
+
     }
-
-
     public void setItemInfo(String title,String content){
         txRowTitle.setText(title+"");
         txRowContent.setText(content+"");
     }
-
+    public void showRightIcon(boolean b){
+        if (b){
+            ivRight.setVisibility(View.VISIBLE);
+        }else {
+            ivRight.setVisibility(View.GONE);
+        }
+    }
+    public void setItemClickListener(OnClickListener listener){
+        llRoot.setOnClickListener(listener);
+    }
 }
