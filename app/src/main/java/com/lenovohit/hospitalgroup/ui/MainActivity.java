@@ -25,6 +25,7 @@ import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 @ContentView(R.layout.activity_main)
 public class MainActivity extends CoreActivity<MainController.MainUiCallbacks> implements MainController.MainUi,BottomNavigationBar.OnTabSelectedListener{
@@ -37,10 +38,11 @@ public class MainActivity extends CoreActivity<MainController.MainUiCallbacks> i
     private HospitalFragment mHospitalFragment;
     private PraticalityFragment mPraticalityFragment;
     private MineFragment mMineFragment;
+    Unbinder mUnbinder;
 
     @Override
     public void initView(@Nullable Bundle savedInstanceState) {
-        ButterKnife.bind(this);
+        mUnbinder = ButterKnife.bind(this);
         isShowToolBar(false);
         mFragmentManager = getSupportFragmentManager();
 
@@ -131,11 +133,8 @@ public class MainActivity extends CoreActivity<MainController.MainUiCallbacks> i
     }
 
     /** 
-
       * 菜单、返回键响应 
-
       */
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event){
         if(keyCode == KeyEvent.KEYCODE_BACK) {
@@ -164,5 +163,11 @@ public class MainActivity extends CoreActivity<MainController.MainUiCallbacks> i
             finish();
             System.exit(0);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mUnbinder.unbind();
     }
 }

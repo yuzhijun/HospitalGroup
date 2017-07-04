@@ -26,8 +26,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-import static com.lenovohit.hospitalgroup.R.id.waveView;
-
 /**
  * Created by yuzhijun on 2017/6/29.
  */
@@ -44,13 +42,12 @@ public class MineFragment extends CoreFragment<MainController.MainUiCallbacks> i
     MyItemOne lrvMyFK;
     @BindView(R.id.btnConfig)
     MyItemOne btnConfig;
-    @BindView(waveView)
+    @BindView(R.id.waveView)
     WaveView mWaveView;
     @BindView(R.id.lrvFocusDoctor)
     MyItemOne lrvFocusDoctor;
     @BindView(R.id.lrvFocusHospital)
     MyItemOne lrvFocusHospital;
-
     Unbinder unbinder;
     @BindView(R.id.llMineEdit)
     LinearLayout llMineEdit;

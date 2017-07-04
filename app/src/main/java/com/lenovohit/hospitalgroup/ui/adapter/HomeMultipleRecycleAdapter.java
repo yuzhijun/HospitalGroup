@@ -12,9 +12,14 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.lenovohit.hospitalgroup.R;
+import com.lenovohit.lartemis_api.base.CoreActivity;
 import com.lenovohit.lartemis_api.model.HomePage;
 import com.lenovohit.lartemis_api.model.TopNew;
 import com.lenovohit.lartemis_api.views.RecycleViewDivider;
+import com.lenovohit.lrouter_api.base.LRouterAppcation;
+import com.lenovohit.lrouter_api.core.LRouterRequest;
+import com.lenovohit.lrouter_api.core.LocalRouter;
+import com.lenovohit.lrouter_api.core.callback.IRequestCallBack;
 
 import java.util.List;
 
@@ -72,6 +77,7 @@ public class HomeMultipleRecycleAdapter extends BaseMultiItemQuickAdapter<HomePa
 
     //绑定模块
     private void bindToModuleData(BaseViewHolder helper, final HomePage item){
+
         ((SimpleDraweeView)helper.getView(R.id.ivAppointment)).setImageURI(item.getIndexPageModels().get(0).getIconURL());
         ((SimpleDraweeView)helper.getView(R.id.ivTodayAppointment)).setImageURI(item.getIndexPageModels().get(1).getIconURL());
         ((SimpleDraweeView)helper.getView(R.id.ivMobileTreatment)).setImageURI(item.getIndexPageModels().get(2).getIconURL());
@@ -86,6 +92,9 @@ public class HomeMultipleRecycleAdapter extends BaseMultiItemQuickAdapter<HomePa
         helper.setText(R.id.tvTodayAppointmentDes,item.getIndexPageModels().get(1).getDes());
         helper.setText(R.id.tvMobileTreatmentDes,item.getIndexPageModels().get(2).getDes());
         helper.setText(R.id.tvReportSearchDes,item.getIndexPageModels().get(3).getDes());
+
+        helper.addOnClickListener(R.id.llAppointment);
+        setOnItemChildClickListener(this);
     }
 
     private void bindToRecommendHosData(BaseViewHolder helper, HomePage homePage){
@@ -106,13 +115,34 @@ public class HomeMultipleRecycleAdapter extends BaseMultiItemQuickAdapter<HomePa
         });
     }
 
-    @Override
-    public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-
-    }
 
     @Override
     public int getSpanSize(GridLayoutManager gridLayoutManager, int position) {
         return mData.get(position).getSpanSize();
+    }
+
+    @Override
+    public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+        switch (view.getId()) {
+            case R.id.llAppointment:
+                try{
+                    LocalRouter.getInstance(LRouterAppcation.getInstance())
+                            .navigation(CoreActivity.currentActivity, LRouterRequest.getInstance(CoreActivity.currentActivity)
+                                    .processName("com.lenovohit.hospitalgroup:module_appointment")
+                                    .provider("AppoinmentProvider")
+                                    .action("EntranceAction"))
+                            .setCallBack(new IRequestCallBack() {
+                                @Override
+                                public void onSuccess(final String result) {
+                                }
+                                @Override
+                                public void onFailure(Exception e) {
+                                }
+                            });
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                break;
+        }
     }
 }

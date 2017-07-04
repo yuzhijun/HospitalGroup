@@ -44,11 +44,11 @@ public class WaveView extends View {
      * +------------------------+__|____
      */
     private static final float DEFAULT_AMPLITUDE_RATIO = 0.05f;
-    private static final float DEFAULT_WATER_LEVEL_RATIO = 0.9f;
+    private static final float DEFAULT_WATER_LEVEL_RATIO = 0.8f;
     private static final float DEFAULT_WAVE_LENGTH_RATIO = 1.0f;
     private static final float DEFAULT_WAVE_SHIFT_RATIO = 0.0f;
 
-    public static final int DEFAULT_BEHIND_WAVE_COLOR = Color.parseColor("#40D13A2D");
+    public static final int DEFAULT_BEHIND_WAVE_COLOR = Color.parseColor("#80D13A2D");
     public static final int DEFAULT_FRONT_WAVE_COLOR = Color.parseColor("#D13A2D");
     public static final ShapeType DEFAULT_WAVE_SHAPE = ShapeType.CIRCLE;
 
@@ -224,7 +224,7 @@ public class WaveView extends View {
         Canvas canvas = new Canvas(bitmap);
 
         Paint wavePaint = new Paint();
-        wavePaint.setStrokeWidth(2);
+        wavePaint.setStrokeWidth(1.6f);
         wavePaint.setAntiAlias(true);
 
         // Draw default waves into the bitmap
