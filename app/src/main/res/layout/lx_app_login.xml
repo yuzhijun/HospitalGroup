@@ -37,7 +37,7 @@
         <EditText
             android:id="@+id/edtCode"
             android:layout_width="0dip"
-            android:layout_height="43dip"
+            android:layout_height="45dip"
             android:layout_weight="1"
             android:background="@color/white"
             android:hint="输入短信验证码"

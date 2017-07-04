@@ -127,12 +127,12 @@ private TimeCount time;
 
     @Override
     public String getUserPhone() {
-       return edtPhone.getText().toString();
+       return edtPhone.getText().toString().trim();
     }
 
     @Override
     public String getUserCode() {
-        return edtCode.getText().toString();
+        return edtCode.getText().toString().trim();
     }
 
     @Override

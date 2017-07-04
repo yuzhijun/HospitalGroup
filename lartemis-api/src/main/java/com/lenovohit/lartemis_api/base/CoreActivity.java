@@ -165,6 +165,22 @@ public abstract class CoreActivity<UC> extends BaseActivity<UC> {
         mBtnLeft.setLayoutParams(linearParams);
         mLlLeft.setOnClickListener(listener);
     }
+    protected void  setLeftDefault(){
+        mTvLeft.setVisibility(View.VISIBLE);
+        mTvLeft.setText("返回");
+        mBtnLeft.setVisibility(View.VISIBLE);
+        mBtnLeft.setBackgroundResource(ivBack);
+        ViewGroup.LayoutParams linearParams = mBtnLeft.getLayoutParams();
+        linearParams.height = DensityUtil.dip2px(this,15);
+        linearParams.width = DensityUtil.dip2px(this,15);
+        mBtnLeft.setLayoutParams(linearParams);
+        mLlLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CoreActivity.currentActivity.finish();
+            }
+        });
+    }
 
     public void showProgressDialog() {
         if(!this.isLoading) {

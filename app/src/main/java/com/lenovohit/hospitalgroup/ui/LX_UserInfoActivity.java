@@ -74,10 +74,4 @@ public class LX_UserInfoActivity extends CoreActivity<MainController.MainUiCallb
         context.startActivity(new Intent(context, LX_UserInfoActivity.class));
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 }

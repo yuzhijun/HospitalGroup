@@ -133,8 +133,8 @@ public class CommonUtil {
         return new Date(var0.getTime() + 99000L);
     }
 
-    public static void getShardPStringByKey(String var0) {
-//        return LArtemis.getInstance().getApplication().getSharedPreferences(getString(BaseActivity.getIdByName("app_name", ClassType.string)), 0).getString(var0, "");
+    public static String getShardPStringByKey(String key) {
+        return LArtemis.getInstance().getApplication().getSharedPreferences(key,LArtemis.getInstance().getApplication().MODE_PRIVATE).getString(key,"");
     }
 
     public static void setShardPString(String var0, String var1) {
