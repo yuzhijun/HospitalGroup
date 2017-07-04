@@ -81,6 +81,7 @@ public abstract class CoreFragment<UC> extends BaseFragment<UC> {
         mTvLeft=(TextView) view.findViewById(tvLeft);
         mTvRight=(TextView) view.findViewById(tvRight);
         View inflate = getLayoutInflater(bundle).inflate(getLayoutResId(), this.mLLContent);
+        setLeftDefault();
         return inflate;
     }
 
@@ -155,5 +156,21 @@ public abstract class CoreFragment<UC> extends BaseFragment<UC> {
     }
     protected ImageView getRightButton(){
         return mBtnRight;
+    }
+    protected void  setLeftDefault(){
+        mTvLeft.setVisibility(View.VISIBLE);
+        mTvLeft.setText("返回");
+        mBtnLeft.setVisibility(View.VISIBLE);
+        mBtnLeft.setBackgroundResource(ivBack);
+        ViewGroup.LayoutParams linearParams = mBtnLeft.getLayoutParams();
+        linearParams.height = DensityUtil.dip2px(getActivity(),15);
+        linearParams.width = DensityUtil.dip2px(getActivity(),15);
+        mBtnLeft.setLayoutParams(linearParams);
+        mLlLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CoreActivity.currentActivity.finish();
+            }
+        });
     }
 }

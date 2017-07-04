@@ -97,6 +97,7 @@ public abstract class CoreActivity<UC> extends BaseActivity<UC> {
         mTvLeft=(TextView) findViewById(tvLeft);
         mTvRight=(TextView) findViewById(tvRight);
         getLayoutInflater().inflate(getLayoutId(),this.mLLContent);
+        setLeftDefault();
     }
 
 

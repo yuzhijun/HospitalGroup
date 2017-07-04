@@ -134,13 +134,14 @@ public class CommonUtil {
     }
 
     public static String getShardPStringByKey(String key) {
-        return LArtemis.getInstance().getApplication().getSharedPreferences(key,LArtemis.getInstance().getApplication().MODE_PRIVATE).getString(key,"");
+        return LArtemis.getInstance().getApplication().getSharedPreferences("user_info",LArtemis.getInstance().getApplication().MODE_PRIVATE).getString(key,"");
     }
 
-    public static void setShardPString(String var0, String var1) {
+    public static void setShardPString(String key, String value) {
         SharedPreferences.Editor var2;
-//        (var2 = LArtemis.getInstance().getApplication().getSharedPreferences(getString(BaseActivity.getIdByName("app_name", ClassType.string)), 0).edit()).putString(var0, var1);
-//        var2.commit();
+        var2 = LArtemis.getInstance().getApplication().getSharedPreferences("user_info",LArtemis.getInstance().getApplication().MODE_PRIVATE).edit();
+        var2.putString(key,value);
+        var2.commit();
     }
     public static String getString(int var0) {
         return LArtemis.getInstance().getApplication().getString(var0);
