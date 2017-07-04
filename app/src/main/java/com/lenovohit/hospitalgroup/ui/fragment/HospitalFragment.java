@@ -32,6 +32,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import in.srain.cube.views.ptr.PtrHandler;
@@ -55,8 +56,7 @@ public class HospitalFragment extends CoreFragment<MainController.MainUiCallback
     //第二个下拉矿中的view
     private RecyclerView orderView;
     private AllHosAdapter adapter;
-
-
+    Unbinder mUnbinder;
     List<Hospitals> hospitalList = new ArrayList<>();
     private View notDataView;
 
@@ -66,7 +66,7 @@ public class HospitalFragment extends CoreFragment<MainController.MainUiCallback
 
     @Override
     protected void initViews(final View view, Bundle savedInstanceState) {
-        ButterKnife.bind(this,view);
+        mUnbinder = ButterKnife.bind(this,view);
         setCenterTitle("医院");
         setRightTitleAndIcon("", R.mipmap.lx_iv_search_icon, new View.OnClickListener() {
             @Override
@@ -224,5 +224,11 @@ public class HospitalFragment extends CoreFragment<MainController.MainUiCallback
     @Override
     public void onLoadMoreRequested() {
         refreshMainHomeData();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mUnbinder.unbind();
     }
 }

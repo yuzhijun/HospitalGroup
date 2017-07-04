@@ -29,6 +29,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import in.srain.cube.views.ptr.PtrHandler;
@@ -57,6 +58,7 @@ public class MainHomeFragment extends CoreFragment<MainController.MainUiCallback
     LinearLayout advisory_layout;
     private View notDataView;
     private int distanceY;
+    Unbinder unbinder;
     private HomeMultipleRecycleAdapter adapter;
     private List<HomePage> mHomePages = new ArrayList<>();
 
@@ -66,7 +68,7 @@ public class MainHomeFragment extends CoreFragment<MainController.MainUiCallback
 
     @Override
     protected void initViews(View view,Bundle savedInstanceState) {
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         isShowToolBar(false);
         initPtrFrame();
         initRecyclerView();
@@ -198,5 +200,11 @@ public class MainHomeFragment extends CoreFragment<MainController.MainUiCallback
         super.onResponseError(error);
         lx_header_view_rotate.refreshComplete();
         adapter.setEmptyView(notDataView);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }

@@ -1,18 +1,19 @@
 package com.lenovohit.module_appointment.exposure;
 
 import android.content.Context;
-import android.text.TextUtils;
+import android.content.Intent;
 
 import com.lenovohit.annotation.Action;
 import com.lenovohit.lrouter_api.core.LRAction;
 import com.lenovohit.lrouter_api.core.LRActionResult;
 import com.lenovohit.lrouter_api.core.LRouterRequest;
+import com.lenovohit.module_appointment.ui.AppointmentMainActivity;
 
 /**
  * Created by yuzhijun on 2017/6/29.
  */
-@Action(name = "TestAction",provider = "AppoinmentProvider")
-public class TestAction extends LRAction {
+@Action(name = "EntranceAction",provider = "AppoinmentProvider")
+public class EntranceAction extends LRAction {
     @Override
     public boolean needAsync(Context context, LRouterRequest requestData) {
         return true;
@@ -20,17 +21,13 @@ public class TestAction extends LRAction {
 
     @Override
     public LRActionResult invoke(Context context, LRouterRequest requestData) {
-        String temp = "";
-        if (!TextUtils.isEmpty((CharSequence) requestData.getParams().get("1"))) {
-            temp += requestData.getParams().get("1");
-        }
-        if (!TextUtils.isEmpty((CharSequence) requestData.getParams().get("2"))) {
-            temp += requestData.getParams().get("2");
-        }
+        Intent intent = new Intent(context, AppointmentMainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+
         LRActionResult result = new LRActionResult.Builder()
                 .code(LRActionResult.RESULT_SUCESS)
                 .msg("success")
-                .data(temp)
                 .build();
         return result;
     }

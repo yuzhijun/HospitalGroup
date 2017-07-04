@@ -24,28 +24,28 @@ import rx.schedulers.Schedulers;
 public class MainController extends BaseController<MainController.MainUi,MainController.MainUiCallbacks> {
     private static final String IP = "63.223.108.42";
     private ApiService mApiService;
-    private SecondController mSecondController;
+    private AppointmentController mAppointmentController;
 
     @Inject
-    public MainController(ApiService apiService, SecondController secondController){
+    public MainController(ApiService apiService, AppointmentController appointmentController){
         super();
 
         mApiService = Preconditions.checkNotNull(apiService, "ApiService cannot be null");
-        mSecondController = Preconditions.checkNotNull(secondController, "secondController cannot be null");
+        mAppointmentController = Preconditions.checkNotNull(appointmentController, "secondController cannot be null");
     }
 
     @Override
     protected void onInited() {
         super.onInited();
         //其他controller则在这里init
-        mSecondController.init();
+        mAppointmentController.init();
     }
 
     @Override
     protected void onSuspended() {
         super.onSuspended();
         //其他controller则在这里suspend
-        mSecondController.suspend();
+        mAppointmentController.suspend();
     }
 
     @Override
@@ -122,7 +122,7 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
         void getHospitalListCallBack(List<Hospitals>list);
     }
 
-    public SecondController getSecondController() {
-        return mSecondController;
+    public AppointmentController getAppointmentController() {
+        return mAppointmentController;
     }
 }
