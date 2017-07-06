@@ -24,8 +24,7 @@ public class EmptyView extends View{
     public static final  String TYPE_LOADING = "000";
     public static final  String TYPE_ERROR = "001";
     public static final  String TYPE_NO_DATA = "002";
-    private  TextView tvTitleNoData;
-    private  TextView tvTitleError;
+    private  TextView tvTitle;
     private  ImageView ivEmpty;
     private  ProgressBar progressBar;
     private OnClickListener listener;
@@ -43,8 +42,7 @@ public class EmptyView extends View{
     private void init(Context context,ViewGroup viewGroup){
         view = LayoutInflater.from(context).inflate(R.layout.lx_empty_view, viewGroup, false);
         ivEmpty = (ImageView) view.findViewById(R.id.ivEmpty);
-        tvTitleNoData = (TextView) view.findViewById(R.id.tvTitleNoData);
-        tvTitleError = (TextView) view.findViewById(R.id.tvTitleError);
+        tvTitle = (TextView) view.findViewById(R.id.tvTitle);
         plLayout= (PercentLinearLayout) view.findViewById(R.id.plLayout);
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         if (listener!=null){
@@ -56,25 +54,22 @@ public class EmptyView extends View{
 
         if (type.equals(TYPE_LOADING)){
             ivEmpty.setVisibility(View.GONE);
-            tvTitleError.setVisibility(View.GONE);
-            tvTitleNoData.setVisibility(View.GONE);
+            tvTitle.setVisibility(View.GONE);
             progressBar.setVisibility(View.VISIBLE);
         }else if (type.equals(TYPE_ERROR)){
             ivEmpty.setVisibility(View.VISIBLE);
-            tvTitleError.setVisibility(View.VISIBLE);
-            tvTitleNoData.setVisibility(View.GONE);
+            tvTitle.setVisibility(View.VISIBLE);
             progressBar.setVisibility(View.GONE);
             ivEmpty.setImageResource(R.mipmap.lx_no_network_default);
         }else if (type.equals(TYPE_NO_DATA)){
             ivEmpty.setVisibility(View.VISIBLE);
-            tvTitleNoData.setVisibility(View.VISIBLE);
-            tvTitleError.setVisibility(View.GONE);
+            tvTitle.setVisibility(View.VISIBLE);
             progressBar.setVisibility(View.GONE);
             ivEmpty.setImageResource(R.mipmap.lx_iv_no_data);
         }
     }
     public  void setMessage(String text){
-        tvTitleNoData.setText(text);
+        tvTitle.setText(text);
     }
     public void setRefreshListener(OnClickListener listener){
         this.listener=listener;

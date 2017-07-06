@@ -21,6 +21,7 @@ import com.lenovohit.lartemis_api.model.ResponseError;
 import com.lenovohit.lartemis_api.ui.controller.MainController;
 import com.lenovohit.lartemis_api.utils.CommonUtil;
 import com.lenovohit.lartemis_api.views.DropDownMenu;
+import com.lenovohit.lartemis_api.views.EmptyView;
 import com.lenovohit.lartemis_api.views.LXHeaderView;
 import com.lenovohit.lartemis_api.views.RecycleViewDivider;
 import com.zhy.view.flowlayout.FlowLayout;
@@ -58,7 +59,7 @@ public class HospitalFragment extends CoreFragment<MainController.MainUiCallback
     private AllHosAdapter adapter;
     Unbinder mUnbinder;
     List<Hospitals> hospitalList = new ArrayList<>();
-    private View notDataView;
+    private EmptyView emptyView;
 
     public static HospitalFragment newInstance() {
         return new HospitalFragment();
@@ -126,9 +127,19 @@ public class HospitalFragment extends CoreFragment<MainController.MainUiCallback
         View inflate = LayoutInflater.from(getActivity()).inflate(R.layout.lx_dropdown_hospital_arrow_view, null);
         RecyclerView recyclerView = (RecyclerView) inflate.findViewById(R.id.AllHosRecyclerView);
         adapter = new AllHosAdapter(R.layout.lx_recommond_hos_view_item,hospitalList);
-        adapter.setEmptyView(R.layout.lx_preloading_view_layout, (ViewGroup) recyclerView.getParent());
         adapter.setOnLoadMoreListener(this);
         adapter.setEnableLoadMore(false);
+        emptyView = new EmptyView(recyclerView.getContext(), (ViewGroup) recyclerView.getParent());
+        emptyView.setType(EmptyView.TYPE_LOADING);
+        emptyView.setRefreshListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                emptyView.setType(EmptyView.TYPE_LOADING);
+                adapter.setEmptyView(emptyView.getView());
+                getCallbacks().getIndexRecommendInfo();
+            }
+        });
+        adapter.setEmptyView(emptyView.getView());
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext(),LinearLayoutManager.VERTICAL,false));
         recyclerView.addItemDecoration(new RecycleViewDivider(recyclerView.getContext(), LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(adapter);
@@ -148,14 +159,6 @@ public class HospitalFragment extends CoreFragment<MainController.MainUiCallback
             }
         });
 
-        //没有数据时的布局,以及点击重试
-        notDataView = LayoutInflater.from(recyclerView.getContext()).inflate(R.layout.lx_empty_view, (ViewGroup) recyclerView.getParent(), false);
-        notDataView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getCallbacks().getHospitalsList();
-            }
-        });
         dropDownMenu.setDropDownMenu(titleList,popupViews,inflate);
 
     }
@@ -172,10 +175,13 @@ public class HospitalFragment extends CoreFragment<MainController.MainUiCallback
 
     public void getHospitalListCallBack(List<Hospitals> list) {
         if (list==null||list.size()==0){
-            adapter.setEmptyView(notDataView);
+            emptyView.setType(EmptyView.TYPE_NO_DATA);
+            adapter.setEmptyView(emptyView.getView());
             lx_header_view_rotate.refreshComplete();
             return;
         }
+        emptyView.setType(EmptyView.TYPE_NO_DATA);
+        adapter.setEmptyView(emptyView.getView());
         hospitalList.clear();
         adapter.setNewData(hospitalList);
         lx_header_view_rotate.refreshComplete();
@@ -200,7 +206,8 @@ public class HospitalFragment extends CoreFragment<MainController.MainUiCallback
     public void getIndexRecommendInfoCallBack(HomePage response) {
         if(null == response || null == response.getTopNews()){
             lx_header_view_rotate.refreshComplete();
-            adapter.setEmptyView(notDataView);
+            emptyView.setType(EmptyView.TYPE_NO_DATA);
+            adapter.setEmptyView(emptyView.getView());
             return;
         }
         adapter.getData().clear();
@@ -209,16 +216,17 @@ public class HospitalFragment extends CoreFragment<MainController.MainUiCallback
         adapter.setNewData(hospitalList);
         lx_header_view_rotate.refreshComplete();
         adapter.loadMoreEnd();
+        emptyView.setType(EmptyView.TYPE_NO_DATA);
+        adapter.setEmptyView(emptyView.getView());
     }
 
     @Override
     public void onResponseError(ResponseError error) {
         super.onResponseError(error);
         lx_header_view_rotate.refreshComplete();
-        adapter.setEmptyView(notDataView);
-        //将错误显示到界面中去
-        TextView tvTitle = (TextView) notDataView.findViewById(R.id.tvTitleError);
-        tvTitle.setText(error.getMessage());
+        emptyView.setType(EmptyView.TYPE_ERROR);
+        emptyView.setMessage(error.getMessage());
+        adapter.setEmptyView(emptyView.getView());
     }
 
     @Override

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -105,14 +104,6 @@ public class LX_HospitalsActivity extends CoreActivity<MainController.MainUiCall
               getCollectHospitalData();
             }
         });
-        //没有数据时的布局,以及点击重试
-        notDataView = LayoutInflater.from(recycleView.getContext()).inflate(R.layout.lx_no_data_view, (ViewGroup) recycleView.getParent(), false);
-        notDataView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getCollectHospitalData();
-            }
-        });
     }
 
     @Override
@@ -178,6 +169,7 @@ public class LX_HospitalsActivity extends CoreActivity<MainController.MainUiCall
         CommonUtil.showSnackBar(tvPostText,error.getMessage());
         lx_header_view_rotate.refreshComplete();
         emptyView.setType(EmptyView.TYPE_ERROR);
+        emptyView.setMessage(error.getMessage());
         adapter.setEmptyView(emptyView.getView());
     }
 

@@ -122,6 +122,7 @@ public class LX_SwitchPatientActivity extends CoreActivity<MainController.MainUi
             UserData.getTempUser().setCommonUsers(commonUsers);
         }
             emptyView.setType(EmptyView.TYPE_NO_DATA);
+            emptyView.setMessage("暂无患者列表，请点击右上角添加");
             adapter.setEmptyView(emptyView.getView());
 
     }
@@ -156,8 +157,9 @@ public class LX_SwitchPatientActivity extends CoreActivity<MainController.MainUi
     @Override
     public void onResponseError(ResponseError error) {
         super.onResponseError(error);
+        CommonUtil.showSnackBar(recycleView,error.getMessage());
         emptyView.setType(EmptyView.TYPE_ERROR);
-        View view = emptyView.getView();
-        adapter.setEmptyView(view);
+        emptyView.setMessage(error.getMessage());
+        adapter.setEmptyView(emptyView.getView());
     }
 }

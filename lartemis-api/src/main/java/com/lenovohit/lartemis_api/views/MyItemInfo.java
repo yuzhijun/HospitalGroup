@@ -46,7 +46,7 @@ public class MyItemInfo extends LinearLayout {
         if (b){
             ivRight.setVisibility(View.VISIBLE);
         }else {
-            ivRight.setVisibility(View.GONE);
+            ivRight.setVisibility(View.INVISIBLE);
         }
     }
     public void setItemClickListener(OnClickListener listener){

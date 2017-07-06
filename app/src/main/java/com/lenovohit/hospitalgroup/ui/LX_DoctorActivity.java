@@ -169,6 +169,7 @@ public class LX_DoctorActivity extends CoreActivity<MainController.MainUiCallbac
         CommonUtil.showSnackBar(tvDoctorCount,error.getMessage());
         lxHeaderViewRotate.refreshComplete();
         emptyView.setType(EmptyView.TYPE_ERROR);
+        emptyView.setMessage(error.getMessage());
         adapter.setEmptyView(emptyView.getView());
     }
 
