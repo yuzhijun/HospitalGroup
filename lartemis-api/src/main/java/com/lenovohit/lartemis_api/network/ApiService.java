@@ -52,4 +52,6 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("NeweHealthServices/api/Hospital/FocusOrNotHospitalOrDoctor")
     Observable<HttpResult<Result>>FocusHospOrDoctor(@Field("UID")String UID,@Field("HID")String HID,@Field("DoctorCode") String DoctorCode,@Field("DepCode")String DepCode,@Field("Type")String Type);
+    @GET("eHealthPlatformService/api/Hospital/DepDoctors/{hID}/{depCode}/{tag}")
+    Observable<HttpResult<List<Doctor>>> getDepDoctors(@Path("hID") String hID,@Path("depCode") String depCode,@Path("tag") String tag);
 }

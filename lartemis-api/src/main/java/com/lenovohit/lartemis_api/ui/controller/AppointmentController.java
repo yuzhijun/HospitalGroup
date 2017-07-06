@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import com.lenovohit.lartemis_api.base.BaseController;
 import com.lenovohit.lartemis_api.base.CoreActivity;
 import com.lenovohit.lartemis_api.model.CommonObj;
+import com.lenovohit.lartemis_api.model.Doctor;
 import com.lenovohit.lartemis_api.model.Hospitals;
 import com.lenovohit.lartemis_api.model.ResponseError;
 import com.lenovohit.lartemis_api.network.ApiService;
@@ -90,12 +91,34 @@ public class AppointmentController extends BaseController<AppointmentController.
                             }
                         });
             }
+
+            @Override
+            public void getDepDoctors(String hid, String depCode, String tag) {
+                CoreActivity.currentActivity.showProgressDialog();
+                mApiService.getDepDoctors(hid,depCode,tag)
+                        .map(new HttpResultFunc<List<Doctor>>())
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                       .subscribe(new RequestCallBack<List<Doctor>>() {
+                           @Override
+                           public void onResponse(List<Doctor> response) {
+                               CoreActivity.currentActivity.hideProgressDialog();
+                               ((AppointmentDocUi)ui).getDepDoctorsCallBack(response);
+                           }
+                           @Override
+                           public void onFailure(ResponseError error) {
+                               CoreActivity.currentActivity.hideProgressDialog();
+                               ui.onResponseError(error);
+                           }
+                       });
+            }
         };
     }
 
     public interface AppointmentUiCallbacks{//给UI界面调用
         void getSearchHospital(String key);//根据搜索的key获取医院
         void getAllDep(String hid);
+        void getDepDoctors(String hid,String depCode,String tag);
     }
 
     public interface AppointmentUi extends BaseController.Ui<AppointmentController.AppointmentUiCallbacks> {
@@ -111,6 +134,10 @@ public class AppointmentController extends BaseController<AppointmentController.
     }
 
     public interface AppointmentDocUi extends AppointmentUi{
+        void getDepDoctorsCallBack(List<Doctor> response);
+    }
+
+    public interface AppointmentDocInfoUi extends AppointmentUi{
 
     }
 }
