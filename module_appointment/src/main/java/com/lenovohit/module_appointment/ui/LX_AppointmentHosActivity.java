@@ -11,6 +11,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lenovohit.lartemis_api.base.BaseController;
 import com.lenovohit.lartemis_api.base.CoreActivity;
 import com.lenovohit.lartemis_api.core.LArtemis;
+import com.lenovohit.lartemis_api.data.HospitalData;
 import com.lenovohit.lartemis_api.model.Hospitals;
 import com.lenovohit.lartemis_api.model.ResponseError;
 import com.lenovohit.lartemis_api.ui.controller.AppointmentController;
@@ -68,6 +69,7 @@ public class LX_AppointmentHosActivity extends CoreActivity<AppointmentControlle
         mHosAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                HospitalData.setCurrentHospital((Hospitals)adapter.getData().get(position));
                 LX_AppointmentMainActivity.startAppointmentMain(LX_AppointmentHosActivity.this,((Hospitals)adapter.getData().get(position)).getHID());
             }
         });

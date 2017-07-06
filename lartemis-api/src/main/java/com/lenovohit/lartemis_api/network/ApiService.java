@@ -34,7 +34,7 @@ public interface ApiService {
     @GET("NeweHealthServices/api/User/LoginInfo/{phoneNumber}/{smsCode}")
     Observable<HttpResult<User>>getLoginData(@Path("phoneNumber")String phoneNumber,@Path("smsCode")String smsCode);
 
-    @FormUrlEncoded
+   @FormUrlEncoded
     @POST("NeweHealthServices/api/User/SendSMSCode")
     Observable<HttpResult<Result>>getLoginCode(@Field("PhoneNumber")String PhoneNumber, @Field("TempCode")String TempCode);
     @FormUrlEncoded
@@ -54,6 +54,8 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("NeweHealthServices/api/Hospital/FocusOrNotHospitalOrDoctor")
     Observable<HttpResult<Result>>FocusHospOrDoctor(@Field("UID")String UID,@Field("HID")String HID,@Field("DoctorCode") String DoctorCode,@Field("DepCode")String DepCode,@Field("Type")String Type);
+    @GET("eHealthPlatformService/api/Hospital/DepDoctors/{hID}/{depCode}/{tag}")
+    Observable<HttpResult<List<Doctor>>> getDepDoctors(@Path("hID") String hID,@Path("depCode") String depCode,@Path("tag") String tag);
     @GET("NeweHealthServices/api/User/GetAllCommonUser/{uID}")
     Observable<HttpResult<List<CommonUser>>>getSwitchPatientList(@Path("uID")String uid);
 

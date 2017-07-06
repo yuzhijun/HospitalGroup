@@ -13,7 +13,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lenovohit.lartemis_api.base.BaseController;
 import com.lenovohit.lartemis_api.base.CoreActivity;
 import com.lenovohit.lartemis_api.core.LArtemis;
+import com.lenovohit.lartemis_api.data.HospitalData;
 import com.lenovohit.lartemis_api.model.CommonObj;
+import com.lenovohit.lartemis_api.model.Hospitals;
 import com.lenovohit.lartemis_api.ui.controller.AppointmentController;
 import com.lenovohit.lartemis_api.views.RecycleViewDivider;
 import com.lenovohit.module_appointment.R;
@@ -36,7 +38,6 @@ public class LX_AppointmentMainActivity extends CoreActivity<AppointmentControll
     private List<CommonObj> parentDept = new ArrayList<>();
     private List<CommonObj> sonDept = new ArrayList<>();
 
-    private View notDataView;
     private String hid;
     private int recycleViewCanShowHeight;
 
@@ -64,7 +65,6 @@ public class LX_AppointmentMainActivity extends CoreActivity<AppointmentControll
         mSonDeptAdapter = new AppointSonDeptAdapter(R.layout.lx_son_dept_item,sonDept);
         rvSonDept.setAdapter(mSonDeptAdapter);
 
-
         getCallbacks().getAllDep(hid);
     }
 
@@ -90,7 +90,9 @@ public class LX_AppointmentMainActivity extends CoreActivity<AppointmentControll
         mSonDeptAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-
+                Hospitals hospital = HospitalData.getCurrentHospital();
+                LX_AppointmentDocActivity.startAppointmentDocActivity(LX_AppointmentMainActivity.this,hospital.getHID(),mSonDeptAdapter.getData().get(position).getID(),
+                        mSonDeptAdapter.getData().get(position).getTitle(),"zxyy");
             }
         });
     }
@@ -125,6 +127,13 @@ public class LX_AppointmentMainActivity extends CoreActivity<AppointmentControll
     @Override
     public void getAllDepCallBack(List<CommonObj> response) {
         if (null == response || response.size() <= 0){
+            return;
+        }
+
+        if (response.size() == 1){
+            rvParentDept.setVisibility(View.GONE);
+            mSonDeptAdapter.getData().clear();
+            mSonDeptAdapter.setNewData(response.get(0).getChildrens());
             return;
         }
 
