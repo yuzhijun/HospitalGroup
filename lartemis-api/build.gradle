@@ -53,6 +53,7 @@ dependencies {
     compile 'com.zhy:flowlayout-lib:1.0.3'
     //百分比布局
     compile 'com.zhy:percent-support-extends:1.1.1'
-    //相册选取图片
-    compile 'com.jph.takephoto:takephoto_library:4.0.3'
+    compile('cn.qqtheme.framework:WheelPicker:1.5.2') {
+        exclude group: 'com.android.support'
+    }
 }

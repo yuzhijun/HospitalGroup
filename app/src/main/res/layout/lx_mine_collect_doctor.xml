@@ -1,6 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:lx_ptr="http://schemas.android.com/apk/res-auto"
+    android:background="@color/grey_normal_bg"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="5dp" >
+
+        <TextView
+            android:id="@+id/tvPreText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="为您找到 "
+           style="@style/blackTextStyle"/>
+
+        <TextView
+            android:id="@+id/tvDoctorCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            style="@style/colorPrimaryTextStyle"
+            android:textSize="@dimen/font_size_B" />
+
+        <TextView
+            android:id="@+id/tvPostText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" 位医生"
+           style="@style/blackTextStyle" />
+    </LinearLayout>
+    <com.lenovohit.lartemis_api.views.LXHeaderView
+        android:id="@+id/lx_header_view_rotate"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        lx_ptr:ptr_duration_to_close="200"
+        lx_ptr:ptr_duration_to_close_header="400"
+        lx_ptr:ptr_keep_header_when_refresh="true"
+        lx_ptr:ptr_pull_to_fresh="false"
+        lx_ptr:ptr_ratio_of_header_height_to_refresh="1.0"
+        lx_ptr:ptr_resistance="1.7"
+        android:background="@color/white">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycleView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+        </android.support.v7.widget.RecyclerView>
+
+    </com.lenovohit.lartemis_api.views.LXHeaderView>
 
 </LinearLayout>

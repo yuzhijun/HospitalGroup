@@ -72,6 +72,6 @@
         android:layout_marginTop="50dip"
         android:textColor="@color/white"
         android:textSize="@dimen/font_size_B"
-        android:background="@drawable/iv_app_button_select"
+        android:background="@drawable/lx_btn_complete_select"
         android:text="退 出 登 录"/>
 </LinearLayout>

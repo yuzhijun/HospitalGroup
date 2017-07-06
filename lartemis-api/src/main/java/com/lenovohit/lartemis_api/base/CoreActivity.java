@@ -53,6 +53,11 @@ public abstract class CoreActivity<UC> extends BaseActivity<UC> {
         initEvent();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
     public abstract void initView(@Nullable Bundle savedInstanceState);
     public abstract void initEvent();
 
@@ -67,7 +72,10 @@ public abstract class CoreActivity<UC> extends BaseActivity<UC> {
         return 0;
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 
     protected void addFragment(int containerViewId, Fragment fragment , String tag) {
         final FragmentTransaction fragmentTransaction = this.getSupportFragmentManager().beginTransaction();
@@ -178,7 +186,7 @@ public abstract class CoreActivity<UC> extends BaseActivity<UC> {
         mLlLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CoreActivity.currentActivity.finish();
+                finish();
             }
         });
     }

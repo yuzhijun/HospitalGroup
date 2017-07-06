@@ -8,6 +8,7 @@ import android.widget.FrameLayout;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.google.gson.Gson;
 import com.lenovohit.hospitalgroup.R;
 import com.lenovohit.hospitalgroup.ui.fragment.HospitalFragment;
 import com.lenovohit.hospitalgroup.ui.fragment.MainHomeFragment;
@@ -17,8 +18,10 @@ import com.lenovohit.lartemis_api.annotation.ContentView;
 import com.lenovohit.lartemis_api.base.BaseController;
 import com.lenovohit.lartemis_api.base.CoreActivity;
 import com.lenovohit.lartemis_api.core.LArtemis;
+import com.lenovohit.lartemis_api.data.UserData;
 import com.lenovohit.lartemis_api.ui.controller.MainController;
 import com.lenovohit.lartemis_api.utils.CommonUtil;
+import com.lenovohit.lartemis_api.utils.Constants;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -169,5 +172,6 @@ public class MainActivity extends CoreActivity<MainController.MainUiCallbacks> i
     protected void onDestroy() {
         super.onDestroy();
         mUnbinder.unbind();
+        CommonUtil.setShardPString(Constants.SP_USER_INFO,new Gson().toJson(UserData.getTempUser()));
     }
 }

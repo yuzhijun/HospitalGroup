@@ -42,8 +42,10 @@ public class LX_LoginActivity extends CoreActivity<MainController.MainUiCallback
     Button btnCode;
     @BindView(R.id.btnGetUser)
     Button btnGetUser;
-private TimeCount time;
+    private TimeCount time;
     private Unbinder bind;
+    //type代表从哪个界面跳转到登录页面
+    private String type;
 
     @Override
     protected BaseController getController() {
@@ -63,7 +65,9 @@ private TimeCount time;
         });
         edtPhone.setText("18757574669");
         edtCode.setText("999999");
-        init();
+        //初始化时间控件
+        initTime();
+        type = getIntent().getStringExtra("login_info");
     }
 
     @Override
@@ -93,14 +97,16 @@ private TimeCount time;
                     time = new TimeCount(59000, 1000);
                     time.start();// 开始计时
                     UserData.setGetYZMDateTime(CommonUtil.AddTimeforNow2());
-                    getCallbacks().getLoginCode(getUserPhone(), Constants.SP_USER_INFO);
+                    getCallbacks().getLoginCode(getUserPhone(), Constants.SMS_TEMP_CODE);
                 }
             }
         });
     }
 
-    public static void startLoginActivity(Context context) {
-        context.startActivity(new Intent(context, LX_LoginActivity.class));
+    public static void startLoginActivity(Context context,String type) {
+       Intent intent=new Intent(context, LX_LoginActivity.class);
+        intent.putExtra("login_info",type);
+        context.startActivity(intent);
     }
 
 
@@ -112,11 +118,9 @@ private TimeCount time;
     public void getLoginDataCallBack(User user) {
         if (CommonUtil.isNotEmpty(user)){
             UserData.setTempUser(user);
-            LX_UserInfoActivity.startUserInfoActivity(LX_LoginActivity.this);
             Gson gson=new Gson();
             String s = gson.toJson(user);
             CommonUtil.setShardPString("user",s);
-            finish();
         }else {
             CommonUtil.showSnackBar(edtCode,"验证码错误或过期");
         }
@@ -151,6 +155,21 @@ private TimeCount time;
             btnCode.setText("重新获取验证码");
             btnCode.setEnabled(true);
             btnCode.setBackgroundResource(R.drawable.lx_btn_complete_select);
+            switch (type){
+                case Constants.LOGIN_TOP:
+                    LX_UserInfoActivity.startUserInfoActivity(LX_LoginActivity.this);
+                    finish();
+                    break;
+                case Constants.LOGIN_COLLECT_HOSPITAL:
+                    LX_HospitalsActivity.startHospitalActivity(LX_LoginActivity.this);
+                    finish();
+                    break;
+                case Constants.LOGIN_COLLECT_DOCTOR:
+                    LX_DoctorActivity.startDoctorActivity(LX_LoginActivity.this);
+                    finish();
+                    break;
+
+            }
         }else{
             CommonUtil.showSnackBar(edtCode,"抱歉,登录失败啦,请重新登录");
         }
@@ -196,7 +215,7 @@ private TimeCount time;
     /**
      * 初始化
      * */
-    public void init() {
+    public void initTime() {
         // 初始化时时间控件
         if (CommonUtil.isNotEmpty(UserData.getGetYZMDateTime())) {
             long a = UserData.getGetYZMDateTime().getTime();

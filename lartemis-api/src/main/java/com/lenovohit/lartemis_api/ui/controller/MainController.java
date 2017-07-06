@@ -3,6 +3,7 @@ package com.lenovohit.lartemis_api.ui.controller;
 import com.google.common.base.Preconditions;
 import com.lenovohit.lartemis_api.base.BaseController;
 import com.lenovohit.lartemis_api.base.CoreActivity;
+import com.lenovohit.lartemis_api.model.Doctor;
 import com.lenovohit.lartemis_api.model.HomePage;
 import com.lenovohit.lartemis_api.model.Hospitals;
 import com.lenovohit.lartemis_api.model.HttpResult;
@@ -82,6 +83,26 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
             @Override
             public void editUserInfo(String uid, String name, String sex, String IDCard) {
                 editUserInfoData(ui,uid,name,sex,IDCard);
+            }
+
+            @Override
+            public void getCollectHospital(String uID) {
+                getCollectHospitalData(ui,uID);
+            }
+
+            @Override
+            public void focusHospital(String UID, String HID, String DoctorCode, String DepCode, String Type) {
+                FocusDoctorOrHospital(ui,UID,HID,DoctorCode,DepCode,Type);
+            }
+
+            @Override
+            public void getCollectDoctor(String uID) {
+                getCollectDoctorData(ui,uID);
+            }
+
+            @Override
+            public void focusDoctor(String UID, String HID, String DoctorCode, String DepCode, String Type) {
+                FocusDoctorOrHospital(ui,UID,HID,DoctorCode,DepCode,Type);
             }
         };
     }
@@ -226,12 +247,79 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
         }
 
     }
+    //获取收藏的医院
+    public void getCollectHospitalData(final  MainUi ui,String uID){
+        if (ui instanceof CollectHospital){
+            mApiService.getCollectHospitalList(uID)
+                    .map(new HttpResultFunc<List<Hospitals>>())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new RequestCallBack<List<Hospitals>>() {
+                        @Override
+                        public void onResponse(List<Hospitals> response) {
+                            ((CollectHospital) ui).getCollectHospitalCallBack(response);
+                        }
+
+                        @Override
+                        public void onFailure(ResponseError error) {
+                            ui.onResponseError(error);
+                        }
+                    });
+        }
+    }
+    //获取收藏的医生
+    public void getCollectDoctorData(final  MainUi ui,String uID){
+        if (ui instanceof CollectDoctor){
+            mApiService.getCollectDoctorList(uID)
+                    .map(new HttpResultFunc<List<Doctor>>())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new RequestCallBack<List<Doctor>>() {
+                        @Override
+                        public void onResponse(List<Doctor> response) {
+                            ((CollectDoctor) ui).getCollectDoctorCallBack(response);
+                        }
+
+                        @Override
+                        public void onFailure(ResponseError error) {
+                            ui.onResponseError(error);
+                        }
+                    });
+        }
+    }
+    //关注或取消关注 医生或医院
+    public void FocusDoctorOrHospital(final MainUi ui,String UID,String HID,String DoctorCode,String DepCode,String Type){
+            if (ui instanceof CollectHospital){
+                CoreActivity.currentActivity.showProgressDialog();
+                mApiService.FocusHospOrDoctor(UID,HID,DoctorCode,DepCode,Type)
+                        .map(new HttpResultFunc<Result>())
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new RequestCallBack<Result>() {
+                            @Override
+                            public void onResponse(Result response) {
+                                CoreActivity.currentActivity.hideProgressDialog();
+                                ((CollectHospital) ui).FocusHospitalCallBack(response);
+                            }
+
+                            @Override
+                            public void onFailure(ResponseError error) {
+                                ui.onResponseError(error);
+                                CoreActivity.currentActivity.hideProgressDialog();
+                            }
+                        });
+            }
+    }
     public interface MainUiCallbacks{//给UI界面调用
         void getIndexRecommendInfo();
         void getHospitalsList();
         void getLoginData(String phoneNumber,String code);
         void getLoginCode(String phoneNumber,String mode);
         void editUserInfo(String uid,String name,String sex,String IDCard);
+        void getCollectHospital(String uID);
+        void focusHospital(String UID,String HID,String DoctorCode,String DepCode,String Type);
+        void getCollectDoctor(String uID);
+        void focusDoctor(String UID,String HID,String DoctorCode,String DepCode,String Type);
     }
 
     public interface MainUi extends BaseController.Ui<MainUiCallbacks> {
@@ -255,8 +343,19 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
        //修改个人信息接口
         void editUserInfoCallBack(Result result);
     }
+    public interface  CollectHospital extends MainUi{
+        //获取收藏的医院
+        void getCollectHospitalCallBack(List<Hospitals>list);
+        void FocusHospitalCallBack(Result result);
+    }
+    public interface  CollectDoctor extends MainUi{
+        //获取收藏的医生
+        void getCollectDoctorCallBack(List<Doctor>list);
+        void FocusDoctorCallBack(Result result);
+    }
 
     public AppointmentController getAppointmentController() {
         return mAppointmentController;
     }
+
 }
