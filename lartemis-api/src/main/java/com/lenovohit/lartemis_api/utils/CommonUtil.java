@@ -204,4 +204,8 @@ public class CommonUtil {
                 + content.substring(content.length() - endNum, content.length());
 
     }
+
+    public static int getResColor(int id) {
+        return LArtemis.getInstance().getApplication().getResources().getColor(id);
+    }
 }

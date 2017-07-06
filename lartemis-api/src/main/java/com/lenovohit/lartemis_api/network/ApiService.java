@@ -1,6 +1,7 @@
 package com.lenovohit.lartemis_api.network;
 
 import com.lenovohit.lartemis_api.model.Doctor;
+import com.lenovohit.lartemis_api.model.CommonObj;
 import com.lenovohit.lartemis_api.model.HomePage;
 import com.lenovohit.lartemis_api.model.Hospitals;
 import com.lenovohit.lartemis_api.model.HttpResult;
@@ -14,6 +15,7 @@ import javax.inject.Singleton;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -31,6 +33,7 @@ public interface ApiService {
     Observable<HttpResult<List<Hospitals>>>getIndexHospitalList();
     @GET("NeweHealthServices/api/User/LoginInfo/{phoneNumber}/{smsCode}")
     Observable<HttpResult<User>>getLoginData(@Path("phoneNumber")String phoneNumber,@Path("smsCode")String smsCode);
+
    @FormUrlEncoded
     @POST("NeweHealthServices/api/User/SendSMSCode")
     Observable<HttpResult<Result>>getLoginCode(@Field("PhoneNumber")String PhoneNumber, @Field("TempCode")String TempCode);
@@ -40,8 +43,11 @@ public interface ApiService {
    @FormUrlEncoded
     @POST("NeweHealthServices/api/User/EditUserInfo")
     Observable<HttpResult<Result>>editUserInfo(@Field("uid")String uid,@Field("name")String name,@Field("sex")String sex,@Field("IDCard")String IDCard);
+    Observable<HttpResult<Result>> getLoginCode(@Field("PhoneNumber")String PhoneNumber, @Field("TempCode")String TempCode);
     @GET("NeweHealthServices/api/Hospital/SearchHospitals")
     Observable<HttpResult<List<Hospitals>>> getSearchHospitalList(@Query("key") String key);
+    @GET("eHealthPlatformService/api/Hospital/AllDep/{hID}")
+    Observable<HttpResult<List<CommonObj>>> getAllDep(@Path("hID") String hID);
     @GET("NeweHealthServices/api/User/CollectHospitals/{uID}")
     Observable<HttpResult<List<Hospitals>>> getCollectHospitalList(@Path("uID") String uID);
     @GET("NeweHealthServices/api/User/CollectDoctors/{uID}")

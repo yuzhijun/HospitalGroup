@@ -1,1 +1,1 @@
-include ':app', ':lrouter-annotation', ':lrouter-compiler', ':lrouter-api', ':lartemis-api', ':module_appointment', ':module_queue'
+include ':app', ':lrouter-annotation', ':lrouter-compiler', ':lrouter-api', ':lartemis-api', ':module_appointment', ':module_queue', ':appointentranceapp'

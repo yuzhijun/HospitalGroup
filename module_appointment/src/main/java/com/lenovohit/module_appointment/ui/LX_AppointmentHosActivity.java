@@ -4,11 +4,15 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.view.ViewGroup;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lenovohit.lartemis_api.base.BaseController;
 import com.lenovohit.lartemis_api.base.CoreActivity;
 import com.lenovohit.lartemis_api.core.LArtemis;
 import com.lenovohit.lartemis_api.model.Hospitals;
+import com.lenovohit.lartemis_api.model.ResponseError;
 import com.lenovohit.lartemis_api.ui.controller.AppointmentController;
 import com.lenovohit.lartemis_api.views.RecycleViewDivider;
 import com.lenovohit.module_appointment.R;
@@ -25,6 +29,7 @@ public class LX_AppointmentHosActivity extends CoreActivity<AppointmentControlle
 
     private RecyclerView rvHosList;
     private AppointmentHosAdapter mHosAdapter;
+    private View notDataView;
     private List<Hospitals> mHospitalses = new ArrayList<>();
 
     @Override
@@ -47,21 +52,41 @@ public class LX_AppointmentHosActivity extends CoreActivity<AppointmentControlle
         mHosAdapter = new AppointmentHosAdapter(R.layout.lx_hos_list_recyclerview,mHospitalses);
         rvHosList.setAdapter(mHosAdapter);
 
+        notDataView = getLayoutInflater().inflate(R.layout.lx_empty_view, (ViewGroup) rvHosList.getParent(), false);
+        notDataView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getCallbacks().getSearchHospital("");
+            }
+        });
+
         getCallbacks().getSearchHospital("");
     }
 
     @Override
     public void initEvent() {
-
+        mHosAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                LX_AppointmentMainActivity.startAppointmentMain(LX_AppointmentHosActivity.this,((Hospitals)adapter.getData().get(position)).getHID());
+            }
+        });
     }
 
     @Override
     public void getSearchHospitalCallBack(List<Hospitals> response) {
         if (null == response || response.size() <= 0){
+            mHosAdapter.setEmptyView(notDataView);
             return;
         }
 
         mHosAdapter.getData().clear();
         mHosAdapter.setNewData(response);
+    }
+
+    @Override
+    public void onResponseError(ResponseError error) {
+        super.onResponseError(error);
+        mHosAdapter.setEmptyView(notDataView);
     }
 }
