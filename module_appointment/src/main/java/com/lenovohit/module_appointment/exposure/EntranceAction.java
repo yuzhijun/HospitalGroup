@@ -7,7 +7,7 @@ import com.lenovohit.annotation.Action;
 import com.lenovohit.lrouter_api.core.LRAction;
 import com.lenovohit.lrouter_api.core.LRActionResult;
 import com.lenovohit.lrouter_api.core.LRouterRequest;
-import com.lenovohit.module_appointment.ui.AppointmentMainActivity;
+import com.lenovohit.module_appointment.ui.LX_AppointmentHosActivity;
 
 /**
  * Created by yuzhijun on 2017/6/29.
@@ -21,7 +21,7 @@ public class EntranceAction extends LRAction {
 
     @Override
     public LRActionResult invoke(Context context, LRouterRequest requestData) {
-        Intent intent = new Intent(context, AppointmentMainActivity.class);
+        Intent intent = new Intent(context, LX_AppointmentHosActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
 

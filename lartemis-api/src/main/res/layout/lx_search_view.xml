@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="51dp"
+    android:background="@color/white">
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginTop="@dimen/spacing_smallest"
+        android:layout_marginBottom="@dimen/spacing_smallest"
+        android:layout_marginLeft="@dimen/spacing_normal"
+        android:layout_marginRight="@dimen/spacing_normal"
+        android:background="@drawable/tv_search_view_bg"
+        >
+        <ImageView
+            android:layout_marginLeft="5dp"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@mipmap/lx_iv_search_icon"
+            />
+        <TextView
+            android:layout_marginLeft="3dp"
+            android:gravity="center_vertical"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="30dp"
+           style="@style/greyTextStyleSmaller"
+            android:lines="1"
+            android:ellipsize="end"
+            android:text="搜索医院,医生"
+            />
+    </LinearLayout>
+</LinearLayout>
