@@ -187,7 +187,6 @@ public abstract class CoreActivity<UC> extends BaseActivity<UC> {
             @Override
             public void onClick(View v) {
                finish();
-                finish();
             }
         });
     }
