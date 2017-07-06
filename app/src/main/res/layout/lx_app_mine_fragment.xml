@@ -24,7 +24,7 @@
             android:layout_height="80dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="45dp"
-            app:roundAsCircle="false"
+            app:roundAsCircle="true"
             app:placeholderImage="@mipmap/lx_iv_icon_doctor"
             app:placeholderImageScaleType="fitXY"/>
         <TextView
@@ -34,11 +34,23 @@
              style=" @style/TextAppearance.AppCompat.Widget.ActionBar.Title"
             tools:text="患者姓名"
             android:text="姓名"
-            android:padding="10dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="5dp"
             android:layout_marginTop="10dp"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/ivUserAvatar"
+            android:textSize="@dimen/spacing_normal"
+            android:textColor="@color/white"/>
+        <TextView
+
+            android:id="@+id/tvUserPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style=" @style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            tools:text="患者手机号"
+            android:text="患者手机号"
+            android:layout_marginBottom="30dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/tvUserName"
             android:textSize="@dimen/spacing_normal"
             android:textColor="@color/white"/>
         <LinearLayout

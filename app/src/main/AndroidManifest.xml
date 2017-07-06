@@ -30,6 +30,10 @@
             android:screenOrientation="portrait"
             android:launchMode="singleTask"/>
         <service android:name=".exposure.MainRouterConnectService"/>
+        <activity android:name=".ui.LX_UserInfoEditActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"/>
     </application>
 
 </manifest>

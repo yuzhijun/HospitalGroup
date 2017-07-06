@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/lx_list_item_select"
     android:clickable="true"
+    android:id="@+id/llRoot"
     android:orientation="vertical" >
 
     <ImageView

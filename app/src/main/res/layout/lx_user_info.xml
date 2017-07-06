@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey_normal_bg">
     <RelativeLayout
@@ -10,6 +12,7 @@
         android:gravity="center_vertical"
         android:background="@drawable/lx_list_item_select"
         android:paddingLeft="15dip"
+        android:clickable="true"
         android:paddingRight="10dip">
         <TextView
             android:layout_width="wrap_content"
@@ -18,9 +21,11 @@
             android:layout_centerVertical="true"
             android:textColor="@color/black"
             android:textSize="@dimen/font_size_B"/>
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:layout_centerVertical="true"
-            android:background="@mipmap/lx_iv_icon_doctor"
+            app:roundAsCircle="true"
+            app:placeholderImage="@mipmap/lx_iv_icon_doctor"
+            app:placeholderImageScaleType="fitXY"
             android:layout_alignParentRight="true"
             android:id="@+id/aivInfoHead"
             android:layout_width="54dip"
@@ -33,24 +38,28 @@
         android:background="@color/app_line_colors" />
     <com.lenovohit.lartemis_api.views.MyItemInfo
         android:id="@+id/lrvXM"
+        android:clickable="true"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="-1dip"
        />
     <com.lenovohit.lartemis_api.views.MyItemInfo
         android:id="@+id/lrvSFZ"
+        android:clickable="true"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="-1dip"
          />
     <com.lenovohit.lartemis_api.views.MyItemInfo
         android:id="@+id/lrvSJHM"
+        android:clickable="true"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="-1dip"
        />
     <com.lenovohit.lartemis_api.views.MyItemInfo
         android:id="@+id/lrvXB"
+        android:clickable="true"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="-1dip"
