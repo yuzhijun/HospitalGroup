@@ -7,7 +7,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.lenovohit.hospitalgroup.R;
-import com.lenovohit.lartemis_api.model.Hospitals;
+import com.lenovohit.lartemis_api.model.Doctor;
 import com.lenovohit.lartemis_api.utils.CommonUtil;
 
 import java.util.List;
@@ -16,19 +16,19 @@ import java.util.List;
  * Created by Administrator on 2017-07-01.
  */
 
-public class CollectHosAdapter extends BaseQuickAdapter<Hospitals,BaseViewHolder>{
-    public CollectHosAdapter(@LayoutRes int layoutResId, @Nullable List<Hospitals> data) {
+public class CollectDoctorAdapter extends BaseQuickAdapter<Doctor,BaseViewHolder>{
+    public CollectDoctorAdapter(@LayoutRes int layoutResId, @Nullable List<Doctor> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, Hospitals item) {
-        ((SimpleDraweeView)helper.getView(R.id.hospitalIv)).setImageURI(item.getLogoUrl());
-        helper.setText(R.id.hospitalNameTv, CommonUtil.isStrEmpty(item.getHospitalName())?"未知医院名称":item.getHospitalName());
-        helper.setText(R.id.tvHospitalLevel,CommonUtil.isStrEmpty(item.getHospitalLevelName())?"未知等级":item.getHospitalLevelName());
-        helper.setText(R.id.tvHospitalProperty,CommonUtil.isStrEmpty(item.getHospitalType())?"未知类型":item.getHospitalType());
-        helper.setText(R.id.metersTv,"暂无数据");
-        helper.setText(R.id.attentionNumTv,"暂无数据");
+    protected void convert(BaseViewHolder helper, Doctor item) {
+        ((SimpleDraweeView)helper.getView(R.id.ivDoctor)).setImageURI(item.getPhotoUrl());
+        helper.setText(R.id.tvDoctorName, CommonUtil.isStrEmpty(item.getDoctorName())?"未知医生姓名":item.getDoctorName());
+        helper.setText(R.id.tvDoctorType,CommonUtil.isStrEmpty(item.getJobName())?"未知类型":item.getJobName());
+        helper.setText(R.id.tvDoctorKeshi,CommonUtil.isStrEmpty(item.getDepName())?"未知科室":item.getDepName());
+        helper.setText(R.id.tvHospitalName,CommonUtil.isStrEmpty(item.getHospitalName())?"未知医院姓名":item.getHospitalName());
+        helper.setText(R.id.tvExpert,CommonUtil.isStrEmpty(item.getExpert())?"擅长未知":item.getExpert());
     }
 
 }

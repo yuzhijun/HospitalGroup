@@ -18,6 +18,8 @@ import com.lenovohit.lartemis_api.base.BaseController;
 import com.lenovohit.lartemis_api.base.CoreActivity;
 import com.lenovohit.lartemis_api.core.LArtemis;
 import com.lenovohit.lartemis_api.data.UserData;
+import com.lenovohit.lartemis_api.model.ResponseError;
+import com.lenovohit.lartemis_api.model.Result;
 import com.lenovohit.lartemis_api.model.User;
 import com.lenovohit.lartemis_api.ui.controller.MainController;
 import com.lenovohit.lartemis_api.utils.CommonUtil;
@@ -27,13 +29,15 @@ import com.lenovohit.lartemis_api.views.MyItemInfo;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import cn.qqtheme.framework.picker.OptionPicker;
+import cn.qqtheme.framework.widget.WheelView;
 
 /**
  * Created by Administrator on 2017-07-04.
  * 患者个人信息设置界面
  */
 @ContentView(R.layout.lx_user_info)
-public class LX_UserInfoActivity extends CoreActivity<MainController.MainUiCallbacks> implements MainController.MainUi {
+public class LX_UserInfoActivity extends CoreActivity<MainController.MainUiCallbacks> implements MainController.UserInfoEditUi {
 
     @BindView(R.id.lrvTX)
     RelativeLayout rlAvautar;
@@ -50,6 +54,7 @@ public class LX_UserInfoActivity extends CoreActivity<MainController.MainUiCallb
     @BindView(R.id.lrvXB)
     MyItemInfo lrvXB;
     private Unbinder bind;
+    private String mSex;
 
 
     @Override
@@ -108,6 +113,37 @@ public class LX_UserInfoActivity extends CoreActivity<MainController.MainUiCallb
                 LX_UserInfoEditActivity.startUserInfoEditActivity(LX_UserInfoActivity.this,LX_UserInfoEditActivity.TYPE_SFZ);
             }
         });
+        lrvXB.setItemClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OptionPicker picker = new OptionPicker(LX_UserInfoActivity.this, new String[]{
+                        "男", "女"
+                });
+                picker.setCanceledOnTouchOutside(false);
+                picker.setDividerRatio(WheelView.DividerConfig.FILL);
+//                picker.setShadowColor(getResources().getColor(R.color.colorPrimary), 100);
+                picker.setSelectedIndex(UserData.getTempUser().getBaseInfo().getSex().equals("男")?0:1);
+                picker.setPressedTextColor(getResources().getColor(R.color.colorPrimary));
+                picker.setDividerColor(getResources().getColor(R.color.grey_line_bg));
+                picker.setTextColor(getResources().getColor(R.color.gray_5));
+                picker.setCancelTextColor(getResources().getColor(R.color.gray_5));
+                picker.setSubmitTextColor(getResources().getColor(R.color.gray_5));
+                picker.setTopLineColor(getResources().getColor(R.color.gray_5));
+                picker.setCycleDisable(true);
+                picker.setTextSize(11);
+                picker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
+                    @Override
+                    public void onOptionPicked(int index, String item) {
+                        User tempUser = UserData.getTempUser();
+                        if (tempUser!=null){
+                            mSex=item;
+                            getCallbacks().editUserInfo(tempUser.getBaseInfo().getUID(),tempUser.getBaseInfo().getName(),item,tempUser.getBaseInfo().getIDCard());
+                        }
+                    }
+                });
+                picker.show();
+            }
+        });
     }
 
     @Override
@@ -147,5 +183,25 @@ public class LX_UserInfoActivity extends CoreActivity<MainController.MainUiCallb
             }
             lrvSJHM.showRightIcon(false);
         }
+    }
+
+    @Override
+    public void editUserInfoCallBack(Result result) {
+        if (CommonUtil.isNotEmpty(result)) {
+            if (result.getState() <= 0) { // 表示错误
+                CommonUtil.showSnackBar(aivInfoHead,result.getMsg());
+            } else {
+//                Toast.makeText(this,"修改成功!",Toast.LENGTH_SHORT).show();
+                CommonUtil.showSnackBar(aivInfoHead,"修改成功!");
+                lrvXB.setItemInfo("性别",mSex);
+                UserData.getTempUser().getBaseInfo().setSex(mSex);
+            }
+        }
+    }
+
+    @Override
+    public void onResponseError(ResponseError error) {
+        super.onResponseError(error);
+        CommonUtil.showSnackBar(aivInfoHead,error.getMessage());
     }
 }

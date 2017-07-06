@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lenovohit.hospitalgroup.R;
 import com.lenovohit.lartemis_api.annotation.ContentView;
@@ -16,6 +17,7 @@ import com.lenovohit.lartemis_api.base.BaseController;
 import com.lenovohit.lartemis_api.base.CoreActivity;
 import com.lenovohit.lartemis_api.core.LArtemis;
 import com.lenovohit.lartemis_api.data.UserData;
+import com.lenovohit.lartemis_api.model.ResponseError;
 import com.lenovohit.lartemis_api.model.Result;
 import com.lenovohit.lartemis_api.model.User;
 import com.lenovohit.lartemis_api.ui.controller.MainController;
@@ -98,7 +100,8 @@ public class LX_UserInfoEditActivity extends CoreActivity<MainController.MainUiC
                 } else if (type.equals(TYPE_SFZ)) {
                     UserData.getTempUser().getBaseInfo().setIDCard(edtContent.getText().toString());
                 }
-                CommonUtil.showSnackBar(edtContent,"修改成功!");
+//                CommonUtil.showSnackBar(edtContent,"修改成功!");
+                Toast.makeText(this,"修改成功!",Toast.LENGTH_SHORT).show();
                 finish();
             }
         }
@@ -114,4 +117,10 @@ public class LX_UserInfoEditActivity extends CoreActivity<MainController.MainUiC
         context.startActivity(new Intent(context,LX_UserInfoEditActivity.class));
     }
 
+    @Override
+    public void onResponseError(ResponseError error) {
+        super.onResponseError(error);
+        CommonUtil.showSnackBar(edtContent,error.getMessage());
+//        Toast.makeText(this,error.getMessage(),Toast.LENGTH_SHORT).show();
+    }
 }

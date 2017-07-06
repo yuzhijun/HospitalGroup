@@ -1,6 +1,7 @@
 package com.lenovohit.lartemis_api.network;
 
 import com.lenovohit.lartemis_api.model.CommonObj;
+import com.lenovohit.lartemis_api.model.Doctor;
 import com.lenovohit.lartemis_api.model.HomePage;
 import com.lenovohit.lartemis_api.model.Hospitals;
 import com.lenovohit.lartemis_api.model.HttpResult;
@@ -44,4 +45,11 @@ public interface ApiService {
     Observable<HttpResult<List<Hospitals>>> getSearchHospitalList(@Query("key") String key);
     @GET("eHealthPlatformService/api/Hospital/AllDep/{hID}")
     Observable<HttpResult<List<CommonObj>>> getAllDep(@Path("hID") String hID);
+    @GET("NeweHealthServices/api/User/CollectHospitals/{uID}")
+    Observable<HttpResult<List<Hospitals>>> getCollectHospitalList(@Path("uID") String uID);
+    @GET("NeweHealthServices/api/User/CollectDoctors/{uID}")
+    Observable<HttpResult<List<Doctor>>> getCollectDoctorList(@Path("uID") String uID);
+    @FormUrlEncoded
+    @POST("NeweHealthServices/api/Hospital/FocusOrNotHospitalOrDoctor")
+    Observable<HttpResult<Result>>FocusHospOrDoctor(@Field("UID")String UID,@Field("HID")String HID,@Field("DoctorCode") String DoctorCode,@Field("DepCode")String DepCode,@Field("Type")String Type);
 }

@@ -16,18 +16,19 @@ import java.util.List;
  * Created by Administrator on 2017-07-01.
  */
 
-public class AllHosAdapter extends BaseQuickAdapter<Hospitals,BaseViewHolder>{
-    public AllHosAdapter(@LayoutRes int layoutResId, @Nullable List<Hospitals> data) {
+public class CollectHosAdapter extends BaseQuickAdapter<Hospitals,BaseViewHolder>{
+    public CollectHosAdapter(@LayoutRes int layoutResId, @Nullable List<Hospitals> data) {
         super(layoutResId, data);
     }
 
     @Override
     protected void convert(BaseViewHolder helper, Hospitals item) {
-        ((SimpleDraweeView) helper.getView(R.id.ivHospitalImg)).setImageURI(item.getLogoUrl());
-        helper.setText(R.id.tvHospitalName,item.getHospitalName() == null ? "未知医院名" : item.getHospitalName());
-        helper.setText(R.id.tvHospitalProperty,item.getHospitalType() == null ? "未知类型" : item.getHospitalType());
-        helper.setText(R.id.tvHospitalLevel,item.getHospitalLevelName() == null ? "未知等级" : item.getHospitalLevelName());
-        helper.setText(R.id.tvIsCollection,"" + item.getFocus());
-        helper.setText(R.id.tvPreOrderNum, CommonUtil.isStrEmpty(item.getAppointmentNum())?"预约量 0":"预约量 " + item.getAppointmentNum());
+        ((SimpleDraweeView)helper.getView(R.id.hospitalIv)).setImageURI(item.getLogoUrl());
+        helper.setText(R.id.hospitalNameTv, CommonUtil.isStrEmpty(item.getHospitalName())?"未知医院名称":item.getHospitalName());
+        helper.setText(R.id.tvHospitalLevel,CommonUtil.isStrEmpty(item.getHospitalLevelName())?"未知等级":item.getHospitalLevelName());
+        helper.setText(R.id.tvHospitalProperty,CommonUtil.isStrEmpty(item.getHospitalType())?"未知类型":item.getHospitalType());
+        helper.setText(R.id.metersTv,"暂无数据");
+        helper.setText(R.id.attentionNumTv,"暂无数据");
     }
+
 }

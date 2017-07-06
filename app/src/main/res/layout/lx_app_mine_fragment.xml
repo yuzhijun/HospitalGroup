@@ -123,7 +123,8 @@
         android:id="@+id/lrvDingDan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-1dp">
+        android:layout_marginTop="-1dp"
+        android:visibility="gone">
 
     </com.lenovohit.lartemis_api.views.MyItemOne>
     <com.lenovohit.lartemis_api.views.MyItemOne

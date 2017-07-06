@@ -14,7 +14,7 @@
         <ImageView
             android:layout_width="154dp"
             android:layout_height="172dp"
-            android:src="@mipmap/lx_no_network_default"
+            android:src="@mipmap/lx_iv_no_data"
             android:layout_gravity="center"
             android:layout_marginTop="100dp"
             android:scaleType="fitCenter"/>
@@ -22,7 +22,7 @@
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="数据跑到火星上去了~~"
+            android:text="暂时还没有数据(⊙v⊙)"
             style="@style/greyTextStyleNormal"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/spacing_large"

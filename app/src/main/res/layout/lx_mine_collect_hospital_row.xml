@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@drawable/lx_list_item_select"
-              android:orientation="horizontal"
-              android:padding="2dp" >
-    <ImageView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/lx_list_item_select"
+    android:orientation="horizontal"
+    android:padding="2dp">
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/hospitalIv"
         android:layout_width="78dip"
         android:layout_height="78dip"
@@ -14,7 +15,8 @@
         android:layout_marginTop="@dimen/app_interval_15"
         android:layout_marginBottom="@dimen/app_interval_15"
         android:layout_marginRight="@dimen/app_interval_10"
-        android:scaleType="fitXY"
+        app:placeholderImage="@drawable/ic_empty"
+        app:placeholderImageScaleType="fitXY"
         />
     <LinearLayout
         android:layout_width="0dp"
@@ -99,7 +101,7 @@
                 <ImageView
                     android:layout_width="12dp"
                     android:layout_height="16dp"
-                    android:src="@mipmap/"
+                    android:src="@mipmap/lx_iv_gray_compass"
                     />
                 <TextView
                     android:id="@+id/metersTv"
