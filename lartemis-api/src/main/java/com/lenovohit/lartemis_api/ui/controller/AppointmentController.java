@@ -109,4 +109,8 @@ public class AppointmentController extends BaseController<AppointmentController.
     public interface AppointmentHosUi extends AppointmentUi{
         void getSearchHospitalCallBack(List<Hospitals> response);
     }
+
+    public interface AppointmentDocUi extends AppointmentUi{
+
+    }
 }

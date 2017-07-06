@@ -1,6 +1,7 @@
 package com.lenovohit.hospitals.data;
 
-import com.lenovohit.hospitals.domain.Doctor;
+
+import com.lenovohit.lartemis_api.model.Doctor;
 
 import java.util.List;
 
