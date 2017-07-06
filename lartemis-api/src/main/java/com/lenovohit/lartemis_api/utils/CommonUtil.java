@@ -147,4 +147,8 @@ public class CommonUtil {
         return LArtemis.getInstance().getApplication().getString(var0);
     }
 
+
+    public static int getResColor(int id) {
+        return LArtemis.getInstance().getApplication().getResources().getColor(id);
+    }
 }

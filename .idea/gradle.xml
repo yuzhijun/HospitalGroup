@@ -9,6 +9,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/appointentranceapp" />
             <option value="$PROJECT_DIR$/lartemis-api" />
             <option value="$PROJECT_DIR$/lrouter-annotation" />
             <option value="$PROJECT_DIR$/lrouter-api" />

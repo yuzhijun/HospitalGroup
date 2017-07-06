@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
-             android:id="@+id/emptyView"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:background="@color/grey_normal_bg"
-    >
-    <LinearLayout
+<com.zhy.android.percent.support.PercentLinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/grey_normal_bg"
+        android:clickable="true"
         >
         <ImageView
             android:layout_width="154dp"
             android:layout_height="172dp"
             android:src="@mipmap/lx_no_network_default"
             android:layout_gravity="center"
-            android:layout_marginTop="100dp"
-            android:scaleType="fitCenter"/>
+            android:scaleType="fitCenter"
+            app:layout_marginTopPercent="10%"
+            app:layout_heightPercent="60%w"
+            app:layout_widthPercent="65%w"
+            android:clickable="false"/>
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
@@ -27,18 +27,8 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/spacing_large"
             />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="重新刷新"
-            style="@style/whiteTextStyle"
-            android:background="@drawable/btn_color_accent_select"
-            android:paddingLeft="@dimen/spacing_huge"
-            android:paddingRight="@dimen/spacing_huge"
-            android:paddingTop="@dimen/spacing_smaller"
-            android:paddingBottom="@dimen/spacing_smaller"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/spacing_large"
-            android:visibility="gone"/>
-    </LinearLayout>
-</ScrollView>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:background="@color/grey_normal_bg"/>
+</com.zhy.android.percent.support.PercentLinearLayout>

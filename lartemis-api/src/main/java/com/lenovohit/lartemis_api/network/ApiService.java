@@ -1,5 +1,6 @@
 package com.lenovohit.lartemis_api.network;
 
+import com.lenovohit.lartemis_api.model.CommonObj;
 import com.lenovohit.lartemis_api.model.HomePage;
 import com.lenovohit.lartemis_api.model.Hospitals;
 import com.lenovohit.lartemis_api.model.HttpResult;
@@ -35,4 +36,6 @@ public interface ApiService {
     Observable<HttpResult<Result>> getLoginCode(@Field("PhoneNumber")String PhoneNumber, @Field("TempCode")String TempCode);
     @GET("NeweHealthServices/api/Hospital/SearchHospitals")
     Observable<HttpResult<List<Hospitals>>> getSearchHospitalList(@Query("key") String key);
+    @GET("eHealthPlatformService/api/Hospital/AllDep/{hID}")
+    Observable<HttpResult<List<CommonObj>>> getAllDep(@Path("hID") String hID);
 }

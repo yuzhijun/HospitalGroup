@@ -27,6 +27,7 @@ public class AppointmentHosAdapter extends BaseQuickAdapter<Hospitals,BaseViewHo
         helper.setText(R.id.tvHospitalName, CommonUtil.isStrEmpty(item.getHospitalName())?"未知医院名称":item.getHospitalName());
         helper.setText(R.id.tvHospitalLevel,CommonUtil.isStrEmpty(item.getHospitalLevelName())?"未知等级":item.getHospitalLevelName());
         helper.setText(R.id.tvHospitalProperty,CommonUtil.isStrEmpty(item.getHospitalType())?"未知类型":item.getHospitalType());
-
+        helper.setText(R.id.tvAttentionNum,CommonUtil.isStrEmpty(item.getFocus())?"关注 0":"关注 "+item.getFocus());
+        helper.setText(R.id.metersTv,CommonUtil.isStrEmpty(item.getDistance())?"距离0米":"距离 "+item.getDistance()+"米");
     }
 }
