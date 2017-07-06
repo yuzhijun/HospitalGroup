@@ -168,7 +168,10 @@ public class LX_LoginActivity extends CoreActivity<MainController.MainUiCallback
                     LX_DoctorActivity.startDoctorActivity(LX_LoginActivity.this);
                     finish();
                     break;
-
+                case Constants.LOGIN_SWITCH_PATIENT:
+                    LX_SwitchPatientActivity.startSwitchPatientActivity(LX_LoginActivity.this);
+                    finish();
+                    break;
             }
         }else{
             CommonUtil.showSnackBar(edtCode,"抱歉,登录失败啦,请重新登录");

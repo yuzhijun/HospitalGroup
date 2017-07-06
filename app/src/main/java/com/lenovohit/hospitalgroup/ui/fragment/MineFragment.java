@@ -7,16 +7,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.gson.Gson;
 import com.lenovohit.hospitalgroup.R;
 import com.lenovohit.hospitalgroup.ui.LX_DoctorActivity;
 import com.lenovohit.hospitalgroup.ui.LX_HospitalsActivity;
 import com.lenovohit.hospitalgroup.ui.LX_LoginActivity;
+import com.lenovohit.hospitalgroup.ui.LX_SwitchPatientActivity;
 import com.lenovohit.hospitalgroup.ui.LX_UserInfoActivity;
 import com.lenovohit.lartemis_api.annotation.ContentView;
 import com.lenovohit.lartemis_api.base.BaseController;
 import com.lenovohit.lartemis_api.base.CoreFragment;
 import com.lenovohit.lartemis_api.core.LArtemis;
 import com.lenovohit.lartemis_api.data.UserData;
+import com.lenovohit.lartemis_api.model.CommonUser;
 import com.lenovohit.lartemis_api.model.User;
 import com.lenovohit.lartemis_api.ui.controller.MainController;
 import com.lenovohit.lartemis_api.utils.CommonUtil;
@@ -106,6 +109,17 @@ public class MineFragment extends CoreFragment<MainController.MainUiCallbacks> i
                 }
             }
         });
+        lrvSwitchPatient.setItemClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (UserData.getTempUser() == null) {
+                    //跳转到登录页面
+                    LX_LoginActivity.startLoginActivity(getActivity(), Constants.LOGIN_COLLECT_DOCTOR);
+                } else {
+                    LX_SwitchPatientActivity.startSwitchPatientActivity(getActivity());
+                }
+            }
+        });
     }
 
     @Override
@@ -137,8 +151,14 @@ public class MineFragment extends CoreFragment<MainController.MainUiCallbacks> i
         lrvFocusDoctor.isShowingTopLine(false);
         lrvFocusDoctor.setItemInfo(R.mipmap.lx_iv_focus_doctor, "关注的医生", tempUser == null || tempUser.getCollectDoctors() == null || tempUser.getCollectDoctors().size() == 0 ? "0" : tempUser.getCollectDoctors().size() + "");
         lrvFocusHospital.setItemInfo(R.mipmap.lx_iv_focus_hospital, "关注的医院", tempUser == null || tempUser.getCollectHospitals() == null || tempUser.getCollectHospitals().size() == 0 ? "0" : tempUser.getCollectHospitals().size() + "");
-
-        lrvSwitchPatient.setItemInfo(R.mipmap.lx_iv_my_switch_patient, "切换患者", tempUser == null || CommonUtil.isStrEmpty(tempUser.getBaseInfo().getName()) ? "" : tempUser.getBaseInfo().getName());
+        String json = CommonUtil.getShardPStringByKey(Constants.COMM_USER_JSON);
+        if (CommonUtil.isStrEmpty(json)){
+            lrvSwitchPatient.setItemInfo(R.mipmap.lx_iv_my_switch_patient, "切换患者","");
+        }else {
+            CommonUser commonUser = new Gson().fromJson(json, CommonUser.class);
+            if (commonUser!=null && commonUser.isSelected())
+            lrvSwitchPatient.setItemInfo(R.mipmap.lx_iv_my_switch_patient, "切换患者",commonUser.getName());
+        }
         lrvYuYue.setItemInfo(R.mipmap.lx_iv_my_appointment, "预约历史", "");
         //隐藏掉诊疗记录
         lrvDingDan.setItemInfo(R.mipmap.lx_iv_mobile_treatment_history, "诊疗记录", "");
@@ -165,5 +185,6 @@ public class MineFragment extends CoreFragment<MainController.MainUiCallbacks> i
             tvUserPhone.setText("");
             ivUserAvatar.setImageResource(R.mipmap.lx_iv_icon_doctor);
         }
+
     }
 }

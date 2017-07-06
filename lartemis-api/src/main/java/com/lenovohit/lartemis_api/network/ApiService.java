@@ -1,6 +1,7 @@
 package com.lenovohit.lartemis_api.network;
 
 import com.lenovohit.lartemis_api.model.CommonObj;
+import com.lenovohit.lartemis_api.model.CommonUser;
 import com.lenovohit.lartemis_api.model.Doctor;
 import com.lenovohit.lartemis_api.model.HomePage;
 import com.lenovohit.lartemis_api.model.Hospitals;
@@ -33,7 +34,7 @@ public interface ApiService {
     @GET("NeweHealthServices/api/User/LoginInfo/{phoneNumber}/{smsCode}")
     Observable<HttpResult<User>>getLoginData(@Path("phoneNumber")String phoneNumber,@Path("smsCode")String smsCode);
 
-   @FormUrlEncoded
+    @FormUrlEncoded
     @POST("NeweHealthServices/api/User/SendSMSCode")
     Observable<HttpResult<Result>>getLoginCode(@Field("PhoneNumber")String PhoneNumber, @Field("TempCode")String TempCode);
     @FormUrlEncoded
@@ -53,4 +54,7 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("NeweHealthServices/api/Hospital/FocusOrNotHospitalOrDoctor")
     Observable<HttpResult<Result>>FocusHospOrDoctor(@Field("UID")String UID,@Field("HID")String HID,@Field("DoctorCode") String DoctorCode,@Field("DepCode")String DepCode,@Field("Type")String Type);
+    @GET("NeweHealthServices/api/User/GetAllCommonUser/{uID}")
+    Observable<HttpResult<List<CommonUser>>>getSwitchPatientList(@Path("uID")String uid);
+
 }

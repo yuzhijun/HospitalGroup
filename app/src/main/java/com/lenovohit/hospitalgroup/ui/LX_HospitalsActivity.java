@@ -26,6 +26,7 @@ import com.lenovohit.lartemis_api.model.User;
 import com.lenovohit.lartemis_api.ui.controller.MainController;
 import com.lenovohit.lartemis_api.utils.CommonUtil;
 import com.lenovohit.lartemis_api.utils.Constants;
+import com.lenovohit.lartemis_api.views.EmptyView;
 import com.lenovohit.lartemis_api.views.LXHeaderView;
 import com.lenovohit.lartemis_api.views.RecycleViewDivider;
 
@@ -58,6 +59,7 @@ public class LX_HospitalsActivity extends CoreActivity<MainController.MainUiCall
     @BindView(R.id.lx_header_view_rotate)
      LXHeaderView lx_header_view_rotate;
     private CollectHosAdapter adapter;
+    private EmptyView emptyView;
 
     @Override
     protected BaseController getController() {
@@ -70,7 +72,17 @@ public class LX_HospitalsActivity extends CoreActivity<MainController.MainUiCall
         isShowToolBar(true);
         setCenterTitle("关注的医院");
         adapter = new CollectHosAdapter(R.layout.lx_mine_collect_hospital_row,collectHosList);
-        adapter.setEmptyView(R.layout.lx_preloading_view_layout, (ViewGroup) recycleView.getParent());
+        emptyView = new EmptyView(recycleView.getContext(), (ViewGroup) recycleView.getParent());
+        emptyView.setType(EmptyView.TYPE_LOADING);
+        emptyView.setRefreshListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                emptyView.setType(EmptyView.TYPE_LOADING);
+                adapter.setEmptyView(emptyView.getView());
+                getCollectHospitalData();
+            }
+        });
+        adapter.setEmptyView(emptyView.getView());
         recycleView.setLayoutManager(new LinearLayoutManager(recycleView.getContext(),LinearLayoutManager.VERTICAL,false));
         recycleView.addItemDecoration(new RecycleViewDivider(recycleView.getContext(), LinearLayoutManager.VERTICAL));
         recycleView.setAdapter(adapter);
@@ -137,7 +149,9 @@ public class LX_HospitalsActivity extends CoreActivity<MainController.MainUiCall
             CommonUtil.showSnackBar(tvPostText,"获取数据成功!");
             tvHosPitalCount.setText(list.size() + "");
         }
-        adapter.setEmptyView(notDataView);
+        emptyView.setType(EmptyView.TYPE_NO_DATA);
+        emptyView.setMessage("您还没有关注医院，赶紧关注吧");
+        adapter.setEmptyView(emptyView.getView());
         lx_header_view_rotate.refreshComplete();
     }
 
@@ -163,6 +177,8 @@ public class LX_HospitalsActivity extends CoreActivity<MainController.MainUiCall
         super.onResponseError(error);
         CommonUtil.showSnackBar(tvPostText,error.getMessage());
         lx_header_view_rotate.refreshComplete();
+        emptyView.setType(EmptyView.TYPE_ERROR);
+        adapter.setEmptyView(emptyView.getView());
     }
 
 

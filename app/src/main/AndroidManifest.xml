@@ -42,6 +42,10 @@
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:launchMode="singleTask"/>
+        <activity android:name=".ui.LX_SwitchPatientActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"/>
     </application>
 
 </manifest>

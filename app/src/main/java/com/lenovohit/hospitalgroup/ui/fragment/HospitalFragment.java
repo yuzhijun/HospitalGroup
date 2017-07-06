@@ -217,7 +217,7 @@ public class HospitalFragment extends CoreFragment<MainController.MainUiCallback
         lx_header_view_rotate.refreshComplete();
         adapter.setEmptyView(notDataView);
         //将错误显示到界面中去
-        TextView tvTitle = (TextView) notDataView.findViewById(R.id.tvTitle);
+        TextView tvTitle = (TextView) notDataView.findViewById(R.id.tvTitleError);
         tvTitle.setText(error.getMessage());
     }
 
