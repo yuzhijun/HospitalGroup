@@ -1,6 +1,7 @@
 package com.lenovohit.lartemis_api.network;
 
 import com.lenovohit.lartemis_api.model.CommonObj;
+import com.lenovohit.lartemis_api.model.CommonUser;
 import com.lenovohit.lartemis_api.model.Doctor;
 import com.lenovohit.lartemis_api.model.DoctorAppoint;
 import com.lenovohit.lartemis_api.model.HomePage;
@@ -39,7 +40,7 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("NeweHealthServices/api/User/SetAppPushInfo")
     Observable<HttpResult<Result>>getLoginValidate(@Field("UID")String UID,@Field("PlatformType") String PlatformType,@Field("OpenID")String OpenID,@Field("AliasType")String AliasType,@Field("Alias")String Alias);
-   @FormUrlEncoded
+    @FormUrlEncoded
     @POST("NeweHealthServices/api/User/EditUserInfo")
     Observable<HttpResult<Result>>editUserInfo(@Field("uid")String uid,@Field("name")String name,@Field("sex")String sex,@Field("IDCard")String IDCard);
     @GET("NeweHealthServices/api/Hospital/SearchHospitals")
@@ -57,4 +58,7 @@ public interface ApiService {
     Observable<HttpResult<List<Doctor>>> getDepDoctors(@Path("hID") String hID,@Path("depCode") String depCode,@Path("tag") String tag);
     @GET("eHealthPlatformService/api/Appointment/DoctorAppoint")
     Observable<HttpResult<List<DoctorAppoint>>> getDoctorAppoint(@Query("hID")String hID,@Query("dCode")String dCode,@Query("depCode")String depCode,@Query("tag")String tag);
+    @GET("NeweHealthServices/api/User/GetAllCommonUser/{uID}")
+    Observable<HttpResult<List<CommonUser>>>getSwitchPatientList(@Path("uID")String uid);
+
 }

@@ -4,7 +4,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -21,6 +20,7 @@ import com.lenovohit.lartemis_api.model.ResponseError;
 import com.lenovohit.lartemis_api.ui.controller.MainController;
 import com.lenovohit.lartemis_api.utils.CommonUtil;
 import com.lenovohit.lartemis_api.utils.DeepCopyUtil;
+import com.lenovohit.lartemis_api.views.EmptyView;
 import com.lenovohit.lartemis_api.views.LXHeaderView;
 import com.lenovohit.lartemis_api.views.SpaceItemDecoration;
 
@@ -56,11 +56,11 @@ public class MainHomeFragment extends CoreFragment<MainController.MainUiCallback
     LinearLayout scanning_layout;
     @BindView(R.id.advisory_layout)
     LinearLayout advisory_layout;
-    private View notDataView;
     private int distanceY;
     Unbinder unbinder;
     private HomeMultipleRecycleAdapter adapter;
     private List<HomePage> mHomePages = new ArrayList<>();
+    private EmptyView emptyView;
 
     public static MainHomeFragment newInstance() {
         return new MainHomeFragment();
@@ -72,7 +72,6 @@ public class MainHomeFragment extends CoreFragment<MainController.MainUiCallback
         isShowToolBar(false);
         initPtrFrame();
         initRecyclerView();
-
         getCallbacks().getIndexRecommendInfo();
     }
 
@@ -124,14 +123,17 @@ public class MainHomeFragment extends CoreFragment<MainController.MainUiCallback
         });
         adapter = new HomeMultipleRecycleAdapter(mHomePages);
         rvMainHome.setAdapter(adapter);
-        adapter.setEmptyView(R.layout.lx_preloading_view_layout, (ViewGroup) rvMainHome.getParent());
-        notDataView = LayoutInflater.from(rvMainHome.getContext()).inflate(R.layout.lx_empty_view, (ViewGroup) rvMainHome.getParent(), false);
-        notDataView.setOnClickListener(new View.OnClickListener() {
+        emptyView = new EmptyView(rvMainHome.getContext(), (ViewGroup) rvMainHome.getParent());
+        emptyView.setType(EmptyView.TYPE_LOADING);
+        emptyView.setRefreshListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
+                emptyView.setType(EmptyView.TYPE_LOADING);
                 getCallbacks().getIndexRecommendInfo();
             }
         });
+        adapter.setEmptyView(emptyView.getView());
+
     }
 
     @Override
@@ -173,10 +175,9 @@ public class MainHomeFragment extends CoreFragment<MainController.MainUiCallback
     public void getIndexRecommendInfoCallBack(HomePage homePage) {
         if(null == homePage || null == homePage.getTopNews()){
             lx_header_view_rotate.refreshComplete();
-            adapter.setEmptyView(notDataView);
+            emptyView.setType(EmptyView.TYPE_NO_DATA);
             return;
         }
-
         adapter.getData().clear();
         mHomePages.clear();
         try {
@@ -199,7 +200,8 @@ public class MainHomeFragment extends CoreFragment<MainController.MainUiCallback
     public void onResponseError(ResponseError error) {
         super.onResponseError(error);
         lx_header_view_rotate.refreshComplete();
-        adapter.setEmptyView(notDataView);
+        emptyView.setType(EmptyView.TYPE_ERROR);
+        emptyView.setMessage(error.getMessage());
     }
 
     @Override

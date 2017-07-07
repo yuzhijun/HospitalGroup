@@ -3,6 +3,7 @@ package com.lenovohit.lartemis_api.ui.controller;
 import com.google.common.base.Preconditions;
 import com.lenovohit.lartemis_api.base.BaseController;
 import com.lenovohit.lartemis_api.base.CoreActivity;
+import com.lenovohit.lartemis_api.model.CommonUser;
 import com.lenovohit.lartemis_api.model.Doctor;
 import com.lenovohit.lartemis_api.model.HomePage;
 import com.lenovohit.lartemis_api.model.Hospitals;
@@ -103,6 +104,11 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
             @Override
             public void focusDoctor(String UID, String HID, String DoctorCode, String DepCode, String Type) {
                 FocusDoctorOrHospital(ui,UID,HID,DoctorCode,DepCode,Type);
+            }
+
+            @Override
+            public void getSwitchPatientList(String UID) {
+                getSwitchPatientListData(ui,UID);
             }
         };
     }
@@ -310,6 +316,26 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
                         });
             }
     }
+    //获取选择患者时的患者列表
+    public void getSwitchPatientListData(final  MainUi ui,String uid){
+        if (ui instanceof SwitchPatientUi){
+            mApiService.getSwitchPatientList(uid)
+                    .map(new HttpResultFunc<List<CommonUser>>())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new RequestCallBack<List<CommonUser>>() {
+                        @Override
+                        public void onResponse(List<CommonUser> response) {
+                            ((SwitchPatientUi) ui).getSwitchPatientListCallBack(response);
+                        }
+
+                        @Override
+                        public void onFailure(ResponseError error) {
+                           ui.onResponseError(error);
+                        }
+                    });
+        }
+    }
     public interface MainUiCallbacks{//给UI界面调用
         void getIndexRecommendInfo();
         void getHospitalsList();
@@ -320,6 +346,7 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
         void focusHospital(String UID,String HID,String DoctorCode,String DepCode,String Type);
         void getCollectDoctor(String uID);
         void focusDoctor(String UID,String HID,String DoctorCode,String DepCode,String Type);
+        void getSwitchPatientList(String UID);
     }
 
     public interface MainUi extends BaseController.Ui<MainUiCallbacks> {
@@ -352,6 +379,9 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
         //获取收藏的医生
         void getCollectDoctorCallBack(List<Doctor>list);
         void FocusDoctorCallBack(Result result);
+    }
+    public interface SwitchPatientUi extends MainUi{
+        void getSwitchPatientListCallBack(List<CommonUser>list);
     }
 
     public AppointmentController getAppointmentController() {

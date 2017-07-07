@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -26,6 +25,7 @@ import com.lenovohit.lartemis_api.model.User;
 import com.lenovohit.lartemis_api.ui.controller.MainController;
 import com.lenovohit.lartemis_api.utils.CommonUtil;
 import com.lenovohit.lartemis_api.utils.Constants;
+import com.lenovohit.lartemis_api.views.EmptyView;
 import com.lenovohit.lartemis_api.views.LXHeaderView;
 import com.lenovohit.lartemis_api.views.RecycleViewDivider;
 
@@ -59,8 +59,8 @@ public class LX_DoctorActivity extends CoreActivity<MainController.MainUiCallbac
     LXHeaderView lxHeaderViewRotate;
     private Unbinder bind;
     private List<Doctor>collectDoctorList=new ArrayList<>();
-    private View notDataView;
     private CollectDoctorAdapter adapter;
+    private EmptyView emptyView;
 
     @Override
     protected BaseController getController() {
@@ -77,7 +77,16 @@ public class LX_DoctorActivity extends CoreActivity<MainController.MainUiCallbac
             tvDoctorCount.setText(tempUser.getCollectDoctors().size()+"");
         }
         adapter = new CollectDoctorAdapter(R.layout.lx_mine_doctor_info_row,collectDoctorList);
-        adapter.setEmptyView(R.layout.lx_preloading_view_layout, (ViewGroup) recycleView.getParent());
+        emptyView = new EmptyView(recycleView.getContext(), (ViewGroup) recycleView.getParent());
+        emptyView.setType(EmptyView.TYPE_LOADING);
+        emptyView.setRefreshListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                emptyView.setType(EmptyView.TYPE_LOADING);
+                getCollectDoctorData();
+            }
+        });
+        adapter.setEmptyView(emptyView.getView());
         recycleView.setLayoutManager(new LinearLayoutManager(recycleView.getContext(),LinearLayoutManager.VERTICAL,false));
         recycleView.addItemDecoration(new RecycleViewDivider(recycleView.getContext(), LinearLayoutManager.VERTICAL));
         recycleView.setAdapter(adapter);
@@ -94,14 +103,7 @@ public class LX_DoctorActivity extends CoreActivity<MainController.MainUiCallbac
                 getCollectDoctorData();
             }
         });
-        //没有数据时的布局,以及点击重试
-        notDataView = LayoutInflater.from(recycleView.getContext()).inflate(R.layout.lx_no_data_view, (ViewGroup) recycleView.getParent(), false);
-        notDataView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getCollectDoctorData();
-            }
-        });
+
         //获取数据
         getCollectDoctorData();
     }
@@ -132,7 +134,8 @@ public class LX_DoctorActivity extends CoreActivity<MainController.MainUiCallbac
             tvDoctorCount.setText(list.size() + "");
         }
         //不管有没有数据，都要设置以下两项
-        adapter.setEmptyView(notDataView);
+        emptyView.setType(EmptyView.TYPE_NO_DATA);
+        emptyView.setMessage("您还没有关注医生,赶紧关注吧!");
         lxHeaderViewRotate.refreshComplete();
     }
 
@@ -162,6 +165,9 @@ public class LX_DoctorActivity extends CoreActivity<MainController.MainUiCallbac
     public void onResponseError(ResponseError error) {
         super.onResponseError(error);
         CommonUtil.showSnackBar(tvDoctorCount,error.getMessage());
+        lxHeaderViewRotate.refreshComplete();
+        emptyView.setType(EmptyView.TYPE_ERROR);
+        emptyView.setMessage(error.getMessage());
     }
 
     @Override
