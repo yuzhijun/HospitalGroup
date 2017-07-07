@@ -110,7 +110,53 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
             public void getSwitchPatientList(String UID) {
                 getSwitchPatientListData(ui,UID);
             }
+
+            @Override
+            public void getValiteCode(String phoneNumber, String type) {
+
+            }
+
+            @Override
+            public void verifyCodeIsTrue(String phoneNumber, String code, String type) {
+
+            }
+
+            @Override
+            public void getPatientList(String hid, String phoneNumber) {
+
+            }
         };
+    }
+    //添加患者时，获取验证码
+    private void getCodeData(final MainUi ui,String phoneNumber,String type){
+        if (ui instanceof SwitchPatientMangerUi){
+            CoreActivity.currentActivity.showProgressDialog();
+            mApiService.getLoginCode(phoneNumber,type)
+                    .map(new HttpResultFunc<Result>())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                   .subscribe(new RequestCallBack<Result>() {
+                       @Override
+                       public void onResponse(Result response) {
+                           CoreActivity.currentActivity.hideProgressDialog();
+                           ((SwitchPatientMangerUi) ui).getVerifyCodeCallBack(response);
+                       }
+
+                       @Override
+                       public void onFailure(ResponseError error) {
+                            CoreActivity.currentActivity.hideProgressDialog();
+                           ui.onResponseError(error);
+                       }
+                   });
+        }
+    }
+    //添加患者时，验证验证码是否正确
+    private void verifyCodeData(final MainUi ui,String phoneNumber,String code,String type){
+
+    }
+    //添加患者时，获得此手机号绑定的就诊卡
+    private void getPatientListData(final MainUi ui,String hid,String phoneNumber){
+
     }
     //获取首页信息
     private void getIndexRecommendInfoData(final MainUi ui){
@@ -347,6 +393,9 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
         void getCollectDoctor(String uID);
         void focusDoctor(String UID,String HID,String DoctorCode,String DepCode,String Type);
         void getSwitchPatientList(String UID);
+        void getValiteCode(String phoneNumber,String type);
+        void verifyCodeIsTrue(String phoneNumber,String code,String type);
+        void getPatientList(String hid,String phoneNumber);
     }
 
     public interface MainUi extends BaseController.Ui<MainUiCallbacks> {
@@ -383,7 +432,14 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
     public interface SwitchPatientUi extends MainUi{
         void getSwitchPatientListCallBack(List<CommonUser>list);
     }
-
+    public interface  SwitchPatientMangerUi extends  MainUi{
+        //获取验证码
+        void getVerifyCodeCallBack(Result result);
+        //验证验证码
+        void verifyCodeCallBack(Result result);
+        //获取此手机号的就诊卡
+        void getPatientListCallBack(List<CommonUser>list);
+    }
     public AppointmentController getAppointmentController() {
         return mAppointmentController;
     }

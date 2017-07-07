@@ -17,6 +17,10 @@ import com.lenovohit.lartemis_api.model.ResponseError;
 import com.lenovohit.lartemis_api.ui.controller.AppointmentController;
 import com.lenovohit.lartemis_api.utils.Constants;
 import com.lenovohit.lartemis_api.views.RecycleViewDivider;
+import com.lenovohit.lrouter_api.base.LRouterAppcation;
+import com.lenovohit.lrouter_api.core.LRouterRequest;
+import com.lenovohit.lrouter_api.core.LocalRouter;
+import com.lenovohit.lrouter_api.core.callback.IRequestCallBack;
 import com.lenovohit.module_appointment.R;
 import com.lenovohit.module_appointment.ui.adapter.AppointmentHosAdapter;
 
@@ -50,7 +54,7 @@ public class LX_AppointmentHosActivity extends CoreActivity<AppointmentControlle
         isShowToolBar(true);
         stringExtra = getIntent().getStringExtra(Constants.PUT_TYPE);
         if (stringExtra.equals(Constants.PUT_TYPE_SWITCH_PATIENT)){
-            setCenterTitle("添加患者");
+            setCenterTitle("新增就诊者");
         }else if (stringExtra.equals(Constants.PUT_TYPE_APPOINTMENT)){
             setCenterTitle("手机预约");
         }
@@ -81,6 +85,25 @@ public class LX_AppointmentHosActivity extends CoreActivity<AppointmentControlle
                     LX_AppointmentMainActivity.startAppointmentMain(LX_AppointmentHosActivity.this,((Hospitals)adapter.getData().get(position)).getHID());
                 }else if (stringExtra.equals(Constants.PUT_TYPE_SWITCH_PATIENT)){
                     //跳转到对应的添加患者列表
+                    try {
+                        LocalRouter.getInstance(LRouterAppcation.getInstance())
+                                .navigation(CoreActivity.currentActivity, LRouterRequest.getInstance(CoreActivity.currentActivity)
+                                        .processName("com.lenovohit.hospitalgroup")
+                                        .provider("main")
+                                        .action("MainEntranceAction")
+                                        .param(Constants.PUT_TYPE, ((Hospitals)adapter.getData().get(position)).getHID()))
+                                .setCallBack(new IRequestCallBack() {
+                                    @Override
+                                    public void onSuccess(final String result) {
+                                    }
+                                    @Override
+                                    public void onFailure(Exception e) {
+                                    }
+                                });
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    finish();
                 }
             }
         });

@@ -37,6 +37,7 @@ public interface ApiService {
    @FormUrlEncoded
     @POST("NeweHealthServices/api/User/SendSMSCode")
     Observable<HttpResult<Result>>getLoginCode(@Field("PhoneNumber")String PhoneNumber, @Field("TempCode")String TempCode);
+   //登录验证
     @FormUrlEncoded
     @POST("NeweHealthServices/api/User/SetAppPushInfo")
     Observable<HttpResult<Result>>getLoginValidate(@Field("UID")String UID,@Field("PlatformType") String PlatformType,@Field("OpenID")String OpenID,@Field("AliasType")String AliasType,@Field("Alias")String Alias);
@@ -60,5 +61,7 @@ public interface ApiService {
     Observable<HttpResult<List<DoctorAppoint>>> getDoctorAppoint(@Query("hID")String hID,@Query("dCode")String dCode,@Query("depCode")String depCode,@Query("tag")String tag);
     @GET("NeweHealthServices/api/User/GetAllCommonUser/{uID}")
     Observable<HttpResult<List<CommonUser>>>getSwitchPatientList(@Path("uID")String uid);
-
+    @FormUrlEncoded
+    @POST("NeweHealthServices/api/User/VerifyPhoneCode")
+    Observable<HttpResult<Result>>VelifyCdoe(@Field("PhoneNumber")String PhoneNumber,@Field("SMSCode")String SMSCode,@Field("TempCode")String TempCode);
 }
