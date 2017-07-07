@@ -130,7 +130,6 @@ public class MainHomeFragment extends CoreFragment<MainController.MainUiCallback
             @Override
             public void onClick(View v) {
                 emptyView.setType(EmptyView.TYPE_LOADING);
-                adapter.setEmptyView(emptyView.getView());
                 getCallbacks().getIndexRecommendInfo();
             }
         });
@@ -178,7 +177,6 @@ public class MainHomeFragment extends CoreFragment<MainController.MainUiCallback
         if(null == homePage || null == homePage.getTopNews()){
             lx_header_view_rotate.refreshComplete();
             emptyView.setType(EmptyView.TYPE_NO_DATA);
-            adapter.setEmptyView(emptyView.getView());
             return;
         }
 
@@ -206,7 +204,6 @@ public class MainHomeFragment extends CoreFragment<MainController.MainUiCallback
         lx_header_view_rotate.refreshComplete();
         emptyView.setType(EmptyView.TYPE_ERROR);
         emptyView.setMessage(error.getMessage());
-        adapter.setEmptyView(emptyView.getView());
     }
 
     @Override

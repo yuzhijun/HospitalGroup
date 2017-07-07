@@ -77,7 +77,6 @@ public class LX_HospitalsActivity extends CoreActivity<MainController.MainUiCall
             @Override
             public void onClick(View v) {
                 emptyView.setType(EmptyView.TYPE_LOADING);
-                adapter.setEmptyView(emptyView.getView());
                 getCollectHospitalData();
             }
         });
@@ -142,7 +141,6 @@ public class LX_HospitalsActivity extends CoreActivity<MainController.MainUiCall
         }
         emptyView.setType(EmptyView.TYPE_NO_DATA);
         emptyView.setMessage("您还没有关注医院，赶紧关注吧");
-        adapter.setEmptyView(emptyView.getView());
         lx_header_view_rotate.refreshComplete();
     }
 
@@ -170,7 +168,6 @@ public class LX_HospitalsActivity extends CoreActivity<MainController.MainUiCall
         lx_header_view_rotate.refreshComplete();
         emptyView.setType(EmptyView.TYPE_ERROR);
         emptyView.setMessage(error.getMessage());
-        adapter.setEmptyView(emptyView.getView());
     }
 
 

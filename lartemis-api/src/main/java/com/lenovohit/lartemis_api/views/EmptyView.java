@@ -45,9 +45,6 @@ public class EmptyView extends View{
         tvTitle = (TextView) view.findViewById(R.id.tvTitle);
         plLayout= (PercentLinearLayout) view.findViewById(R.id.plLayout);
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
-        if (listener!=null){
-            plLayout.setOnClickListener(listener);
-        }
     }
 
     public  void setType(String type){
@@ -72,7 +69,10 @@ public class EmptyView extends View{
         tvTitle.setText(text);
     }
     public void setRefreshListener(OnClickListener listener){
-        this.listener=listener;
+        if (listener==null){
+            return;
+        }
+        plLayout.setOnClickListener(listener);
     }
     public View getView(){
         return  view;

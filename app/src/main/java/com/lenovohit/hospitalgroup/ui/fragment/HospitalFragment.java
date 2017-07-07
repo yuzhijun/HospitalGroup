@@ -135,7 +135,6 @@ public class HospitalFragment extends CoreFragment<MainController.MainUiCallback
             @Override
             public void onClick(View v) {
                 emptyView.setType(EmptyView.TYPE_LOADING);
-                adapter.setEmptyView(emptyView.getView());
                 getCallbacks().getIndexRecommendInfo();
             }
         });
@@ -181,7 +180,6 @@ public class HospitalFragment extends CoreFragment<MainController.MainUiCallback
             return;
         }
         emptyView.setType(EmptyView.TYPE_NO_DATA);
-        adapter.setEmptyView(emptyView.getView());
         hospitalList.clear();
         adapter.setNewData(hospitalList);
         lx_header_view_rotate.refreshComplete();
@@ -207,7 +205,6 @@ public class HospitalFragment extends CoreFragment<MainController.MainUiCallback
         if(null == response || null == response.getTopNews()){
             lx_header_view_rotate.refreshComplete();
             emptyView.setType(EmptyView.TYPE_NO_DATA);
-            adapter.setEmptyView(emptyView.getView());
             return;
         }
         adapter.getData().clear();
@@ -217,7 +214,6 @@ public class HospitalFragment extends CoreFragment<MainController.MainUiCallback
         lx_header_view_rotate.refreshComplete();
         adapter.loadMoreEnd();
         emptyView.setType(EmptyView.TYPE_NO_DATA);
-        adapter.setEmptyView(emptyView.getView());
     }
 
     @Override
@@ -226,7 +222,6 @@ public class HospitalFragment extends CoreFragment<MainController.MainUiCallback
         lx_header_view_rotate.refreshComplete();
         emptyView.setType(EmptyView.TYPE_ERROR);
         emptyView.setMessage(error.getMessage());
-        adapter.setEmptyView(emptyView.getView());
     }
 
     @Override

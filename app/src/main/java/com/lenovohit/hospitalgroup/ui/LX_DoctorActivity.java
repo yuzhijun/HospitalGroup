@@ -83,7 +83,6 @@ public class LX_DoctorActivity extends CoreActivity<MainController.MainUiCallbac
             @Override
             public void onClick(View v) {
                 emptyView.setType(EmptyView.TYPE_LOADING);
-                adapter.setEmptyView(emptyView.getView());
                 getCollectDoctorData();
             }
         });
@@ -137,7 +136,6 @@ public class LX_DoctorActivity extends CoreActivity<MainController.MainUiCallbac
         //不管有没有数据，都要设置以下两项
         emptyView.setType(EmptyView.TYPE_NO_DATA);
         emptyView.setMessage("您还没有关注医生,赶紧关注吧!");
-        adapter.setEmptyView(emptyView.getView());
         lxHeaderViewRotate.refreshComplete();
     }
 
@@ -170,7 +168,6 @@ public class LX_DoctorActivity extends CoreActivity<MainController.MainUiCallbac
         lxHeaderViewRotate.refreshComplete();
         emptyView.setType(EmptyView.TYPE_ERROR);
         emptyView.setMessage(error.getMessage());
-        adapter.setEmptyView(emptyView.getView());
     }
 
     @Override

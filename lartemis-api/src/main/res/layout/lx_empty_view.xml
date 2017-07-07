@@ -8,6 +8,7 @@
         android:background="@color/grey_normal_bg"
         android:clickable="true"
          android:id="@+id/plLayout"
+    android:descendantFocusability="blocksDescendants"
         >
         <RelativeLayout
             android:layout_width="154dp"
