@@ -2,6 +2,7 @@ package com.lenovohit.lartemis_api.network;
 
 import com.lenovohit.lartemis_api.model.CommonObj;
 import com.lenovohit.lartemis_api.model.Doctor;
+import com.lenovohit.lartemis_api.model.DoctorAppoint;
 import com.lenovohit.lartemis_api.model.HomePage;
 import com.lenovohit.lartemis_api.model.Hospitals;
 import com.lenovohit.lartemis_api.model.HttpResult;
@@ -54,4 +55,6 @@ public interface ApiService {
     Observable<HttpResult<Result>>FocusHospOrDoctor(@Field("UID")String UID,@Field("HID")String HID,@Field("DoctorCode") String DoctorCode,@Field("DepCode")String DepCode,@Field("Type")String Type);
     @GET("eHealthPlatformService/api/Hospital/DepDoctors/{hID}/{depCode}/{tag}")
     Observable<HttpResult<List<Doctor>>> getDepDoctors(@Path("hID") String hID,@Path("depCode") String depCode,@Path("tag") String tag);
+    @GET("eHealthPlatformService/api/Appointment/DoctorAppoint")
+    Observable<HttpResult<List<DoctorAppoint>>> getDoctorAppoint(@Query("hID")String hID,@Query("dCode")String dCode,@Query("depCode")String depCode,@Query("tag")String tag);
 }

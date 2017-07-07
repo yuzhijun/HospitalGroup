@@ -77,7 +77,7 @@ public class HomeMultipleRecycleAdapter extends BaseMultiItemQuickAdapter<HomePa
 
     //绑定模块
     private void bindToModuleData(BaseViewHolder helper, final HomePage item){
-
+        if (null == item.getIndexPageModels() || item.getIndexPageModels().size() < 4)return;
         ((SimpleDraweeView)helper.getView(R.id.ivAppointment)).setImageURI(item.getIndexPageModels().get(0).getIconURL());
         ((SimpleDraweeView)helper.getView(R.id.ivTodayAppointment)).setImageURI(item.getIndexPageModels().get(1).getIconURL());
         ((SimpleDraweeView)helper.getView(R.id.ivMobileTreatment)).setImageURI(item.getIndexPageModels().get(2).getIconURL());
