@@ -72,7 +72,6 @@ public class MainHomeFragment extends CoreFragment<MainController.MainUiCallback
         isShowToolBar(false);
         initPtrFrame();
         initRecyclerView();
-
         getCallbacks().getIndexRecommendInfo();
     }
 
@@ -179,7 +178,6 @@ public class MainHomeFragment extends CoreFragment<MainController.MainUiCallback
             emptyView.setType(EmptyView.TYPE_NO_DATA);
             return;
         }
-
         adapter.getData().clear();
         mHomePages.clear();
         try {

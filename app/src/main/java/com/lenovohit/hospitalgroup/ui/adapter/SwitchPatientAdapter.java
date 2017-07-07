@@ -4,7 +4,7 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.widget.ImageView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseItemDraggableAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.lenovohit.hospitalgroup.R;
 import com.lenovohit.lartemis_api.model.CommonUser;
@@ -16,7 +16,7 @@ import java.util.List;
  * Created by Administrator on 2017-07-06.
  */
 
-public class SwitchPatientAdapter extends BaseQuickAdapter<CommonUser,BaseViewHolder>{
+public class SwitchPatientAdapter extends BaseItemDraggableAdapter<CommonUser,BaseViewHolder> {
     public SwitchPatientAdapter(@LayoutRes int layoutResId, @Nullable List<CommonUser> data) {
         super(layoutResId, data);
     }

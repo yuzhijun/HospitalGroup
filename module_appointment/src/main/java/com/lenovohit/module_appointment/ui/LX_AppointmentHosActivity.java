@@ -15,6 +15,7 @@ import com.lenovohit.lartemis_api.data.HospitalData;
 import com.lenovohit.lartemis_api.model.Hospitals;
 import com.lenovohit.lartemis_api.model.ResponseError;
 import com.lenovohit.lartemis_api.ui.controller.AppointmentController;
+import com.lenovohit.lartemis_api.utils.Constants;
 import com.lenovohit.lartemis_api.views.RecycleViewDivider;
 import com.lenovohit.module_appointment.R;
 import com.lenovohit.module_appointment.ui.adapter.AppointmentHosAdapter;
@@ -32,6 +33,7 @@ public class LX_AppointmentHosActivity extends CoreActivity<AppointmentControlle
     private AppointmentHosAdapter mHosAdapter;
     private View notDataView;
     private List<Hospitals> mHospitalses = new ArrayList<>();
+    private String stringExtra;
 
     @Override
     protected int getLayoutId() {
@@ -46,7 +48,12 @@ public class LX_AppointmentHosActivity extends CoreActivity<AppointmentControlle
     @Override
     public void initView(@Nullable Bundle savedInstanceState) {
         isShowToolBar(true);
-        setCenterTitle("手机预约");
+        stringExtra = getIntent().getStringExtra(Constants.PUT_TYPE);
+        if (stringExtra.equals(Constants.PUT_TYPE_SWITCH_PATIENT)){
+            setCenterTitle("添加患者");
+        }else if (stringExtra.equals(Constants.PUT_TYPE_APPOINTMENT)){
+            setCenterTitle("手机预约");
+        }
         rvHosList = (RecyclerView) findViewById(R.id.rvHosList);
         rvHosList.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
         rvHosList.addItemDecoration(new RecycleViewDivider(this,LinearLayoutManager.VERTICAL));
@@ -69,8 +76,12 @@ public class LX_AppointmentHosActivity extends CoreActivity<AppointmentControlle
         mHosAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                HospitalData.setCurrentHospital((Hospitals)adapter.getData().get(position));
-                LX_AppointmentMainActivity.startAppointmentMain(LX_AppointmentHosActivity.this,((Hospitals)adapter.getData().get(position)).getHID());
+                if (stringExtra.equals(Constants.PUT_TYPE_APPOINTMENT)){
+                    HospitalData.setCurrentHospital((Hospitals)adapter.getData().get(position));
+                    LX_AppointmentMainActivity.startAppointmentMain(LX_AppointmentHosActivity.this,((Hospitals)adapter.getData().get(position)).getHID());
+                }else if (stringExtra.equals(Constants.PUT_TYPE_SWITCH_PATIENT)){
+                    //跳转到对应的添加患者列表
+                }
             }
         });
     }

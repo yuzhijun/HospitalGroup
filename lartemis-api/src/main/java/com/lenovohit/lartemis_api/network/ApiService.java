@@ -33,14 +33,13 @@ public interface ApiService {
     Observable<HttpResult<List<Hospitals>>>getIndexHospitalList();
     @GET("NeweHealthServices/api/User/LoginInfo/{phoneNumber}/{smsCode}")
     Observable<HttpResult<User>>getLoginData(@Path("phoneNumber")String phoneNumber,@Path("smsCode")String smsCode);
-
    @FormUrlEncoded
     @POST("NeweHealthServices/api/User/SendSMSCode")
     Observable<HttpResult<Result>>getLoginCode(@Field("PhoneNumber")String PhoneNumber, @Field("TempCode")String TempCode);
     @FormUrlEncoded
     @POST("NeweHealthServices/api/User/SetAppPushInfo")
     Observable<HttpResult<Result>>getLoginValidate(@Field("UID")String UID,@Field("PlatformType") String PlatformType,@Field("OpenID")String OpenID,@Field("AliasType")String AliasType,@Field("Alias")String Alias);
-   @FormUrlEncoded
+    @FormUrlEncoded
     @POST("NeweHealthServices/api/User/EditUserInfo")
     Observable<HttpResult<Result>>editUserInfo(@Field("uid")String uid,@Field("name")String name,@Field("sex")String sex,@Field("IDCard")String IDCard);
     @GET("NeweHealthServices/api/Hospital/SearchHospitals")

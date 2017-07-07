@@ -36,4 +36,8 @@ public class Constants {
     public static final String FOCUS_HOSPITAL_YES="11";
     public static final String FOCUS_HOSPITAL_NO="10";
 
+    //进程间通讯 传递参数
+    public static final String PUT_TYPE="PUT_TYPE";
+    public static final String PUT_TYPE_SWITCH_PATIENT="PUT_TYPE_SWITCH_PATIENT";
+    public static final String PUT_TYPE_APPOINTMENT="PUT_TYPE_APPOINTMENT";
 }

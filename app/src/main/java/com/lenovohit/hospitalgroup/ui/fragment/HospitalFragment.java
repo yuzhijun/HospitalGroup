@@ -214,6 +214,7 @@ public class HospitalFragment extends CoreFragment<MainController.MainUiCallback
         lx_header_view_rotate.refreshComplete();
         adapter.loadMoreEnd();
         emptyView.setType(EmptyView.TYPE_NO_DATA);
+        emptyView.setMessage("还没有医院,请重试");
     }
 
     @Override

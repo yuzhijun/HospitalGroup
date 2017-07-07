@@ -15,6 +15,7 @@ import com.lenovohit.hospitalgroup.R;
 import com.lenovohit.lartemis_api.base.CoreActivity;
 import com.lenovohit.lartemis_api.model.HomePage;
 import com.lenovohit.lartemis_api.model.TopNew;
+import com.lenovohit.lartemis_api.utils.Constants;
 import com.lenovohit.lartemis_api.views.RecycleViewDivider;
 import com.lenovohit.lrouter_api.base.LRouterAppcation;
 import com.lenovohit.lrouter_api.core.LRouterRequest;
@@ -130,7 +131,8 @@ public class HomeMultipleRecycleAdapter extends BaseMultiItemQuickAdapter<HomePa
                             .navigation(CoreActivity.currentActivity, LRouterRequest.getInstance(CoreActivity.currentActivity)
                                     .processName("com.lenovohit.hospitalgroup:module_appointment")
                                     .provider("AppoinmentProvider")
-                                    .action("EntranceAction"))
+                                    .action("EntranceAction")
+                                    .param(Constants.PUT_TYPE,Constants.PUT_TYPE_APPOINTMENT))
                             .setCallBack(new IRequestCallBack() {
                                 @Override
                                 public void onSuccess(final String result) {

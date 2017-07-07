@@ -2,14 +2,18 @@ package com.lenovohit.hospitalgroup.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback;
+import com.chad.library.adapter.base.listener.OnItemSwipeListener;
 import com.google.gson.Gson;
 import com.lenovohit.hospitalgroup.R;
 import com.lenovohit.hospitalgroup.ui.adapter.SwitchPatientAdapter;
@@ -25,6 +29,10 @@ import com.lenovohit.lartemis_api.utils.CommonUtil;
 import com.lenovohit.lartemis_api.utils.Constants;
 import com.lenovohit.lartemis_api.views.EmptyView;
 import com.lenovohit.lartemis_api.views.RecycleViewDivider;
+import com.lenovohit.lrouter_api.base.LRouterAppcation;
+import com.lenovohit.lrouter_api.core.LRouterRequest;
+import com.lenovohit.lrouter_api.core.LocalRouter;
+import com.lenovohit.lrouter_api.core.callback.IRequestCallBack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +67,24 @@ public class LX_SwitchPatientActivity extends CoreActivity<MainController.MainUi
         setRightTitleAndIcon("", R.mipmap.lx_iv_top_add, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                try{
+                    LocalRouter.getInstance(LRouterAppcation.getInstance())
+                            .navigation(CoreActivity.currentActivity, LRouterRequest.getInstance(CoreActivity.currentActivity)
+                                    .processName("com.lenovohit.hospitalgroup:module_appointment")
+                                    .provider("AppoinmentProvider")
+                                    .action("EntranceAction")
+                                    .param(Constants.PUT_TYPE, Constants.PUT_TYPE_SWITCH_PATIENT))
+                            .setCallBack(new IRequestCallBack() {
+                        @Override
+                        public void onSuccess(final String result) {
+                        }
+                        @Override
+                        public void onFailure(Exception e) {
+                        }
+                    });
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         });
         bind = ButterKnife.bind(this);
@@ -95,6 +120,42 @@ public class LX_SwitchPatientActivity extends CoreActivity<MainController.MainUi
                 adapter.notifyDataSetChanged();
                 CommonUtil.setShardPString(Constants.COMM_USER_JSON,new Gson().toJson(commonUsers.get(position)));
                 finish();
+            }
+        });
+        ItemDragAndSwipeCallback mItemDragAndSwipeCallback = new ItemDragAndSwipeCallback(adapter);
+        mItemDragAndSwipeCallback.setSwipeMoveFlags( ItemTouchHelper.START);
+        ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(mItemDragAndSwipeCallback );
+        mItemTouchHelper.attachToRecyclerView(recycleView);
+
+        adapter.enableSwipeItem();
+//        adapter.enableDragItem(mItemTouchHelper);
+
+        adapter.setOnItemSwipeListener(new OnItemSwipeListener() {
+            @Override
+            public void onItemSwipeStart(RecyclerView.ViewHolder viewHolder, int pos) {
+
+            }
+
+            @Override
+            public void clearView(RecyclerView.ViewHolder viewHolder, int pos) {
+
+            }
+
+            @Override
+            public void onItemSwiped(RecyclerView.ViewHolder viewHolder, int pos) {
+//                    RelativeLayout rlLayout = ((BaseViewHolder)viewHolder).getView(R.id.rlLayout);
+//                    RecyclerView.LayoutParams params=new RecyclerView.LayoutParams(900,RecyclerView.LayoutParams.WRAP_CONTENT);
+//                    rlLayout.setLayoutParams(params);
+            }
+
+            @Override
+            public void onItemSwipeMoving(Canvas canvas, RecyclerView.ViewHolder viewHolder, float dX, float dY, boolean isCurrentlyActive) {
+//                Log.e("tag",dX+"..."+dY);
+//                RelativeLayout rlLayout = ((BaseViewHolder)viewHolder).getView(R.id.rlLayout);
+//                if (-dX>=100){
+//                    RecyclerView.LayoutParams params=new RecyclerView.LayoutParams(canvas.getWidth()-100,RecyclerView.LayoutParams.WRAP_CONTENT);
+//                    rlLayout.setLayoutParams(params);
+//                }
             }
         });
     }
