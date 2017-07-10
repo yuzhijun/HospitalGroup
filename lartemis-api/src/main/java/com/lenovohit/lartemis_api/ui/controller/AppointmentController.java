@@ -135,6 +135,25 @@ public class AppointmentController extends BaseController<AppointmentController.
                         });
 
             }
+
+            @Override
+            public void getDoctorBase(String hid, String depCode, String dCode, String uid) {
+                mApiService.getDoctorBase(hid,depCode,dCode,uid)
+                        .map(new HttpResultFunc<Doctor>())
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new RequestCallBack<Doctor>() {
+                            @Override
+                            public void onResponse(Doctor response) {
+                                ((AppointmentDocInfoUi)ui).getDoctorBaseCallBack(response);
+                            }
+
+                            @Override
+                            public void onFailure(ResponseError error) {
+                                ui.onResponseError(error);
+                            }
+                        });
+            }
         };
     }
 
@@ -143,6 +162,7 @@ public class AppointmentController extends BaseController<AppointmentController.
         void getAllDep(String hid);
         void getDepDoctors(String hid,String depCode,String tag);
         void getDoctorAppoint(String hid,String dCode,String depCode,String tag);
+        void getDoctorBase(String hid,String depCode,String dCode,String uid);
     }
 
     public interface AppointmentUi extends BaseController.Ui<AppointmentController.AppointmentUiCallbacks> {
@@ -163,5 +183,6 @@ public class AppointmentController extends BaseController<AppointmentController.
 
     public interface AppointmentDocInfoUi extends AppointmentUi{
         void getDoctorAppointCallBack(List<DoctorAppoint> response);
+        void getDoctorBaseCallBack(Doctor doctor);
     }
 }

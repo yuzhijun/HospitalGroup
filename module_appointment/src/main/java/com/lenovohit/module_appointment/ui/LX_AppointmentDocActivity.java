@@ -86,7 +86,7 @@ public class LX_AppointmentDocActivity extends CoreActivity<AppointmentControlle
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Doctor doctor = mDocAdapter.getData().get(position);
-                LX_DoctorInfoActivity.startDoctorInfoActivity(LX_AppointmentDocActivity.this,doctor.getHID(),doctor.getDoctorCode(),doctor.getDepCode(),tag);
+                LX_DoctorInfoActivity.startDoctorInfoActivity(LX_AppointmentDocActivity.this,doctor,tag);
             }
         });
     }

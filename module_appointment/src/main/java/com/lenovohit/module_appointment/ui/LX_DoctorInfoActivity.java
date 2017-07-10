@@ -12,17 +12,27 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.lenovohit.lartemis_api.base.BaseController;
 import com.lenovohit.lartemis_api.base.CoreActivity;
 import com.lenovohit.lartemis_api.core.LArtemis;
+import com.lenovohit.lartemis_api.data.UserData;
+import com.lenovohit.lartemis_api.model.Doctor;
 import com.lenovohit.lartemis_api.model.DoctorAppoint;
+import com.lenovohit.lartemis_api.model.DoctorArrangeShow;
 import com.lenovohit.lartemis_api.ui.controller.AppointmentController;
 import com.lenovohit.lartemis_api.utils.BlurUtil;
+import com.lenovohit.lartemis_api.utils.CommonUtil;
+import com.lenovohit.lartemis_api.utils.Constants;
+import com.lenovohit.lartemis_api.utils.SuplusUtil;
 import com.lenovohit.module_appointment.R;
 import com.lenovohit.module_appointment.ui.adapter.AppointmentDocArrangeAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,23 +40,33 @@ import java.util.List;
  * Created by yuzhijun on 2017/7/6.
  */
 public class LX_DoctorInfoActivity extends CoreActivity<AppointmentController.AppointmentUiCallbacks> implements AppointmentController.AppointmentDocInfoUi{
-    public static final String HOSP_ID = "HOSP_ID";
-    public static final String DOCTOR_CODE = "DOCTOR_CODE";
-    public static final String DEP_CODE ="DEP_CODE";
+    public static final String DOCTOR = "DOCTOR";
     public static final String TAG = "TAG";
 
     private AppBarLayout app_bar_layout;
     private Toolbar mToolbar;
+    private LinearLayout llLeft;
     private LinearLayout head_layout;
+    private LinearLayout llFocus;
+    private TextView tvDocTypeLevel;
+    private TextView tvDoctorName;
+    private TextView tvSkilled;
+    private TextView tvDoctorDetail;
+    private TextView tvFocus;
+    private TextView tvAppointNum;
+    private TextView tvMoney;
+    private TextView tvFocusContent;
+    private SimpleDraweeView sdvDoctorLogo;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
     private RecyclerView rvDocAppointment;
     private GridLayoutManager mGridLayoutManager;
     private AppointmentDocArrangeAdapter mDocArrangeAdapter;
+    private List<DoctorArrangeShow> mDoctorArrangeShows = new ArrayList<>();
+    private List<DoctorAppoint> mDoctorAppoints = new ArrayList<>();
 
     private String tag;
-    public String hospID;
-    public String doctorCode;
-    public String depCode;
+    private Doctor doctor;
+
 
     @Override
     protected int getLayoutId() {
@@ -62,14 +82,27 @@ public class LX_DoctorInfoActivity extends CoreActivity<AppointmentController.Ap
     public void initView(@Nullable Bundle savedInstanceState) {
         isShowToolBar(false);
         tag = getIntent().getExtras().getString(TAG);
-        hospID = getIntent().getExtras().getString(HOSP_ID);
-        doctorCode = getIntent().getExtras().getString(DOCTOR_CODE);
-        depCode = getIntent().getExtras().getString(DEP_CODE);
+        doctor = (Doctor) getIntent().getExtras().getSerializable(DOCTOR);
 
         app_bar_layout = (AppBarLayout) findViewById(R.id.app_bar_layout);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        llLeft = (LinearLayout) findViewById(R.id.llBackLeft);
+        llFocus = (LinearLayout) findViewById(R.id.llFocus);
+        tvDocTypeLevel = (TextView) findViewById(R.id.tvDocTypeLevel);
+        tvDoctorName = (TextView) findViewById(R.id.tvDoctorName);
+        tvSkilled = (TextView) findViewById(R.id.tvSkilled);
+        tvDoctorDetail = (TextView) findViewById(R.id.tvDoctorDetail);
+        tvFocus = (TextView) findViewById(R.id.tvFocus);
+        tvAppointNum = (TextView) findViewById(R.id.tvAppointNum);
+        tvMoney = (TextView) findViewById(R.id.tvMoney);
+        tvFocusContent = (TextView) findViewById(R.id.tvFocusContent);
+        sdvDoctorLogo = (SimpleDraweeView) findViewById(R.id.sdvDoctorLogo);
+
+        tvDoctorName.setText(CommonUtil.isStrEmpty(doctor.getDoctorName())?"未知姓名":doctor.getDoctorName());
+        tvDocTypeLevel.setText(CommonUtil.isStrEmpty(doctor.getJobName()+doctor.getDepName())?"暂无明确职称":doctor.getJobName()+" "+doctor.getDepName());
+        sdvDoctorLogo.setImageURI(doctor.getPhotoUrl());
+        tvSkilled.setText(CommonUtil.isStrEmpty(doctor.getExpert())?"暂无擅长说明":doctor.getExpert());
+        tvDoctorDetail.setText(CommonUtil.isStrEmpty(doctor.getInfo())?"暂无医生简介,等待医生录入":doctor.getInfo());
 
         head_layout = (LinearLayout) findViewById(R.id.head_layout);
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.lx_banner_main_page);
@@ -81,37 +114,78 @@ public class LX_DoctorInfoActivity extends CoreActivity<AppointmentController.Ap
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 if (verticalOffset <= -head_layout.getHeight() / 2) {
-                    mCollapsingToolbarLayout.setTitle("陈诗艺");
+                    mCollapsingToolbarLayout.setTitle(CommonUtil.isStrEmpty(doctor.getDoctorName())?"未知姓名":doctor.getDoctorName());
                 } else {
                     mCollapsingToolbarLayout.setTitle(" ");
                 }
             }
         });
 
-        rvDocAppointment = (RecyclerView) findViewById(R.id.rvDocAppointment);
-        mGridLayoutManager = new GridLayoutManager(this,3,GridLayoutManager.HORIZONTAL,false);
-        rvDocAppointment.setLayoutManager(mGridLayoutManager);
+        //设置排班布局
+        try {
+            rvDocAppointment = (RecyclerView) findViewById(R.id.rvDocAppointment);
+            mGridLayoutManager = new GridLayoutManager(this,3,GridLayoutManager.HORIZONTAL,false);
+            rvDocAppointment.setLayoutManager(mGridLayoutManager);
+            mDocArrangeAdapter = new AppointmentDocArrangeAdapter(R.layout.lx_grid_doctor_arrange_item,SuplusUtil.getDoctorArrangeShows(mDoctorAppoints));
+            rvDocAppointment.setAdapter(mDocArrangeAdapter);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
+        //获取医生基本信息和医生排班信息
+        getCallbacks().getDoctorBase(doctor.getHID(),doctor.getDepCode(),doctor.getDoctorCode(),
+                (null == UserData.getTempUser() || null == UserData.getTempUser().getBaseInfo())?"0":UserData.getTempUser().getBaseInfo().getUID());
+        getCallbacks().getDoctorAppoint(doctor.getHID(),doctor.getDoctorCode(),doctor.getDepCode(),tag);
     }
 
     @Override
     public void initEvent() {
+        llLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        llFocus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+            }
+        });
     }
 
-    public static void startDoctorInfoActivity(Context context, String hid, String doctorCode, String depCode, String tag){
+    public static void startDoctorInfoActivity(Context context, Doctor doctor, String tag){
         Intent intent = new Intent(context,LX_DoctorInfoActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putString(HOSP_ID,hid);
-        bundle.putString(DOCTOR_CODE,doctorCode);
-        bundle.putString(DEP_CODE,depCode);
-        bundle.putString(TAG,tag);
+        bundle.putSerializable(DOCTOR,doctor);
+        bundle.putSerializable(TAG,tag);
         intent.putExtras(bundle);
         context.startActivity(intent);
     }
 
     @Override
     public void getDoctorAppointCallBack(List<DoctorAppoint> response) {
+        if (null == response || response.size() <= 0) return;
+        try {
+            mDocArrangeAdapter.getData().clear();
+            mDoctorArrangeShows = SuplusUtil.getDoctorArrangeShows(response);
+            mDocArrangeAdapter.setNewData(mDoctorArrangeShows);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
+    @Override
+    public void getDoctorBaseCallBack(Doctor doctor) {
+        if (null == doctor)return;
+
+        tvFocus.setText(CommonUtil.isStrEmpty(doctor.getFocus())?"0":doctor.getFocus());
+        tvAppointNum.setText(CommonUtil.isStrEmpty(doctor.getAppointmentNum())?"0":doctor.getAppointmentNum());
+        tvMoney.setText(CommonUtil.isStrEmpty(doctor.getOnlineMoney())?"":doctor.getOnlineMoney());
+        if (!CommonUtil.isStrEmpty(doctor.getIsCollection()) && Constants.IS_COLLECTION.equalsIgnoreCase(doctor.getIsCollection())){
+            tvFocusContent.setText("已关注");
+        }else{
+            tvFocusContent.setText("未关注");
+        }
     }
 }

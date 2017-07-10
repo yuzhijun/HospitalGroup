@@ -13,7 +13,13 @@ import android.widget.TextView;
 import com.lenovohit.lartemis_api.R;
 import com.lenovohit.lartemis_api.core.LArtemis;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Pattern;
 
 /**
@@ -207,5 +213,134 @@ public class CommonUtil {
 
     public static int getResColor(int id) {
         return LArtemis.getInstance().getApplication().getResources().getColor(id);
+    }
+
+    public static Date fullConverToDate(String strDate) throws ParseException {
+        SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+        return df.parse(strDate);
+    }
+
+    /**
+     * 获取两个日期之间的间隔天数
+     * @return
+     */
+    public static int getGapCount(Date startDate, Date endDate) {
+        Calendar fromCalendar = Calendar.getInstance();
+        fromCalendar.setTime(startDate);
+        fromCalendar.set(Calendar.HOUR_OF_DAY, 0);
+        fromCalendar.set(Calendar.MINUTE, 0);
+        fromCalendar.set(Calendar.SECOND, 0);
+        fromCalendar.set(Calendar.MILLISECOND, 0);
+
+        Calendar toCalendar = Calendar.getInstance();
+        toCalendar.setTime(endDate);
+        toCalendar.set(Calendar.HOUR_OF_DAY, 0);
+        toCalendar.set(Calendar.MINUTE, 0);
+        toCalendar.set(Calendar.SECOND, 0);
+        toCalendar.set(Calendar.MILLISECOND, 0);
+        return (int) ((toCalendar.getTime().getTime() - fromCalendar.getTime().getTime()) / (1000 * 60 * 60 * 24));
+    }
+
+
+    /**
+     * 把字符串转为日期  
+     * @return
+     */
+    public static Date ConverToDate(String strDate) throws ParseException {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        return df.parse(strDate);
+    }
+
+    public static String getDateTime() {
+        Date date = new Date();
+        return (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(date);
+    }
+
+
+    /**
+     * 判断是否是同一天
+     * */
+    public static boolean isSameDay(String dateOne,String dateTwo){
+        if (dateOne.length() >= 10 && dateTwo.length() >= 10)
+        {
+            if (dateOne.substring(0,10).equalsIgnoreCase(dateTwo.substring(0,10))){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 判断时间是上午还是下午
+     * */
+    public static boolean isMorning(String dateStr) throws Exception{
+        Date date = fullConverToDate(dateStr);
+        Calendar startCal =  Calendar.getInstance();
+        startCal.setTime(date);
+        int apm = startCal.get(Calendar.AM_PM);
+        //0上午1下午
+        return apm == 0? true:false;
+    }
+
+    /**
+     * 把两个日期间的所有日期返回(间隔小于一周则返回一周的所有时间)
+     * */
+    public static List<String> getDatePeriod(String startDateStr, String endDateStr) throws ParseException{
+        //将字符串时间转化成date格式
+        Date startDate = ConverToDate(startDateStr);
+        Date endDate = ConverToDate(endDateStr);
+        //获取两个时间间的间隔天数
+        int gapDay = getGapCount(startDate,endDate) < 7 ? 6 : getGapCount(startDate,endDate);
+
+        ArrayList timeList = new ArrayList();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar startCal =  Calendar.getInstance();
+        startCal.setTime(startDate);
+        timeList.add(dateFormat.format(startCal.getTime()));
+
+        for(int var5 = 0; var5 < gapDay; ++var5) {
+            startCal.add(Calendar.DATE,1);
+            timeList.add(dateFormat.format(startCal.getTime()));
+        }
+        return timeList;
+    }
+
+    /**
+     * 判断当前时间是星期几
+     * */
+    public static String getWeekDay(String dateStr) throws ParseException {
+        String Week = "周";
+        Date date = ConverToDate(dateStr);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar startCal =  Calendar.getInstance();
+        startCal.setTime(date);
+        switch (startCal.get(Calendar.DAY_OF_WEEK)){
+            case 1:
+                Week += "天";
+                break;
+            case 2:
+                Week += "一";
+                break;
+            case 3:
+                Week += "二";
+                break;
+            case 4:
+                Week += "三";
+                break;
+            case 5:
+                Week += "四";
+                break;
+            case 6:
+                Week += "五";
+                break;
+            case 7:
+                Week += "六";
+                break;
+            default:
+                break;
+        }
+        return Week;
     }
 }
