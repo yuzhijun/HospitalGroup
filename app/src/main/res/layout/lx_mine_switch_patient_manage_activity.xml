@@ -134,17 +134,10 @@
             android:background="@color/app_line_colors"
             />
 
-        <ListView
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/lvHospitalCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:divider="@color/grey_line_bg"
-            android:dividerHeight="@dimen/app_interval_10"
-            android:cacheColorHint="#00000000"
-            android:descendantFocusability="blocksDescendants"
-            android:drawSelectorOnTop="false"
-            android:listSelector="@color/transparent"
-            android:background="@color/white"
             />
     </LinearLayout>
 </LinearLayout>

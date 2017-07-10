@@ -61,7 +61,8 @@ public class LX_DoctorActivity extends CoreActivity<MainController.MainUiCallbac
     private List<Doctor>collectDoctorList=new ArrayList<>();
     private CollectDoctorAdapter adapter;
     private EmptyView emptyView;
-
+    private User tempUser;
+    private Doctor doctor;
     @Override
     protected BaseController getController() {
         return LArtemis.getInstance().getMainController();
@@ -72,8 +73,8 @@ public class LX_DoctorActivity extends CoreActivity<MainController.MainUiCallbac
         bind = ButterKnife.bind(this);
         isShowToolBar(true);
         setCenterTitle("关注的医生");
-        User tempUser = UserData.getTempUser();
-        if (tempUser!=null && tempUser.getCollectDoctors()!=null && tempUser.getCollectDoctors().size()>=0){
+        tempUser = UserData.getTempUser();
+        if (tempUser !=null && tempUser.getCollectDoctors()!=null && tempUser.getCollectDoctors().size()>=0){
             tvDoctorCount.setText(tempUser.getCollectDoctors().size()+"");
         }
         adapter = new CollectDoctorAdapter(R.layout.lx_mine_doctor_info_row,collectDoctorList);
@@ -117,6 +118,7 @@ public class LX_DoctorActivity extends CoreActivity<MainController.MainUiCallbac
                 tvCancle.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        doctor = UserData.getTempUser().getCollectDoctors().get(position);
                         getCallbacks().focusDoctor(UserData.getTempUser().getBaseInfo().getUID(),collectDoctorList.get(position).getHID(),collectDoctorList.get(position).getDoctorCode(),collectDoctorList.get(position).getDepCode(), Constants.FOCUS_DOCTOR_NO);
                     }
                 });
@@ -128,10 +130,13 @@ public class LX_DoctorActivity extends CoreActivity<MainController.MainUiCallbac
     public void getCollectDoctorCallBack(List<Doctor> list) {
         if (list!=null && list.size()>=0){
             adapter.getData().clear();
-            adapter.setNewData(list);
+            collectDoctorList.clear();
+            collectDoctorList.addAll(list);
+            adapter.setNewData(collectDoctorList);
             UserData.getTempUser().setCollectDoctors(list);
             CommonUtil.showSnackBar(tvPostText,"获取数据成功!");
             tvDoctorCount.setText(list.size() + "");
+
         }
         //不管有没有数据，都要设置以下两项
         emptyView.setType(EmptyView.TYPE_NO_DATA);
@@ -146,8 +151,10 @@ public class LX_DoctorActivity extends CoreActivity<MainController.MainUiCallbac
             return;
         }
         for (int i = collectDoctorList.size() - 1; i >= 0; i--) {
-            if (collectDoctorList.get(i).getDoctorCode().equals(UserData.getTempUser().getCollectDoctors().get(i).getDoctorCode()))
+            if (collectDoctorList.get(i).getDoctorCode().equals(doctor.getDoctorCode()) && collectDoctorList.get(i).getHID().equals(doctor.getHID())){
                 collectDoctorList.remove(i);
+            }
+
         }
         UserData.getTempUser().setCollectDoctors(collectDoctorList);
         adapter.setNewData(collectDoctorList);

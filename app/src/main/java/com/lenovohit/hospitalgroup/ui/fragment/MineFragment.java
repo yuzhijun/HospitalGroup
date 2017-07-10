@@ -114,7 +114,7 @@ public class MineFragment extends CoreFragment<MainController.MainUiCallbacks> i
             public void onClick(View v) {
                 if (UserData.getTempUser() == null) {
                     //跳转到登录页面
-                    LX_LoginActivity.startLoginActivity(getActivity(), Constants.LOGIN_COLLECT_DOCTOR);
+                    LX_LoginActivity.startLoginActivity(getActivity(), Constants.LOGIN_SWITCH_PATIENT);
                 } else {
                     LX_SwitchPatientActivity.startSwitchPatientActivity(getActivity());
                 }

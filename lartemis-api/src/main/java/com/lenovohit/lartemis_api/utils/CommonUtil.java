@@ -24,6 +24,7 @@ public class CommonUtil {
    public static  int HINT= R.mipmap.lx_iv_common_snack_hint;
     public static int WARN=R.mipmap.lx_iv_common_snack_warn;
    public static  int PROBLEM=R.mipmap.lx_iv_common_snack_warn;
+    private static Date date;
     /**
      *
      * @param view  只要是界面中的view即可
@@ -207,5 +208,13 @@ public class CommonUtil {
 
     public static int getResColor(int id) {
         return LArtemis.getInstance().getApplication().getResources().getColor(id);
+    }
+
+    public static Date getDate() {
+        return date;
+    }
+
+    public static void setDate(Date date) {
+        CommonUtil.date = date;
     }
 }

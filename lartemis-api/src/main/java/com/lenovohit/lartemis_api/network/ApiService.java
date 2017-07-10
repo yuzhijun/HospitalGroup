@@ -14,6 +14,7 @@ import java.util.List;
 
 import javax.inject.Singleton;
 
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -64,4 +65,10 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("NeweHealthServices/api/User/VerifyPhoneCode")
     Observable<HttpResult<Result>>VelifyCdoe(@Field("PhoneNumber")String PhoneNumber,@Field("SMSCode")String SMSCode,@Field("TempCode")String TempCode);
+    @GET("eHealthPlatformService/api/Hospital/GetCards/{HID}/{phone}")
+    Observable<HttpResult<List<CommonUser>>>getPatientList(@Path("HID") String HID,@Path("phone") String phone);
+    @POST("NeweHealthServices/api/User/AddCommonUser")
+    Observable<HttpResult<Result>>addCommonUser(@Body List<CommonUser> user);
+    @GET("NeweHealthServices/api/User/DeleteCommonUser/{patientID}")
+    Observable<HttpResult<Result>>deleteCommonUser(@Path("patientID")String patientID);
 }

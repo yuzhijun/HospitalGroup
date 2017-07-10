@@ -11,4 +11,10 @@
         <attr name="ddmenuSelectedIcon" format="reference"/>
         <attr name="ddmenuUnselectedIcon" format="reference"/>
     </declare-styleable>
+    <declare-styleable name="TimeButton">
+        <attr name="tbcountTime" format="string"></attr>
+        <attr name="tbintervalTime" format="string"></attr>
+        <attr name="tbTimeingBackground" format="reference|integer"></attr>
+        <attr name="tbTimedBackground" format="reference|integer"></attr>
+    </declare-styleable>
 </resources>
