@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lenovohit.lartemis_api.base.BaseController;
@@ -16,7 +17,9 @@ import com.lenovohit.lartemis_api.core.LArtemis;
 import com.lenovohit.lartemis_api.data.HospitalData;
 import com.lenovohit.lartemis_api.model.CommonObj;
 import com.lenovohit.lartemis_api.model.Hospitals;
+import com.lenovohit.lartemis_api.model.ResponseError;
 import com.lenovohit.lartemis_api.ui.controller.AppointmentController;
+import com.lenovohit.lartemis_api.views.EmptyView;
 import com.lenovohit.lartemis_api.views.RecycleViewDivider;
 import com.lenovohit.module_appointment.R;
 import com.lenovohit.module_appointment.ui.adapter.AppointParentDeptAdapter;
@@ -33,6 +36,7 @@ public class LX_AppointmentMainActivity extends CoreActivity<AppointmentControll
     private static final String HID = "hid";
     private RecyclerView rvParentDept;
     private RecyclerView rvSonDept;
+    private EmptyView emptyView;
     private AppointParentDeptAdapter mDeptAdapter;
     private AppointSonDeptAdapter mSonDeptAdapter;
     private List<CommonObj> parentDept = new ArrayList<>();
@@ -64,6 +68,15 @@ public class LX_AppointmentMainActivity extends CoreActivity<AppointmentControll
         rvSonDept.addItemDecoration(new RecycleViewDivider(this,LinearLayoutManager.VERTICAL));
         mSonDeptAdapter = new AppointSonDeptAdapter(R.layout.lx_son_dept_item,sonDept);
         rvSonDept.setAdapter(mSonDeptAdapter);
+
+        emptyView = new EmptyView(rvParentDept.getContext(), (ViewGroup) rvParentDept.getParent());
+        emptyView.setType(EmptyView.TYPE_NO_DATA);
+        emptyView.setRefreshListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getCallbacks().getAllDep(hid);
+            }
+        });
 
         getCallbacks().getAllDep(hid);
     }
@@ -127,6 +140,8 @@ public class LX_AppointmentMainActivity extends CoreActivity<AppointmentControll
     @Override
     public void getAllDepCallBack(List<CommonObj> response) {
         if (null == response || response.size() <= 0){
+            rvSonDept.setVisibility(View.GONE);
+            mDeptAdapter.setEmptyView(emptyView.getView());
             return;
         }
 
@@ -141,5 +156,12 @@ public class LX_AppointmentMainActivity extends CoreActivity<AppointmentControll
         mDeptAdapter.setNewData(response);
         mDeptAdapter.setSelectedPosition(0);
         showSonDept(response.get(0));
+    }
+
+    @Override
+    public void onResponseError(ResponseError error) {
+        super.onResponseError(error);
+        rvSonDept.setVisibility(View.GONE);
+        mDeptAdapter.setEmptyView(emptyView.getView());
     }
 }

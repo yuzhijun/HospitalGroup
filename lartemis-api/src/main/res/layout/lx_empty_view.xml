@@ -7,35 +7,39 @@
         android:layout_height="match_parent"
         android:background="@color/grey_normal_bg"
         android:clickable="true"
-         android:id="@+id/plLayout"
-    android:descendantFocusability="blocksDescendants"
+        android:id="@+id/plLayout"
+        android:descendantFocusability="blocksDescendants"
         >
+
         <RelativeLayout
-            android:layout_width="154dp"
-            android:layout_height="172dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_gravity="center"
-            app:layout_marginTopPercent="10%"
-            app:layout_heightPercent="60%w"
-            app:layout_widthPercent="65%w">
+            app:layout_heightPercent="50%w"
+            app:layout_marginTopPercent="20%"
+            app:layout_widthPercent="55%w">
+
                 <ImageView
                     android:id="@+id/ivEmpty"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@mipmap/lx_no_network_default"
-                    android:clickable="false"/>
+                    android:clickable="false"
+                    android:src="@mipmap/lx_no_network_default"/>
+
                 <ProgressBar
-                    android:visibility="gone"
+                    android:id="@+id/progressBar"
                     style="?android:attr/progressBarStyleLarge"
                     android:layout_width="@dimen/spacing_huge"
                     android:layout_height="@dimen/spacing_huge"
-                    android:id="@+id/progressBar"
-                    android:clickable="false"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
                     android:layout_marginBottom="50dp"
-                    android:layout_gravity="center"/>
+                    android:clickable="false"
+                    android:visibility="gone"/>
         </RelativeLayout>
-                <TextView
+
+        <TextView
                     android:id="@+id/tvTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
