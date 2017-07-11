@@ -1,4 +1,4 @@
-package com.lenovohit.hospitals.view;
+package com.lenovohit.lartemis_api.views;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
-import com.lenovohit.hospitals.R;
+import com.lenovohit.lartemis_api.R;
 
 
 public class AlertDialog {
@@ -42,7 +42,7 @@ public class AlertDialog {
 	public AlertDialog builder() {
 		// 获取Dialog布局
 		View view = LayoutInflater.from(context).inflate(
-				R.layout.view_alertdialog, null);
+				R.layout.lx_view_alertdialog, null);
 
 		// 获取自定义Dialog布局中的控件
 		lLayout_bg = (LinearLayout) view.findViewById(R.id.lLayout_bg);

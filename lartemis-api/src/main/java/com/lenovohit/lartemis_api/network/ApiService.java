@@ -1,5 +1,6 @@
 package com.lenovohit.lartemis_api.network;
 
+import com.lenovohit.lartemis_api.model.Appoint;
 import com.lenovohit.lartemis_api.model.CommonObj;
 import com.lenovohit.lartemis_api.model.CommonUser;
 import com.lenovohit.lartemis_api.model.Doctor;
@@ -8,6 +9,7 @@ import com.lenovohit.lartemis_api.model.HomePage;
 import com.lenovohit.lartemis_api.model.HospitalMainPage;
 import com.lenovohit.lartemis_api.model.Hospitals;
 import com.lenovohit.lartemis_api.model.HttpResult;
+import com.lenovohit.lartemis_api.model.MyAdvice;
 import com.lenovohit.lartemis_api.model.Result;
 import com.lenovohit.lartemis_api.model.User;
 
@@ -77,4 +79,12 @@ public interface ApiService {
     Observable<HttpResult<Result>>addCommonUser(@Body List<CommonUser> user);
     @GET("NeweHealthServices/api/User/DeleteCommonUser/{patientID}")
     Observable<HttpResult<Result>>deleteCommonUser(@Path("patientID")String patientID);
+    @GET("NeweHealthServices/api/Appointment/AppointmentHistorys")
+    Observable<HttpResult<List<Appoint>>>getAppointmentHistory(@Query("uID") String uid,@Query("pID") String pid);
+    @GET("NeweHealthServices/api/Appointment/AppointmentHistory")
+    Observable<HttpResult<Appoint>>getAppointDetail(@Query("AID") String aid);
+    @GET("eHealthPlatformService/api/Appointment/UnAppointment/{aID}/{appointmentCode}/{HID}")
+    Observable<HttpResult<Result>>unAppoint(@Path("aID")String aid,@Path("appointmentCode")String appointmentCode ,@Path("HID")String hid);
+    @GET("NeweHealthServices/api/System/GetUserFeedback/{phoneNumber}")
+   Observable<HttpResult<List<MyAdvice>>>getMyAdviceList(@Path("phoneNumber")String phoneNumber);
 }

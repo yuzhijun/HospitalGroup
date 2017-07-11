@@ -25,6 +25,7 @@ import com.lenovohit.lartemis_api.model.User;
 import com.lenovohit.lartemis_api.ui.controller.MainController;
 import com.lenovohit.lartemis_api.utils.CommonUtil;
 import com.lenovohit.lartemis_api.utils.Constants;
+import com.lenovohit.lartemis_api.views.AlertDialog;
 import com.lenovohit.lartemis_api.views.EmptyView;
 import com.lenovohit.lartemis_api.views.LXHeaderView;
 import com.lenovohit.lartemis_api.views.RecycleViewDivider;
@@ -115,11 +116,25 @@ public class LX_HospitalsActivity extends CoreActivity<MainController.MainUiCall
                 btnUnFocus.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        User tempUser = UserData.getTempUser();
+                        final User tempUser = UserData.getTempUser();
                         if (tempUser!=null&&tempUser.getBaseInfo()!=null){
                             tvHosPitalCount.setText(tempUser.getCollectHospitals().size()+"");
                             hospital = tempUser.getCollectHospitals().get(position);
-                            getCallbacks().focusHospital(tempUser.getBaseInfo().getUID(),tempUser.getCollectHospitals().get(position).getHID(),"","", Constants.FOCUS_HOSPITAL_NO);
+                            new AlertDialog(CoreActivity.currentActivity).builder()
+                                    .setTitle("提示")
+                                    .setMsg("确定要取消关注[" + hospital.getHospitalName() + "]吗?")
+                                    .setCancelable(false)
+                                    .setPositiveButton("确认", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            CoreActivity.currentActivity.showProgressDialog();
+                                            getCallbacks().focusHospital(tempUser.getBaseInfo().getUID(),tempUser.getCollectHospitals().get(position).getHID(),"","", Constants.FOCUS_HOSPITAL_NO);
+                                        }
+                                    }).setNegativeButton("取消", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                }
+                            }).show();
                         }
                     }
                 });

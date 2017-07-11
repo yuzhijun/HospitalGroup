@@ -82,7 +82,7 @@ public class LX_DoctorInfoActivity extends CoreActivity<AppointmentController.Ap
     public void initView(@Nullable Bundle savedInstanceState) {
         isShowToolBar(false);
         tag = getIntent().getExtras().getString(TAG);
-        doctor = (Doctor) getIntent().getExtras().getSerializable(DOCTOR);
+        doctor = (Doctor) getIntent().getExtras().getParcelable(DOCTOR);
 
         app_bar_layout = (AppBarLayout) findViewById(R.id.app_bar_layout);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -156,8 +156,13 @@ public class LX_DoctorInfoActivity extends CoreActivity<AppointmentController.Ap
 
     public static void startDoctorInfoActivity(Context context, Doctor doctor, String tag){
         Intent intent = new Intent(context,LX_DoctorInfoActivity.class);
+//        int myProcessId = ProcessUtil.getMyProcessId();
+//        String processName = ProcessUtil.getProcessName(context, myProcessId);
+//        if (processName.equals("com.lenovohit.hospitalgroup:module_appointment")){
+//        }
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Bundle bundle = new Bundle();
-        bundle.putSerializable(DOCTOR,doctor);
+        bundle.putParcelable(DOCTOR,doctor);
         bundle.putSerializable(TAG,tag);
         intent.putExtras(bundle);
         context.startActivity(intent);

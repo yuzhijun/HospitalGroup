@@ -1,4 +1,4 @@
-package com.lenovohit.hospitals.view;
+package com.lenovohit.lartemis_api.views;
 
 
 import android.content.Context;

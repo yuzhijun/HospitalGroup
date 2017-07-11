@@ -78,7 +78,7 @@
             android:layout_height="wrap_content"
             android:lines="1"
             android:ellipsize="end"
-            android:maxEms="5"
+            android:maxEms="8"
             android:text=""
             android:textSize="@dimen/font_normal"
             android:scrollHorizontally="true"

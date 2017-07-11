@@ -28,4 +28,13 @@ public class Result {
 	public void setMsg(String msg) {
 		Msg = msg;
 	}
+
+	@Override
+	public String toString() {
+		return "Result{" +
+				"PhotoUrl='" + PhotoUrl + '\'' +
+				", State=" + State +
+				", Msg='" + Msg + '\'' +
+				'}';
+	}
 }

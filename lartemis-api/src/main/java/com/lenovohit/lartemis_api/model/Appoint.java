@@ -1,4 +1,4 @@
-package com.lenovohit.hospitals.domain;
+package com.lenovohit.lartemis_api.model;
 
 import java.io.Serializable;
 
@@ -228,5 +228,34 @@ public class Appoint implements Serializable {
 
 	public void setOrderID(String orderID) {
 		OrderID = orderID;
+	}
+
+	@Override
+	public String toString() {
+		return "Appoint{" +
+				"AID='" + AID + '\'' +
+				", DoAID='" + DoAID + '\'' +
+				", HID='" + HID + '\'' +
+				", HospitalName='" + HospitalName + '\'' +
+				", DepName='" + DepName + '\'' +
+				", DoctorName='" + DoctorName + '\'' +
+				", DoctorJobName='" + DoctorJobName + '\'' +
+				", DoctorSex='" + DoctorSex + '\'' +
+				", PID='" + PID + '\'' +
+				", AppTypeName='" + AppTypeName + '\'' +
+				", Money=" + Money +
+				", AppTime='" + AppTime + '\'' +
+				", Note='" + Note + '\'' +
+				", DoctorPhoto='" + DoctorPhoto + '\'' +
+				", PName='" + PName + '\'' +
+				", State='" + State + '\'' +
+				", IDCard='" + IDCard + '\'' +
+				", PCard='" + PCard + '\'' +
+				", PhoneNumber='" + PhoneNumber + '\'' +
+				", PPhone='" + PPhone + '\'' +
+				", OrderID='" + OrderID + '\'' +
+				", AppointmentID='" + AppointmentID + '\'' +
+				", HospitalCard='" + HospitalCard + '\'' +
+				'}';
 	}
 }
