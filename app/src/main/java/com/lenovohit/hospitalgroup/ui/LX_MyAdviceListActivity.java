@@ -72,7 +72,6 @@ public class LX_MyAdviceListActivity extends CoreActivity<MainController.MainUiC
         mRecycleView.setLayoutManager(new LinearLayoutManager(mRecycleView.getContext(), LinearLayoutManager.VERTICAL, false));
         mRecycleView.addItemDecoration(new RecycleViewDivider(mRecycleView.getContext(), LinearLayoutManager.VERTICAL));
         mRecycleView.setAdapter(mMyAdviceAdapter);
-        getMyAdviceList();
     }
 
     @Override
@@ -126,4 +125,9 @@ public class LX_MyAdviceListActivity extends CoreActivity<MainController.MainUiC
         context.startActivity(new Intent(context, LX_MyAdviceListActivity.class));
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getMyAdviceList();
+    }
 }

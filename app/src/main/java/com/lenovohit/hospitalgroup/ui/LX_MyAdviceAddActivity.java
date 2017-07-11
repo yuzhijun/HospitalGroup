@@ -98,12 +98,13 @@ public class LX_MyAdviceAddActivity extends CoreActivity<MainController.MainUiCa
     public void sendMyAdvice(){
         String content = mEtAdviceOpinion.getText().toString().trim();
         String phone = mEtAdvicePhone.getText().toString().trim();
-        getCallbacks().sendMyAdvice("",phone,content);
+        getCallbacks().sendMyAdvice(phone,content);
     }
     @Override
     public void getMyAdviceSendCallBack(Result result) {
         if (result!=null && result.getState()>0){
             CommonUtil.showSnackBar(mEtAdviceOpinion,"您的意见我们已经收到,近期会给您反馈,谢谢!");
+            finish();
         }
     }
 

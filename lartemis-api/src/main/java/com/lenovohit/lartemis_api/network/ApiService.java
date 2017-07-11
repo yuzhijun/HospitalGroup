@@ -83,6 +83,7 @@ public interface ApiService {
     Observable<HttpResult<Result>>unAppoint(@Path("aID")String aid,@Path("appointmentCode")String appointmentCode ,@Path("HID")String hid);
     @GET("NeweHealthServices/api/System/GetUserFeedback/{phoneNumber}")
     Observable<HttpResult<List<MyAdvice>>>getMyAdviceList(@Path("phoneNumber") String phoneNumber);
+    @FormUrlEncoded
     @POST("NeweHealthServices/api/System/AddUserFeedback")
-    Observable<HttpResult<Result>> sendMyAdvice(@Field("email")String email,@Field("contact")String contact,@Field("content") String content);
+    Observable<HttpResult<Result>> sendMyAdvice(@Field("contact")String contact,@Field("content") String content);
 }

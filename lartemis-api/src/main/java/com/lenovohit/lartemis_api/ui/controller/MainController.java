@@ -159,8 +159,8 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
             }
 
             @Override
-            public void sendMyAdvice(String email, String contact, String content) {
-                sendMyAdviceData(ui,email,contact,content);
+            public void sendMyAdvice( String contact, String content) {
+                sendMyAdviceData(ui,contact,content);
             }
         };
     }
@@ -588,10 +588,10 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
         }
     }
     //添加意见反馈
-    public void sendMyAdviceData(final MainUi ui,String email,String contact,String content){
+    public void sendMyAdviceData(final MainUi ui,String contact,String content){
         if (ui instanceof MyAdviceAddUi){
             CoreActivity.currentActivity.showProgressDialog();
-            mApiService.sendMyAdvice(email,contact,content)
+            mApiService.sendMyAdvice(contact,content)
                     .map(new HttpResultFunc<Result>())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -633,7 +633,7 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
         void  getAppointDetail(String AID);
         void  unAppoint(String aID,String appointmentCode,String hid);
         void getMyAdvice(String phoneNumber);
-        void  sendMyAdvice(String email,String contact,String content);
+        void  sendMyAdvice(String contact,String content);
     }
 
     public interface MainUi extends BaseController.Ui<MainUiCallbacks> {
