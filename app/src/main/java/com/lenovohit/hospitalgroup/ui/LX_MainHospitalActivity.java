@@ -48,6 +48,10 @@ public class LX_MainHospitalActivity extends CoreActivity<MainController.MainUiC
     LinearLayout llPhone;
     @BindView(R.id.rvModule)
     RecyclerView rvModule;
+    @BindView(R.id.tvHospitalDes)
+    TextView tvHospitalDes;
+    @BindView(R.id.tvTrafficDes)
+    TextView tvTrafficDes;
 
     private EmptyView emptyView;
     private Hospitals mHospitals;
@@ -119,7 +123,10 @@ public class LX_MainHospitalActivity extends CoreActivity<MainController.MainUiC
             return;
         }
 
+        tvFocus.setText(response.getFocus()+"");
         tvPosition.setText(CommonUtil.isStrEmpty(response.getAddress())?"医院的具体地址未知":response.getAddress());
+        tvHospitalDes.setText(CommonUtil.isStrEmpty(response.getHospitalInfo())?"暂无医院具体简介":response.getHospitalInfo());
+        tvTrafficDes.setText(CommonUtil.isStrEmpty(response.getPublicTransport())?"暂无具体的公共交通班次信息":response.getPublicTransport());
         if (null == response.getOpenModule() || response.getOpenModule().size() <= 0){
             emptyView.setType(EmptyView.TYPE_NO_DATA);
             return;

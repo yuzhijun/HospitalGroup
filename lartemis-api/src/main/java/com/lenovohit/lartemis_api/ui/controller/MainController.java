@@ -129,11 +129,10 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
                     getPatientListData(ui,hid,phoneNumber);
             }
 
-            }
-
             @Override
             public void getHospitalInfo(String hid, String uid) {
-               getHospitalInfoData(ui,hid,uid);
+                getHospitalInfoData(ui, hid, uid);
+            }
             @Override
             public void addCommonUser(List<CommonUser> user) {
                 addCommonUserData(ui,user);

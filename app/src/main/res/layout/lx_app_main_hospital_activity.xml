@@ -165,7 +165,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:background="@color/white"
-                android:layout_marginTop="@dimen/app_interval_20"
+                android:layout_marginTop="@dimen/app_interval_10"
                 android:paddingLeft="@dimen/app_interval_5">
                 <LinearLayout
                     android:id="@+id/llDoctorDes"
