@@ -3,11 +3,13 @@ package com.lenovohit.lartemis_api.ui.controller;
 import com.google.common.base.Preconditions;
 import com.lenovohit.lartemis_api.base.BaseController;
 import com.lenovohit.lartemis_api.base.CoreActivity;
+import com.lenovohit.lartemis_api.model.Appoint;
 import com.lenovohit.lartemis_api.model.CommonUser;
 import com.lenovohit.lartemis_api.model.Doctor;
 import com.lenovohit.lartemis_api.model.HomePage;
 import com.lenovohit.lartemis_api.model.Hospitals;
 import com.lenovohit.lartemis_api.model.HttpResult;
+import com.lenovohit.lartemis_api.model.MyAdvice;
 import com.lenovohit.lartemis_api.model.ResponseError;
 import com.lenovohit.lartemis_api.model.Result;
 import com.lenovohit.lartemis_api.model.User;
@@ -135,7 +137,72 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
             public void deleteCommonUser(String pid) {
                 deleteCommonUserData(ui,pid);
             }
+
+            @Override
+            public void getAppointmentHistory(String uid, String pid) {
+                getAppointmentHistoryData(ui,uid,pid);
+            }
+
+            @Override
+            public void getAppointDetail(String AID) {
+                getAppointHistoryDetailData(ui,AID);
+            }
+
+            @Override
+            public void unAppoint(String aID, String appointmentCode, String hid) {
+                unAppointmentData(ui,aID,appointmentCode,hid);
+            }
+
+            @Override
+            public void getMyAdvice(String phoneNumber) {
+                getMyAdviceListData(ui,phoneNumber);
+            }
         };
+    }
+    //获取预约历史详情页
+    private void getAppointHistoryDetailData(final MainUi ui,String aid){
+        if (ui  instanceof AppointmentHistoryDetailUi){
+            CoreActivity.currentActivity.showProgressDialog();
+            mApiService.getAppointDetail(aid)
+                    .map(new HttpResultFunc<Appoint>())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new RequestCallBack<Appoint>() {
+                        @Override
+                        public void onResponse(Appoint response) {
+                            CoreActivity.currentActivity.hideProgressDialog();
+                            ((AppointmentHistoryDetailUi) ui).getAppointDetailCallBack(response);
+                        }
+
+                        @Override
+                        public void onFailure(ResponseError error) {
+                            CoreActivity.currentActivity.hideProgressDialog();
+                            ui.onResponseError(error);
+                        }
+                    });
+        }
+    }
+    private void unAppointmentData(final MainUi ui,String aID,String appointmentCode,String HID){
+        if (ui instanceof AppointmentHistoryDetailUi){
+            CoreActivity.currentActivity.showProgressDialog();
+            mApiService.unAppoint(aID,appointmentCode,HID)
+                    .map(new HttpResultFunc<Result>())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new RequestCallBack<Result>() {
+                        @Override
+                        public void onResponse(Result response) {
+                            CoreActivity.currentActivity.hideProgressDialog();
+                            ((AppointmentHistoryDetailUi) ui).unAppointCallback(response);
+                        }
+
+                        @Override
+                        public void onFailure(ResponseError error) {
+                            CoreActivity.currentActivity.hideProgressDialog();
+                            ui.onResponseError(error);
+                        }
+                    });
+        }
     }
     //通过手机号，添加就诊者
     private void addCommonUserData(final MainUi ui,List<CommonUser> user){
@@ -457,7 +524,6 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
     }
     public void deleteCommonUserData(final MainUi ui,String pid){
         if (ui instanceof SwitchPatientUi){
-            CoreActivity.currentActivity.showProgressDialog();
             mApiService.deleteCommonUser(pid)
                     .map(new HttpResultFunc<Result>())
                     .subscribeOn(Schedulers.io())
@@ -465,13 +531,52 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
                     .subscribe(new RequestCallBack<Result>() {
                         @Override
                         public void onResponse(Result response) {
-                            CoreActivity.currentActivity.hideProgressDialog();
                             ((SwitchPatientUi) ui).deleteCommonUserCallBack(response);
                         }
 
                         @Override
                         public void onFailure(ResponseError error) {
-                            CoreActivity.currentActivity.hideProgressDialog();
+                            ui.onResponseError(error);
+                        }
+                    });
+        }
+    }
+    //获得预约历史记录
+    public void getAppointmentHistoryData(final MainUi ui,String uid,String pid){
+        if (ui instanceof AppointmentHistoryUi){
+            mApiService.getAppointmentHistory(uid,pid)
+                    .map(new HttpResultFunc<List<Appoint>>())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new RequestCallBack<List<Appoint>>() {
+                        @Override
+                        public void onResponse(List<Appoint> response) {
+                            ((AppointmentHistoryUi) ui).getAppointmentHistoryCallBack(response);
+                        }
+
+                        @Override
+                        public void onFailure(ResponseError error) {
+                            ui.onResponseError(error);
+                        }
+                    });
+        }
+
+    }
+    //获取当前手机号下的意见反馈
+    public void getMyAdviceListData(final MainUi ui,String phoneNumber){
+        if (ui instanceof MyAdviceListUi){
+            mApiService.getMyAdviceList(phoneNumber)
+                    .map(new HttpResultFunc<List<MyAdvice>>())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new RequestCallBack<List<MyAdvice>>() {
+                        @Override
+                        public void onResponse(List<MyAdvice> response) {
+                            ((MyAdviceListUi) ui).getMyAdviceListCallBack(response);
+                        }
+
+                        @Override
+                        public void onFailure(ResponseError error) {
                             ui.onResponseError(error);
                         }
                     });
@@ -496,6 +601,10 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
         //添加就诊者
         void addCommonUser(List<CommonUser> user);
         void deleteCommonUser(String pid);
+        void getAppointmentHistory(String uid,String pid);
+        void  getAppointDetail(String AID);
+        void  unAppoint(String aID,String appointmentCode,String hid);
+        void getMyAdvice(String phoneNumber);
     }
 
     public interface MainUi extends BaseController.Ui<MainUiCallbacks> {
@@ -542,6 +651,16 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
         void getPatientListCallBack(List<CommonUser>list);
         //添加就诊者
         void addCommonUserCallBack(Result result);
+    }
+    public interface  AppointmentHistoryUi extends MainUi{
+        void getAppointmentHistoryCallBack(List<Appoint>list);
+    }
+    public interface AppointmentHistoryDetailUi extends MainUi{
+        void getAppointDetailCallBack(Appoint appoint);
+        void unAppointCallback(Result result);
+    }
+    public interface  MyAdviceListUi extends MainUi{
+        void getMyAdviceListCallBack(List<MyAdvice>advice);
     }
     public AppointmentController getAppointmentController() {
         return mAppointmentController;

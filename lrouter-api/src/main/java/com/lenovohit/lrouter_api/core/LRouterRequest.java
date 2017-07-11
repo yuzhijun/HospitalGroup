@@ -169,7 +169,7 @@ public class LRouterRequest<T> implements Parcelable {
         return this;
     }
 
-    public LRouterRequest reqeustObject(T t) {
+    public LRouterRequest requestObject(T t) {
         this.requestObject = t;
         return this;
     }

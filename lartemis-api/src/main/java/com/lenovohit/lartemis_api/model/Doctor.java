@@ -1,8 +1,9 @@
 package com.lenovohit.lartemis_api.model;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class Doctor implements Serializable{
+public class Doctor implements Parcelable{
 	private String DoctorName;
 	private String HospitalName;
 	private String DepName;
@@ -218,4 +219,79 @@ public class Doctor implements Serializable{
 	public void setIsRegister(String isRegister) {
 		IsRegister = isRegister;
 	}
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(this.DoctorName);
+		dest.writeString(this.HospitalName);
+		dest.writeString(this.DepName);
+		dest.writeString(this.DepID);
+		dest.writeString(this.JobName);
+		dest.writeString(this.PhotoUrl);
+		dest.writeString(this.Info);
+		dest.writeString(this.Expert);
+		dest.writeString(this.DoctorID);
+		dest.writeString(this.DoctorCode);
+		dest.writeString(this.IsCollection);
+		dest.writeString(this.Focus);
+		dest.writeString(this.ClickNum);
+		dest.writeString(this.HID);
+		dest.writeString(this.HGID);
+		dest.writeString(this.Mode);
+		dest.writeString(this.DepCode);
+		dest.writeString(this.Sex);
+		dest.writeString(this.PhoneNum);
+		dest.writeString(this.IsOnline);
+		dest.writeString(this.OnlineMoney);
+		dest.writeString(this.IsAppointment);
+		dest.writeString(this.IsRegister);
+		dest.writeString(this.AppointmentNum);
+	}
+
+	public Doctor() {
+	}
+
+	protected Doctor(Parcel in) {
+		this.DoctorName = in.readString();
+		this.HospitalName = in.readString();
+		this.DepName = in.readString();
+		this.DepID = in.readString();
+		this.JobName = in.readString();
+		this.PhotoUrl = in.readString();
+		this.Info = in.readString();
+		this.Expert = in.readString();
+		this.DoctorID = in.readString();
+		this.DoctorCode = in.readString();
+		this.IsCollection = in.readString();
+		this.Focus = in.readString();
+		this.ClickNum = in.readString();
+		this.HID = in.readString();
+		this.HGID = in.readString();
+		this.Mode = in.readString();
+		this.DepCode = in.readString();
+		this.Sex = in.readString();
+		this.PhoneNum = in.readString();
+		this.IsOnline = in.readString();
+		this.OnlineMoney = in.readString();
+		this.IsAppointment = in.readString();
+		this.IsRegister = in.readString();
+		this.AppointmentNum = in.readString();
+	}
+
+	public static final Creator<Doctor> CREATOR = new Creator<Doctor>() {
+		@Override
+		public Doctor createFromParcel(Parcel source) {
+			return new Doctor(source);
+		}
+
+		@Override
+		public Doctor[] newArray(int size) {
+			return new Doctor[size];
+		}
+	};
 }

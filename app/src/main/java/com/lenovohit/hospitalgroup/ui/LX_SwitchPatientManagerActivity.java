@@ -60,6 +60,7 @@ public class LX_SwitchPatientManagerActivity extends CoreActivity<MainController
     private List<CommonUser>cardList=new ArrayList<>();
     private SwitchPatientCardAdapter adapter;
     private EmptyView emptyView;
+    private String phone;
 
     @Override
     protected BaseController getController() {
@@ -84,7 +85,7 @@ public class LX_SwitchPatientManagerActivity extends CoreActivity<MainController
                 getCardListData();
             }
         });
-//        adapter.setEmptyView(emptyView.getView());
+        adapter.setEmptyView(emptyView.getView());
 
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext(),LinearLayoutManager.VERTICAL,false));
         recyclerView.addItemDecoration(new RecycleViewDivider(recyclerView.getContext(), LinearLayoutManager.VERTICAL));
@@ -96,7 +97,7 @@ public class LX_SwitchPatientManagerActivity extends CoreActivity<MainController
         btnCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String phone = edtPhone.getText().toString();
+                phone = edtPhone.getText().toString();
                 if (CommonUtil.isStrEmpty(phone)){
                     CommonUtil.showSnackBar(edtPhone,"手机号不能为空!");
                 }else if (!CommonUtil.isMobileNO(phone)){
@@ -121,7 +122,8 @@ public class LX_SwitchPatientManagerActivity extends CoreActivity<MainController
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 CommonUser commonUser = cardList.get(position);
-                commonUser.setPID("0");
+                commonUser.setUID(UserData.getTempUser().getBaseInfo().getUID());
+                commonUser.setPhoneNumber(phone);
                 List<CommonUser>list=new ArrayList<CommonUser>();
                 list.add(commonUser);
                 getCallbacks().addCommonUser(list);
@@ -166,9 +168,9 @@ public class LX_SwitchPatientManagerActivity extends CoreActivity<MainController
     public void getPatientListCallBack(List<CommonUser> list) {
         if (list!=null && list.size()>=0){
             adapter.getData().clear();
-            adapter.setNewData(list);
             cardList.clear();
             cardList.addAll(list);
+            adapter.setNewData(cardList);
         }else {
             CommonUtil.showSnackBar(edtPhone,"获取数据失败，请重新尝试!");
         }
@@ -181,11 +183,12 @@ public class LX_SwitchPatientManagerActivity extends CoreActivity<MainController
         if (result!=null && result.getState()>0){
 //            CommonUtil.showSnackBar(edtPhone,"添加就诊人成功");
             finish();
+//            Log.e("tag",result.toString());
         }
     }
 
     public void getCardListData(){
-        String phone = edtPhone.getText().toString();
+        phone = edtPhone.getText().toString();
         if (CommonUtil.isStrEmpty(phone)){
             CommonUtil.showSnackBar(edtPhone,"手机号不能为空");
         }else if(!CommonUtil.isMobileNO(phone)){

@@ -3,16 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/bg">
-    <ListView
+    android:background="@color/grey_normal_bg">
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/lvAppointmentHistory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:divider="@color/bg"
-        android:dividerHeight="@dimen/app_interval_10"
-        android:cacheColorHint="#00000000"
-        android:descendantFocusability="blocksDescendants"
-        android:drawSelectorOnTop="false"
-        android:listSelector="@color/transparent"
+
         />
 </LinearLayout>

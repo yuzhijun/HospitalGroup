@@ -133,4 +133,23 @@ public class CommonUser implements Serializable {
 	public void setTag(String tag) {
 		Tag = tag;
 	}
+
+	@Override
+	public String toString() {
+		return "CommonUser{" +
+				"selected=" + selected +
+				", PID='" + PID + '\'' +
+				", UID='" + UID + '\'' +
+				", HGID='" + HGID + '\'' +
+				", HospitalName='" + HospitalName + '\'' +
+				", Name='" + Name + '\'' +
+				", Sex='" + Sex + '\'' +
+				", IDCard='" + IDCard + '\'' +
+				", HospitalCard='" + HospitalCard + '\'' +
+				", PhoneNumber='" + PhoneNumber + '\'' +
+				", Address='" + Address + '\'' +
+				", Tag='" + Tag + '\'' +
+				", SexName='" + SexName + '\'' +
+				'}';
+	}
 }

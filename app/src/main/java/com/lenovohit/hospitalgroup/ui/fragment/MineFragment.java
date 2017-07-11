@@ -9,9 +9,11 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
 import com.lenovohit.hospitalgroup.R;
+import com.lenovohit.hospitalgroup.ui.LX_AppointmentHistoryActivity;
 import com.lenovohit.hospitalgroup.ui.LX_DoctorActivity;
 import com.lenovohit.hospitalgroup.ui.LX_HospitalsActivity;
 import com.lenovohit.hospitalgroup.ui.LX_LoginActivity;
+import com.lenovohit.hospitalgroup.ui.LX_MyAdviceListActivity;
 import com.lenovohit.hospitalgroup.ui.LX_SwitchPatientActivity;
 import com.lenovohit.hospitalgroup.ui.LX_UserInfoActivity;
 import com.lenovohit.lartemis_api.annotation.ContentView;
@@ -117,6 +119,28 @@ public class MineFragment extends CoreFragment<MainController.MainUiCallbacks> i
                     LX_LoginActivity.startLoginActivity(getActivity(), Constants.LOGIN_SWITCH_PATIENT);
                 } else {
                     LX_SwitchPatientActivity.startSwitchPatientActivity(getActivity());
+                }
+            }
+        });
+        lrvYuYue.setItemClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (UserData.getTempUser() == null) {
+                    //跳转到登录页面
+                    LX_LoginActivity.startLoginActivity(getActivity(), Constants.LOGIN_APPOINTMENT_HISTORY);
+                } else {
+                    LX_AppointmentHistoryActivity.startAppointmentHistoryActivity(getActivity());
+                }
+            }
+        });
+        lrvMyFK.setItemClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (UserData.getTempUser() == null) {
+                    //跳转到登录页面
+                    LX_LoginActivity.startLoginActivity(getActivity(), Constants.LOGIN_MINE_ADVICE);
+                } else {
+                    LX_MyAdviceListActivity.startMyAdviceListActivity(getActivity());
                 }
             }
         });

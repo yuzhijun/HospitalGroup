@@ -3,7 +3,7 @@
 android:layout_width="match_parent"
 android:layout_height="50dp"
 android:orientation="horizontal"
-    android:background="@color/bg">
+    android:background="@color/grey_normal_bg">
 <TextView
     android:layout_weight="2"
     android:layout_width="wrap_content"
@@ -19,7 +19,7 @@ android:orientation="horizontal"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text=""
-    android:textColor="@color/app_theme_colors"
+    android:textColor="@color/colorPrimary"
     android:textSize="@dimen/font_size_C"
     android:layout_gravity="center_vertical"
     android:layout_marginLeft="@dimen/app_interval_5"/>

@@ -25,9 +25,14 @@ import com.lenovohit.lartemis_api.model.User;
 import com.lenovohit.lartemis_api.ui.controller.MainController;
 import com.lenovohit.lartemis_api.utils.CommonUtil;
 import com.lenovohit.lartemis_api.utils.Constants;
+import com.lenovohit.lartemis_api.views.AlertDialog;
 import com.lenovohit.lartemis_api.views.EmptyView;
 import com.lenovohit.lartemis_api.views.LXHeaderView;
 import com.lenovohit.lartemis_api.views.RecycleViewDivider;
+import com.lenovohit.lrouter_api.base.LRouterAppcation;
+import com.lenovohit.lrouter_api.core.LRouterRequest;
+import com.lenovohit.lrouter_api.core.LocalRouter;
+import com.lenovohit.lrouter_api.core.callback.IRequestCallBack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -115,13 +120,47 @@ public class LX_DoctorActivity extends CoreActivity<MainController.MainUiCallbac
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, final int position) {
                 TextView tvCancle = (TextView) view.findViewById(R.id.tvStatus);
+                doctor = UserData.getTempUser().getCollectDoctors().get(position);
                 tvCancle.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        doctor = UserData.getTempUser().getCollectDoctors().get(position);
-                        getCallbacks().focusDoctor(UserData.getTempUser().getBaseInfo().getUID(),collectDoctorList.get(position).getHID(),collectDoctorList.get(position).getDoctorCode(),collectDoctorList.get(position).getDepCode(), Constants.FOCUS_DOCTOR_NO);
+                        new AlertDialog(CoreActivity.currentActivity).builder()
+                                .setTitle("提示")
+                                .setMsg("确定要取消关注[" + doctor.getDoctorName() + "]吗?")
+                                .setCancelable(false)
+                                .setPositiveButton("确认", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        CoreActivity.currentActivity.showProgressDialog();
+                                        getCallbacks().focusDoctor(UserData.getTempUser().getBaseInfo().getUID(),collectDoctorList.get(position).getHID(),collectDoctorList.get(position).getDoctorCode(),collectDoctorList.get(position).getDepCode(), Constants.FOCUS_DOCTOR_NO);
+                                    }
+                                }).setNegativeButton("取消", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                            }
+                        }).show();
                     }
                 });
+                try{
+                    LocalRouter.getInstance(LRouterAppcation.getInstance())
+                            .navigation(CoreActivity.currentActivity, LRouterRequest.getInstance(CoreActivity.currentActivity)
+                                    .processName("com.lenovohit.hospitalgroup:module_appointment")
+                                    .provider("AppoinmentProvider")
+                                    .action("DoctorAction")
+                                    .param("TAG","zxyy")
+                                    .requestObject(doctor))
+
+                            .setCallBack(new IRequestCallBack() {
+                                @Override
+                                public void onSuccess(final String result) {
+                                }
+                                @Override
+                                public void onFailure(Exception e) {
+                                }
+                            });
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         });
     }

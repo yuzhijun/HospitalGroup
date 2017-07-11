@@ -135,14 +135,14 @@ public class LX_SwitchPatientActivity extends CoreActivity<MainController.MainUi
             }
             @Override
             public void clearView(RecyclerView.ViewHolder viewHolder, int pos) {
-
             }
             @Override
             public void onItemSwiped(RecyclerView.ViewHolder viewHolder, int pos) {
-
+                getCallbacks().deleteCommonUser(commonUsers.get(pos).getPID());
             }
             @Override
             public void onItemSwipeMoving(Canvas canvas, RecyclerView.ViewHolder viewHolder, float dX, float dY, boolean isCurrentlyActive) {
+
             }
         });
     }
@@ -160,7 +160,7 @@ public class LX_SwitchPatientActivity extends CoreActivity<MainController.MainUi
 
     @Override
     public void getSwitchPatientListCallBack(List<CommonUser> list) {
-        if (list!=null || list.size()>0){
+        if (list!=null && list.size()>0){
             adapter.getData().clear();
             commonUsers.clear();
             commonUsers.addAll(list);
@@ -168,15 +168,15 @@ public class LX_SwitchPatientActivity extends CoreActivity<MainController.MainUi
             setSelectIndexItem(commonUsers);
             UserData.getTempUser().setCommonUsers(commonUsers);
         }
-            emptyView.setType(EmptyView.TYPE_NO_DATA);
-            emptyView.setMessage("暂无患者列表，请点击右上角添加");
+        emptyView.setType(EmptyView.TYPE_NO_DATA);
+        emptyView.setMessage("暂无患者列表，请点击右上角添加");
 
     }
 
     @Override
     public void deleteCommonUserCallBack(Result result) {
         if (result!=null && result.getState()>0){
-            CommonUtil.showSnackBar(emptyView,"删除就诊者成功");
+                CommonUtil.showSnackBar(emptyView,"删除就诊者成功");
         }
     }
 

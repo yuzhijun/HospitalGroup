@@ -28,6 +28,8 @@ public class Constants {
     public static final String LOGIN_COLLECT_HOSPITAL = "001";
     public static final String LOGIN_COLLECT_DOCTOR = "002";
     public static final String LOGIN_SWITCH_PATIENT = "003";
+    public static final String LOGIN_APPOINTMENT_HISTORY = "004";
+    public static final String LOGIN_MINE_ADVICE = "005";
 
     //关注，取消关注   医生或者医院
     //11关注医院；10取消关注医院 ；21关注医生；20取消关注医生
@@ -43,4 +45,13 @@ public class Constants {
 
     //是否关注
     public static final  String IS_COLLECTION = "1";
+
+    //预约，挂号，等待叫号，正在诊疗，已经诊疗，已取消
+    public static final String APPOINTMENT = "1";
+    public static final String REGISTER = "2";
+    public static final String WAITE_CALL = "3";
+    public static final String VISITING = "4";
+    public static final String VISITEND = "5";
+    public static final String CANCEL_APPOINTMENT = "9";
+    public static final String EXPIRED  = "10";
 }

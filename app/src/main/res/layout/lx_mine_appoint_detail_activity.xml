@@ -3,10 +3,10 @@
     android:id="@+id/parent_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg"
+    android:background="@color/grey_normal_bg"
     android:orientation="vertical" >
 
-    <com.lenovohit.hospitals.view.MyScrollerView
+    <com.lenovohit.lartemis_api.views.MyScrollerView
         android:id="@+id/myScrollerView"
         android:layout_weight="1"
         android:layout_width="match_parent"
@@ -24,7 +24,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
                 <include android:id="@+id/appointment_status"
-                    layout="@layout/appointment_head_layout"/>
+                    layout="@layout/lx_mine_appointment_head_layout"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="医院"
-                        android:textColor="@color/s_gray"
+                        android:textColor="@color/font_gray"
                         android:textSize="@dimen/font_size_B"
                         android:layout_marginTop="@dimen/app_interval_20"
                         android:layout_marginLeft="@dimen/app_interval_20"
@@ -68,7 +68,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="科室"
-                        android:textColor="@color/s_gray"
+                        android:textColor="@color/font_gray"
                         android:textSize="@dimen/font_size_B"
                         android:layout_marginTop="@dimen/app_interval_20"
                         android:layout_marginLeft="@dimen/app_interval_20"
@@ -102,7 +102,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="医生"
-                        android:textColor="@color/s_gray"
+                        android:textColor="@color/font_gray"
                         android:textSize="@dimen/font_size_B"
                         android:layout_marginTop="@dimen/app_interval_20"
                         android:layout_marginLeft="@dimen/app_interval_20"
@@ -143,7 +143,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="门诊类型"
-                            android:textColor="@color/s_gray"
+                            android:textColor="@color/font_gray"
                             android:textSize="@dimen/font_size_B"
                             android:layout_gravity="center_vertical"
                             android:gravity="left"
@@ -170,7 +170,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="挂号费用"
-                            android:textColor="@color/s_gray"
+                            android:textColor="@color/font_gray"
                             android:textSize="@dimen/font_size_B"
                             android:layout_gravity="center_vertical"
                             android:gravity="left"
@@ -197,7 +197,7 @@
                             <!--android:layout_width="wrap_content"-->
                             <!--android:layout_height="wrap_content"-->
                             <!--android:text="支付类型"-->
-                            <!--android:textColor="@color/s_gray"-->
+                            <!--android:textColor="@color/font_gray"-->
                             <!--android:textSize="@dimen/font_size_B"-->
                             <!--android:layout_gravity="center_vertical"-->
                             <!--android:gravity="left"-->
@@ -223,7 +223,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="就诊日期"
-                            android:textColor="@color/s_gray"
+                            android:textColor="@color/font_gray"
                             android:textSize="@dimen/font_size_B"
                             android:layout_gravity="center_vertical"
                             android:gravity="left"
@@ -256,7 +256,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="就诊人信息"
-                        android:textColor="@color/s_gray"
+                        android:textColor="@color/font_gray"
                         android:textSize="@dimen/font_size_B"
                         android:layout_marginTop="@dimen/app_interval_10"
                         android:layout_marginBottom="@dimen/app_interval_10"
@@ -271,7 +271,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="患者姓名:"
-                            android:textColor="@color/s_gray"
+                            android:textColor="@color/font_gray"
                             android:textSize="@dimen/font_size_B"
                             android:layout_marginRight="@dimen/app_interval_10"/>
                         <TextView
@@ -293,7 +293,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="手机号码:"
-                            android:textColor="@color/s_gray"
+                            android:textColor="@color/font_gray"
                             android:textSize="@dimen/font_size_B"
                             android:layout_marginRight="@dimen/app_interval_10"/>
                         <TextView
@@ -315,7 +315,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="就诊卡号:"
-                            android:textColor="@color/s_gray"
+                            android:textColor="@color/font_gray"
                             android:textSize="@dimen/font_size_B"
                             android:layout_marginRight="@dimen/app_interval_10"/>
                         <TextView
@@ -330,9 +330,9 @@
                 </LinearLayout>
             </LinearLayout>
             <include android:id="@+id/top_appointment_status"
-                layout="@layout/appointment_head_layout"/>
+                layout="@layout/lx_mine_appointment_head_layout"/>
         </FrameLayout>
-        </com.lenovohit.hospitals.view.MyScrollerView>
+        </com.lenovohit.lartemis_api.views.MyScrollerView>
     <LinearLayout
         android:id="@+id/llCommit"
         android:layout_width="match_parent"
@@ -352,8 +352,8 @@
             android:layout_height="wrap_content"
             android:text="取消预约"
             android:textSize="@dimen/font_size_C"
-            android:textColor="@color/red"
-            android:background="@drawable/list_item_select"
+            android:textColor="@android:color/holo_red_light"
+            android:background="@drawable/lx_list_item_select"
             android:layout_gravity="center"
             android:gravity="center"/>
     </LinearLayout>
