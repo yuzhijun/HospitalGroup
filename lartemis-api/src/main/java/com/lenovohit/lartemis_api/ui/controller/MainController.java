@@ -114,24 +114,57 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
 
             @Override
             public void getValiteCode(String phoneNumber, String type) {
-
+                   getCodeData(ui,phoneNumber,type);
             }
 
             @Override
             public void verifyCodeIsTrue(String phoneNumber, String code, String type) {
-
+                 verifyCodeData(ui,phoneNumber,code,type);
             }
 
             @Override
             public void getPatientList(String hid, String phoneNumber) {
+                    getPatientListData(ui,hid,phoneNumber);
+            }
 
             }
 
             @Override
             public void getHospitalInfo(String hid, String uid) {
                getHospitalInfoData(ui,hid,uid);
+            @Override
+            public void addCommonUser(List<CommonUser> user) {
+                addCommonUserData(ui,user);
+            }
+
+            @Override
+            public void deleteCommonUser(String pid) {
+                deleteCommonUserData(ui,pid);
             }
         };
+    }
+    //通过手机号，添加就诊者
+    private void addCommonUserData(final MainUi ui,List<CommonUser> user){
+        if (ui instanceof SwitchPatientMangerUi){
+            CoreActivity.currentActivity.showProgressDialog();
+            mApiService.addCommonUser(user)
+                    .map(new HttpResultFunc<Result>())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new RequestCallBack<Result>() {
+                        @Override
+                        public void onResponse(Result response) {
+                            CoreActivity.currentActivity.hideProgressDialog();
+                            ((SwitchPatientMangerUi) ui).addCommonUserCallBack(response);
+                        }
+
+                        @Override
+                        public void onFailure(ResponseError error) {
+                            CoreActivity.currentActivity.hideProgressDialog();
+                            ui.onResponseError(error);
+                        }
+                    });
+        }
     }
     //添加患者时，获取验证码
     private void getCodeData(final MainUi ui,String phoneNumber,String type){
@@ -158,11 +191,49 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
     }
     //添加患者时，验证验证码是否正确
     private void verifyCodeData(final MainUi ui,String phoneNumber,String code,String type){
+        if (ui instanceof SwitchPatientMangerUi){
+            CoreActivity.currentActivity.showProgressDialog();
+            mApiService.VelifyCdoe(phoneNumber,code,type)
+                    .map(new HttpResultFunc<Result>())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new RequestCallBack<Result>() {
+                        @Override
+                        public void onResponse(Result response) {
+                            CoreActivity.currentActivity.hideProgressDialog();
+                            ((SwitchPatientMangerUi) ui).verifyCodeCallBack(response);
+                        }
 
+                        @Override
+                        public void onFailure(ResponseError error) {
+                            CoreActivity.currentActivity.hideProgressDialog();
+                            ui.onResponseError(error);
+                        }
+                    });
+        }
     }
     //添加患者时，获得此手机号绑定的就诊卡
     private void getPatientListData(final MainUi ui,String hid,String phoneNumber){
+        if (ui instanceof SwitchPatientMangerUi){
+            CoreActivity.currentActivity.showProgressDialog();
+            mApiService.getPatientList(hid,phoneNumber)
+                    .map(new HttpResultFunc<List<CommonUser>>())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new RequestCallBack<List<CommonUser>>() {
+                        @Override
+                        public void onResponse(List<CommonUser> response) {
+                            CoreActivity.currentActivity.hideProgressDialog();
+                            ((SwitchPatientMangerUi) ui).getPatientListCallBack(response);
+                        }
 
+                        @Override
+                        public void onFailure(ResponseError error) {
+                            CoreActivity.currentActivity.hideProgressDialog();
+                            ui.onResponseError(error);
+                        }
+                    });
+        }
     }
     //获取首页信息
     private void getIndexRecommendInfoData(final MainUi ui){
@@ -347,7 +418,6 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
     }
     //关注或取消关注 医生或医院
     public void FocusDoctorOrHospital(final MainUi ui,String UID,String HID,String DoctorCode,String DepCode,String Type){
-            if (ui instanceof CollectHospital){
                 CoreActivity.currentActivity.showProgressDialog();
                 mApiService.FocusHospOrDoctor(UID,HID,DoctorCode,DepCode,Type)
                         .map(new HttpResultFunc<Result>())
@@ -357,7 +427,11 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
                             @Override
                             public void onResponse(Result response) {
                                 CoreActivity.currentActivity.hideProgressDialog();
-                                ((CollectHospital) ui).FocusHospitalCallBack(response);
+                                if (ui instanceof CollectHospital){
+                                    ((CollectHospital) ui).FocusHospitalCallBack(response);
+                                }else if (ui instanceof CollectDoctor){
+                                    ((CollectDoctor) ui).FocusDoctorCallBack(response);
+                                }
                             }
 
                             @Override
@@ -366,7 +440,6 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
                                 CoreActivity.currentActivity.hideProgressDialog();
                             }
                         });
-            }
     }
     //获取选择患者时的患者列表
     public void getSwitchPatientListData(final  MainUi ui,String uid){
@@ -406,6 +479,28 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
                 });
     }
 
+    public void deleteCommonUserData(final MainUi ui,String pid){
+        if (ui instanceof SwitchPatientUi){
+            CoreActivity.currentActivity.showProgressDialog();
+            mApiService.deleteCommonUser(pid)
+                    .map(new HttpResultFunc<Result>())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new RequestCallBack<Result>() {
+                        @Override
+                        public void onResponse(Result response) {
+                            CoreActivity.currentActivity.hideProgressDialog();
+                            ((SwitchPatientUi) ui).deleteCommonUserCallBack(response);
+                        }
+
+                        @Override
+                        public void onFailure(ResponseError error) {
+                            CoreActivity.currentActivity.hideProgressDialog();
+                            ui.onResponseError(error);
+                        }
+                    });
+        }
+    }
     public interface MainUiCallbacks{//给UI界面调用
         void getIndexRecommendInfo();
         void getHospitalsList();
@@ -416,11 +511,16 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
         void focusHospital(String UID,String HID,String DoctorCode,String DepCode,String Type);
         void getCollectDoctor(String uID);
         void focusDoctor(String UID,String HID,String DoctorCode,String DepCode,String Type);
+        //获取当前用户的患者列表
         void getSwitchPatientList(String UID);
         void getValiteCode(String phoneNumber,String type);
         void verifyCodeIsTrue(String phoneNumber,String code,String type);
+        //通过手机号获取就诊卡号
         void getPatientList(String hid,String phoneNumber);
         void getHospitalInfo(String hid,String uid);
+        //添加就诊者
+        void addCommonUser(List<CommonUser> user);
+        void deleteCommonUser(String pid);
     }
 
     public interface MainUi extends BaseController.Ui<MainUiCallbacks> {
@@ -456,6 +556,7 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
     }
     public interface SwitchPatientUi extends MainUi{
         void getSwitchPatientListCallBack(List<CommonUser>list);
+        void deleteCommonUserCallBack(Result result);
     }
     public interface  SwitchPatientMangerUi extends  MainUi{
         //获取验证码
@@ -464,6 +565,8 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
         void verifyCodeCallBack(Result result);
         //获取此手机号的就诊卡
         void getPatientListCallBack(List<CommonUser>list);
+        //添加就诊者
+        void addCommonUserCallBack(Result result);
     }
 
     public interface MainHospitalUi extends MainUi{

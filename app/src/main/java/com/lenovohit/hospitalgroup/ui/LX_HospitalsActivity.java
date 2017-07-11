@@ -59,6 +59,7 @@ public class LX_HospitalsActivity extends CoreActivity<MainController.MainUiCall
      LXHeaderView lx_header_view_rotate;
     private CollectHosAdapter adapter;
     private EmptyView emptyView;
+    private Hospitals hospital;
 
     @Override
     protected BaseController getController() {
@@ -117,6 +118,7 @@ public class LX_HospitalsActivity extends CoreActivity<MainController.MainUiCall
                         User tempUser = UserData.getTempUser();
                         if (tempUser!=null&&tempUser.getBaseInfo()!=null){
                             tvHosPitalCount.setText(tempUser.getCollectHospitals().size()+"");
+                            hospital = tempUser.getCollectHospitals().get(position);
                             getCallbacks().focusHospital(tempUser.getBaseInfo().getUID(),tempUser.getCollectHospitals().get(position).getHID(),"","", Constants.FOCUS_HOSPITAL_NO);
                         }
                     }
@@ -151,7 +153,7 @@ public class LX_HospitalsActivity extends CoreActivity<MainController.MainUiCall
             return;
         }
             for (int i = collectHosList.size() - 1; i >= 0; i--) {
-                if (collectHosList.get(i).getHID().equals(UserData.getTempUser().getCollectHospitals().get(i).getHID()))
+                if (collectHosList.get(i).getHID().equals(hospital.getHID()))
                     collectHosList.remove(i);
             }
             UserData.getTempUser().setCollectHospitals(collectHosList);

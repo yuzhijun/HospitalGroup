@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_marginBottom="5dp">
+
+    <TextView
+        android:id="@+id/tvHospitalName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="@color/gray_dark"
+        android:textSize="@dimen/font_size_C"
+        android:layout_margin="@dimen/app_interval_10"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="@dimen/app_interval_10">
+            <TextView
+                android:id="@+id/tvPatientName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="@dimen/font_size_B"
+                android:textColor="@color/gray_dark"/>
+
+            <TextView
+                android:id="@+id/tvSex"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/gray_dark"
+                android:textSize="@dimen/font_size_B"
+                android:layout_marginLeft="@dimen/app_interval_10"/>
+
+            <TextView
+                android:id="@+id/tvPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/gray_dark"
+                android:textSize="@dimen/font_size_B"
+                android:layout_marginRight="@dimen/app_interval_10"
+                />
+        </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/app_line_colors"
+        android:layout_marginTop="@dimen/app_interval_10"
+        android:layout_marginLeft="@dimen/app_interval_20"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/app_interval_10"
+        android:layout_marginLeft="@dimen/app_interval_10">
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="就诊卡号"
+            android:textSize="@dimen/font_size_B"
+            android:textColor="@color/gray_dark"/>
+
+        <TextView
+            android:id="@+id/tvHospitalCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/gray_dark"
+            android:textSize="@dimen/font_size_B"
+            android:layout_marginRight="@dimen/app_interval_10"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/app_interval_10"
+        android:layout_marginLeft="@dimen/app_interval_10"
+        android:layout_marginBottom="@dimen/app_interval_10">
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="身份证号"
+            android:textSize="@dimen/font_size_B"
+            android:textColor="@color/gray_dark"/>
+        <TextView
+            android:id="@+id/tvIDCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/gray_dark"
+            android:textSize="@dimen/font_size_B"
+            android:layout_marginRight="@dimen/app_interval_10"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>

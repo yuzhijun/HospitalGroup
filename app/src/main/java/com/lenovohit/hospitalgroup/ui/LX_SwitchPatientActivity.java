@@ -24,6 +24,7 @@ import com.lenovohit.lartemis_api.core.LArtemis;
 import com.lenovohit.lartemis_api.data.UserData;
 import com.lenovohit.lartemis_api.model.CommonUser;
 import com.lenovohit.lartemis_api.model.ResponseError;
+import com.lenovohit.lartemis_api.model.Result;
 import com.lenovohit.lartemis_api.ui.controller.MainController;
 import com.lenovohit.lartemis_api.utils.CommonUtil;
 import com.lenovohit.lartemis_api.utils.Constants;
@@ -105,8 +106,6 @@ public class LX_SwitchPatientActivity extends CoreActivity<MainController.MainUi
         recycleView.addItemDecoration(new RecycleViewDivider(recycleView.getContext(), LinearLayoutManager.VERTICAL));
         recycleView.setAdapter(adapter);
 
-        getPatientListData();
-
     }
 
     @Override
@@ -133,29 +132,17 @@ public class LX_SwitchPatientActivity extends CoreActivity<MainController.MainUi
         adapter.setOnItemSwipeListener(new OnItemSwipeListener() {
             @Override
             public void onItemSwipeStart(RecyclerView.ViewHolder viewHolder, int pos) {
-
             }
-
             @Override
             public void clearView(RecyclerView.ViewHolder viewHolder, int pos) {
 
             }
-
             @Override
             public void onItemSwiped(RecyclerView.ViewHolder viewHolder, int pos) {
-//                    RelativeLayout rlLayout = ((BaseViewHolder)viewHolder).getView(R.id.rlLayout);
-//                    RecyclerView.LayoutParams params=new RecyclerView.LayoutParams(900,RecyclerView.LayoutParams.WRAP_CONTENT);
-//                    rlLayout.setLayoutParams(params);
-            }
 
+            }
             @Override
             public void onItemSwipeMoving(Canvas canvas, RecyclerView.ViewHolder viewHolder, float dX, float dY, boolean isCurrentlyActive) {
-//                Log.e("tag",dX+"..."+dY);
-//                RelativeLayout rlLayout = ((BaseViewHolder)viewHolder).getView(R.id.rlLayout);
-//                if (-dX>=100){
-//                    RecyclerView.LayoutParams params=new RecyclerView.LayoutParams(canvas.getWidth()-100,RecyclerView.LayoutParams.WRAP_CONTENT);
-//                    rlLayout.setLayoutParams(params);
-//                }
             }
         });
     }
@@ -185,6 +172,14 @@ public class LX_SwitchPatientActivity extends CoreActivity<MainController.MainUi
             emptyView.setMessage("暂无患者列表，请点击右上角添加");
 
     }
+
+    @Override
+    public void deleteCommonUserCallBack(Result result) {
+        if (result!=null && result.getState()>0){
+            CommonUtil.showSnackBar(emptyView,"删除就诊者成功");
+        }
+    }
+
     public static void startSwitchPatientActivity(Context context){
         context.startActivity(new Intent(context,LX_SwitchPatientActivity.class));
     }
@@ -219,5 +214,11 @@ public class LX_SwitchPatientActivity extends CoreActivity<MainController.MainUi
         CommonUtil.showSnackBar(recycleView,error.getMessage());
         emptyView.setType(EmptyView.TYPE_ERROR);
         emptyView.setMessage(error.getMessage());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getPatientListData();
     }
 }
