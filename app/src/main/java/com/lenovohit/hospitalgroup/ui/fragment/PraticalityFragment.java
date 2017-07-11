@@ -27,6 +27,11 @@ public class PraticalityFragment extends CoreFragment<MainController.MainUiCallb
     }
 
     @Override
+    protected void initEvent() {
+
+    }
+
+    @Override
     protected void handleArguments(Bundle arguments) {
 
     }

@@ -5,6 +5,7 @@ import com.lenovohit.lartemis_api.model.CommonUser;
 import com.lenovohit.lartemis_api.model.Doctor;
 import com.lenovohit.lartemis_api.model.DoctorAppoint;
 import com.lenovohit.lartemis_api.model.HomePage;
+import com.lenovohit.lartemis_api.model.HospitalMainPage;
 import com.lenovohit.lartemis_api.model.Hospitals;
 import com.lenovohit.lartemis_api.model.HttpResult;
 import com.lenovohit.lartemis_api.model.Result;
@@ -66,4 +67,6 @@ public interface ApiService {
     Observable<HttpResult<Result>> VelifyCdoe(@Field("PhoneNumber")String PhoneNumber,@Field("SMSCode")String SMSCode,@Field("TempCode")String TempCode);
     @GET("eHealthPlatformService/api/Hospital/DoctorBase/{hID}/{depCode}/{doctorCode}/{uID}")
     Observable<HttpResult<Doctor>> getDoctorBase(@Path("hID")String hID,@Path("depCode")String depCode,@Path("doctorCode")String doctorCode,@Path("uID")String uID);
+    @GET("NeweHealthServices/api/Hospital/HospitalInfo/{hID}/{uID}")
+    Observable<HttpResult<HospitalMainPage>> getHospitalInfo(@Path("hID")String hID,@Path("uID")String uID);
 }

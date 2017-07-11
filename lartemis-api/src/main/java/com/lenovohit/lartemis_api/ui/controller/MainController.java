@@ -6,6 +6,7 @@ import com.lenovohit.lartemis_api.base.CoreActivity;
 import com.lenovohit.lartemis_api.model.CommonUser;
 import com.lenovohit.lartemis_api.model.Doctor;
 import com.lenovohit.lartemis_api.model.HomePage;
+import com.lenovohit.lartemis_api.model.HospitalMainPage;
 import com.lenovohit.lartemis_api.model.Hospitals;
 import com.lenovohit.lartemis_api.model.HttpResult;
 import com.lenovohit.lartemis_api.model.ResponseError;
@@ -124,6 +125,11 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
             @Override
             public void getPatientList(String hid, String phoneNumber) {
 
+            }
+
+            @Override
+            public void getHospitalInfo(String hid, String uid) {
+               getHospitalInfoData(ui,hid,uid);
             }
         };
     }
@@ -382,6 +388,24 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
                     });
         }
     }
+
+    private void getHospitalInfoData(final MainUi ui, String hid, String uid){
+        mApiService.getHospitalInfo(hid,uid)
+                .map(new HttpResultFunc<HospitalMainPage>())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new RequestCallBack<HospitalMainPage>() {
+                    @Override
+                    public void onResponse(HospitalMainPage response) {
+                        ((MainHospitalUi)ui).getHospitalInfoCallBack(response);
+                    }
+                    @Override
+                    public void onFailure(ResponseError error) {
+                        ui.onResponseError(error);
+                    }
+                });
+    }
+
     public interface MainUiCallbacks{//给UI界面调用
         void getIndexRecommendInfo();
         void getHospitalsList();
@@ -396,6 +420,7 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
         void getValiteCode(String phoneNumber,String type);
         void verifyCodeIsTrue(String phoneNumber,String code,String type);
         void getPatientList(String hid,String phoneNumber);
+        void getHospitalInfo(String hid,String uid);
     }
 
     public interface MainUi extends BaseController.Ui<MainUiCallbacks> {
@@ -440,8 +465,12 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
         //获取此手机号的就诊卡
         void getPatientListCallBack(List<CommonUser>list);
     }
+
+    public interface MainHospitalUi extends MainUi{
+        void getHospitalInfoCallBack(HospitalMainPage response);
+    }
+
     public AppointmentController getAppointmentController() {
         return mAppointmentController;
     }
-
 }

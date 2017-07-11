@@ -50,6 +50,7 @@ public abstract class CoreFragment<UC> extends BaseFragment<UC> {
         setToolbar(view,savedInstanceState);
         handleArguments(getArguments());
         initViews(view,savedInstanceState);
+        initEvent();
     }
 
     @Override
@@ -58,6 +59,7 @@ public abstract class CoreFragment<UC> extends BaseFragment<UC> {
     }
 
     protected abstract void initViews(View view,Bundle savedInstanceState);
+    protected abstract void initEvent();
     protected abstract void handleArguments(Bundle arguments);
 
     protected int getLayoutResId() {

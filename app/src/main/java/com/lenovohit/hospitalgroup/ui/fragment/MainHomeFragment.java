@@ -75,6 +75,11 @@ public class MainHomeFragment extends CoreFragment<MainController.MainUiCallback
         getCallbacks().getIndexRecommendInfo();
     }
 
+    @Override
+    protected void initEvent() {
+
+    }
+
     private void initPtrFrame(){
         lx_header_view_rotate.setOnRefreshDistanceListener(this);
         lx_header_view_rotate.setPtrHandler(new PtrHandler() {
