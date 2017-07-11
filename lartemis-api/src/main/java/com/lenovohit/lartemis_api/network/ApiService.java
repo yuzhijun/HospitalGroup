@@ -61,9 +61,12 @@ public interface ApiService {
     @GET("eHealthPlatformService/api/Appointment/DoctorAppoint")
     Observable<HttpResult<List<DoctorAppoint>>> getDoctorAppoint(@Query("hID")String hID,@Query("dCode")String dCode,@Query("depCode")String depCode,@Query("tag")String tag);
     @GET("NeweHealthServices/api/User/GetAllCommonUser/{uID}")
-    Observable<HttpResult<List<CommonUser>>>getSwitchPatientList(@Path("uID")String uid);
+    Observable<HttpResult<List<CommonUser>>> getSwitchPatientList(@Path("uID")String uid);
     @FormUrlEncoded
     @POST("NeweHealthServices/api/User/VerifyPhoneCode")
+    Observable<HttpResult<Result>> VelifyCdoe(@Field("PhoneNumber")String PhoneNumber,@Field("SMSCode")String SMSCode,@Field("TempCode")String TempCode);
+    @GET("eHealthPlatformService/api/Hospital/DoctorBase/{hID}/{depCode}/{doctorCode}/{uID}")
+    Observable<HttpResult<Doctor>> getDoctorBase(@Path("hID")String hID,@Path("depCode")String depCode,@Path("doctorCode")String doctorCode,@Path("uID")String uID);
     Observable<HttpResult<Result>>VelifyCdoe(@Field("PhoneNumber")String PhoneNumber,@Field("SMSCode")String SMSCode,@Field("TempCode")String TempCode);
     @GET("eHealthPlatformService/api/Hospital/GetCards/{HID}/{phone}")
     Observable<HttpResult<List<CommonUser>>>getPatientList(@Path("HID") String HID,@Path("phone") String phone);
