@@ -152,6 +152,7 @@ public class LX_AppointmentMainActivity extends CoreActivity<AppointmentControll
             return;
         }
 
+        rvSonDept.setVisibility(View.VISIBLE);
         mDeptAdapter.getData().clear();
         mDeptAdapter.setNewData(response);
         mDeptAdapter.setSelectedPosition(0);
