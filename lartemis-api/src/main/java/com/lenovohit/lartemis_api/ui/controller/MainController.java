@@ -7,6 +7,7 @@ import com.lenovohit.lartemis_api.model.Appoint;
 import com.lenovohit.lartemis_api.model.CommonUser;
 import com.lenovohit.lartemis_api.model.Doctor;
 import com.lenovohit.lartemis_api.model.HomePage;
+import com.lenovohit.lartemis_api.model.HospitalMainPage;
 import com.lenovohit.lartemis_api.model.Hospitals;
 import com.lenovohit.lartemis_api.model.HttpResult;
 import com.lenovohit.lartemis_api.model.MyAdvice;
@@ -128,6 +129,10 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
                     getPatientListData(ui,hid,phoneNumber);
             }
 
+            @Override
+            public void getHospitalInfo(String hid, String uid) {
+                getHospitalInfoData(ui, hid, uid);
+            }
             @Override
             public void addCommonUser(List<CommonUser> user) {
                 addCommonUserData(ui,user);
@@ -527,6 +532,24 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
                     });
         }
     }
+
+    private void getHospitalInfoData(final MainUi ui, String hid, String uid){
+        mApiService.getHospitalInfo(hid,uid)
+                .map(new HttpResultFunc<HospitalMainPage>())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new RequestCallBack<HospitalMainPage>() {
+                    @Override
+                    public void onResponse(HospitalMainPage response) {
+                        ((MainHospitalUi)ui).getHospitalInfoCallBack(response);
+                    }
+                    @Override
+                    public void onFailure(ResponseError error) {
+                        ui.onResponseError(error);
+                    }
+                });
+    }
+
     public void deleteCommonUserData(final MainUi ui,String pid){
         if (ui instanceof SwitchPatientUi){
             mApiService.deleteCommonUser(pid)
@@ -626,6 +649,7 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
         void verifyCodeIsTrue(String phoneNumber,String code,String type);
         //通过手机号获取就诊卡号
         void getPatientList(String hid,String phoneNumber);
+        void getHospitalInfo(String hid,String uid);
         //添加就诊者
         void addCommonUser(List<CommonUser> user);
         void deleteCommonUser(String pid);
@@ -681,6 +705,11 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
         //添加就诊者
         void addCommonUserCallBack(Result result);
     }
+
+    public interface MainHospitalUi extends MainUi{
+        void getHospitalInfoCallBack(HospitalMainPage response);
+    }
+
     public interface  AppointmentHistoryUi extends MainUi{
         void getAppointmentHistoryCallBack(List<Appoint>list);
     }
@@ -697,5 +726,4 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
     public AppointmentController getAppointmentController() {
         return mAppointmentController;
     }
-
 }

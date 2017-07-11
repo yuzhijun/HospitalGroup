@@ -10,9 +10,11 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lenovohit.hospitalgroup.R;
+import com.lenovohit.hospitalgroup.ui.LX_MainHospitalActivity;
 import com.lenovohit.hospitalgroup.ui.adapter.AllHosAdapter;
 import com.lenovohit.lartemis_api.annotation.ContentView;
 import com.lenovohit.lartemis_api.base.BaseController;
+import com.lenovohit.lartemis_api.base.CoreActivity;
 import com.lenovohit.lartemis_api.base.CoreFragment;
 import com.lenovohit.lartemis_api.core.LArtemis;
 import com.lenovohit.lartemis_api.model.HomePage;
@@ -56,6 +58,7 @@ public class HospitalFragment extends CoreFragment<MainController.MainUiCallback
     private List<String> typeTitleList = new ArrayList<>();
     //第二个下拉矿中的view
     private RecyclerView orderView;
+    private RecyclerView recyclerView;
     private AllHosAdapter adapter;
     Unbinder mUnbinder;
     List<Hospitals> hospitalList = new ArrayList<>();
@@ -84,7 +87,7 @@ public class HospitalFragment extends CoreFragment<MainController.MainUiCallback
         //添加tab标题
         titleList = new ArrayList<>();
         titleList.add("医院性质");
-         titleList.add("综合排序");
+        titleList.add("综合排序");
 
         //添加具体下拉布局
         popupViews=new ArrayList<>();
@@ -125,7 +128,7 @@ public class HospitalFragment extends CoreFragment<MainController.MainUiCallback
 
         //添加dropDownView下边的布局
         View inflate = LayoutInflater.from(getActivity()).inflate(R.layout.lx_dropdown_hospital_arrow_view, null);
-        RecyclerView recyclerView = (RecyclerView) inflate.findViewById(R.id.AllHosRecyclerView);
+        recyclerView = (RecyclerView) inflate.findViewById(R.id.AllHosRecyclerView);
         adapter = new AllHosAdapter(R.layout.lx_recommond_hos_view_item,hospitalList);
         adapter.setOnLoadMoreListener(this);
         adapter.setEnableLoadMore(false);
@@ -160,6 +163,16 @@ public class HospitalFragment extends CoreFragment<MainController.MainUiCallback
 
         dropDownMenu.setDropDownMenu(titleList,popupViews,inflate);
 
+    }
+
+    @Override
+    protected void initEvent() {
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter tempAdapter, View view, int position) {
+                LX_MainHospitalActivity.startMainHospitalActivity(CoreActivity.currentActivity,adapter.getData().get(position));
+            }
+        });
     }
 
     @Override

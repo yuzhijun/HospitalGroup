@@ -3,7 +3,9 @@ package com.lenovohit.lartemis_api.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Doctor implements Parcelable{
+import java.io.Serializable;
+
+public class Doctor implements Parcelable,Serializable{
 	private String DoctorName;
 	private String HospitalName;
 	private String DepName;

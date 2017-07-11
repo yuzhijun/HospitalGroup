@@ -147,6 +147,11 @@ public class MineFragment extends CoreFragment<MainController.MainUiCallbacks> i
     }
 
     @Override
+    protected void initEvent() {
+
+    }
+
+    @Override
     protected void handleArguments(Bundle arguments) {
 
     }
