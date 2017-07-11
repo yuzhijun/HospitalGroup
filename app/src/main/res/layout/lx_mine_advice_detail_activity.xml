@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3.8"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginBottom="40dip"
+            android:background="@color/colorPrimary" >
+
+            <ImageView
+                android:id="@+id/imgMyQuestion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_margin="10dp"
+                android:src="@mipmap/lx_iv_advice_q" />
+             <ScrollView 
+                   android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                 android:layout_marginBottom="50dp"
+                android:layout_below="@id/imgMyQuestion"
+                android:scrollbars="none">
+            <TextView
+                android:id="@+id/tvQuestion"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_size_C" />
+            </ScrollView>
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="10dip"
+            android:background="@mipmap/lx_iv_advice_a" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:orientation="vertical" >
+       
+        <TextView
+            android:id="@+id/tvAnswer"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:hint="暂无回复    ╮(╯▽╰)╭"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/font_size_C" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
@@ -15,6 +16,7 @@ import com.lenovohit.lartemis_api.annotation.ContentView;
 import com.lenovohit.lartemis_api.base.BaseController;
 import com.lenovohit.lartemis_api.base.CoreActivity;
 import com.lenovohit.lartemis_api.core.LArtemis;
+import com.lenovohit.lartemis_api.data.HospitalData;
 import com.lenovohit.lartemis_api.model.Appoint;
 import com.lenovohit.lartemis_api.model.ResponseError;
 import com.lenovohit.lartemis_api.model.Result;
@@ -118,7 +120,8 @@ public class LX_AppointDetailActivity extends CoreActivity<MainController.MainUi
                             @Override
                             public void onClick(View v) {
                                 if (appoint!= null){
-                                    getCallbacks().unAppoint(appoint.getAID(),appoint.getAppointmentID(),appoint.getHID());
+                                    Log.e("tag",appoint.toString());
+                                    getCallbacks().unAppoint(appoint.getAID(),appoint.getDoAID(), HospitalData.getCurrentHospital().getHID());
                                 }
                             }
                         })

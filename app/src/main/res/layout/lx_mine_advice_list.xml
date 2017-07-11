@@ -3,8 +3,19 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <android.support.v7.widget.RecyclerView
+        android:layout_weight="1"
         android:id="@+id/recycleView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </android.support.v7.widget.RecyclerView>
+    <Button
+        android:layout_marginTop="10dp"
+        android:id="@+id/btnCommitAdvice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="新增反馈"
+        android:textColor="@color/white"
+        android:background="@drawable/lx_btn_complete_select"
+        />
 </LinearLayout>

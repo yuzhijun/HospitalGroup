@@ -29,6 +29,10 @@ import com.lenovohit.lartemis_api.views.AlertDialog;
 import com.lenovohit.lartemis_api.views.EmptyView;
 import com.lenovohit.lartemis_api.views.LXHeaderView;
 import com.lenovohit.lartemis_api.views.RecycleViewDivider;
+import com.lenovohit.lrouter_api.base.LRouterAppcation;
+import com.lenovohit.lrouter_api.core.LRouterRequest;
+import com.lenovohit.lrouter_api.core.LocalRouter;
+import com.lenovohit.lrouter_api.core.callback.IRequestCallBack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -112,14 +116,15 @@ public class LX_HospitalsActivity extends CoreActivity<MainController.MainUiCall
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, final int position) {
+                final User tempUser = UserData.getTempUser();
+                hospital = tempUser.getCollectHospitals().get(position);
                 TextView btnUnFocus = (TextView)view.findViewById(R.id.btnCancel);
                 btnUnFocus.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        final User tempUser = UserData.getTempUser();
+
                         if (tempUser!=null&&tempUser.getBaseInfo()!=null){
                             tvHosPitalCount.setText(tempUser.getCollectHospitals().size()+"");
-                            hospital = tempUser.getCollectHospitals().get(position);
                             new AlertDialog(CoreActivity.currentActivity).builder()
                                     .setTitle("提示")
                                     .setMsg("确定要取消关注[" + hospital.getHospitalName() + "]吗?")
@@ -138,6 +143,26 @@ public class LX_HospitalsActivity extends CoreActivity<MainController.MainUiCall
                         }
                     }
                 });
+                try{
+                    LocalRouter.getInstance(LRouterAppcation.getInstance())
+                            .navigation(CoreActivity.currentActivity, LRouterRequest.getInstance(CoreActivity.currentActivity)
+                                    .processName("com.lenovohit.hospitalgroup:module_appointment")
+                                    .provider("AppoinmentProvider")
+                                    .action("DoctorAction")
+                                    .param("TAG","zxyy")
+                                    .requestObject(hospital))
+
+                            .setCallBack(new IRequestCallBack() {
+                                @Override
+                                public void onSuccess(final String result) {
+                                }
+                                @Override
+                                public void onFailure(Exception e) {
+                                }
+                            });
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         });
     }
