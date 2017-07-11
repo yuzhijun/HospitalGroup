@@ -88,5 +88,5 @@ public interface ApiService {
     Observable<HttpResult<List<MyAdvice>>>getMyAdviceList(@Path("phoneNumber") String phoneNumber);
     @FormUrlEncoded
     @POST("NeweHealthServices/api/System/AddUserFeedback")
-    Observable<HttpResult<Result>> sendMyAdvice(@Field("contact")String contact,@Field("content") String content);
+    Observable<HttpResult<Result>> sendMyAdvice(@Field("email") String email,@Field("contact")String contact,@Field("content") String content);
 }

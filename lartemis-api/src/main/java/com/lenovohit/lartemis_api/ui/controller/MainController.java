@@ -614,7 +614,7 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
     public void sendMyAdviceData(final MainUi ui,String contact,String content){
         if (ui instanceof MyAdviceAddUi){
             CoreActivity.currentActivity.showProgressDialog();
-            mApiService.sendMyAdvice(contact,content)
+            mApiService.sendMyAdvice("",contact,content)
                     .map(new HttpResultFunc<Result>())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())

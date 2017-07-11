@@ -16,6 +16,7 @@ import com.lenovohit.lartemis_api.annotation.ContentView;
 import com.lenovohit.lartemis_api.base.BaseController;
 import com.lenovohit.lartemis_api.base.CoreActivity;
 import com.lenovohit.lartemis_api.core.LArtemis;
+import com.lenovohit.lartemis_api.data.UserData;
 import com.lenovohit.lartemis_api.model.ResponseError;
 import com.lenovohit.lartemis_api.model.Result;
 import com.lenovohit.lartemis_api.ui.controller.MainController;
@@ -24,6 +25,9 @@ import com.lenovohit.lartemis_api.utils.CommonUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+
+import static com.lenovohit.hospitalgroup.R.id.et_advice_phone;
+import static com.lenovohit.hospitalgroup.R.id.tvPhone;
 
 /**
  * Created by SharkChao on 2017-07-11.
@@ -34,9 +38,9 @@ public class LX_MyAdviceAddActivity extends CoreActivity<MainController.MainUiCa
     EditText mEtAdviceOpinion;
     @BindView(R.id.tvRestNum)
     TextView mTvRestNum;
-    @BindView(R.id.tvPhone)
+    @BindView(tvPhone)
     TextView mTvPhone;
-    @BindView(R.id.et_advice_phone)
+    @BindView(et_advice_phone)
     EditText mEtAdvicePhone;
     @BindView(R.id.btn_advice_commit)
     Button mBtnAdviceCommit;
@@ -54,6 +58,11 @@ public class LX_MyAdviceAddActivity extends CoreActivity<MainController.MainUiCa
         mBind = ButterKnife.bind(this);
         isShowToolBar(true);
         setCenterTitle("新增反馈");
+        if (UserData.getTempUser() !=null) {
+            mTvPhone.setVisibility(View.GONE);
+            mEtAdvicePhone.setVisibility(View.GONE);
+            mEtAdvicePhone.setText(UserData.getTempUser().getBaseInfo().getPhoneNumber());
+        }
     }
 
     @Override

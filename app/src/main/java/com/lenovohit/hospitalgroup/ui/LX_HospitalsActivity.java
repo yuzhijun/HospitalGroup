@@ -29,10 +29,6 @@ import com.lenovohit.lartemis_api.views.AlertDialog;
 import com.lenovohit.lartemis_api.views.EmptyView;
 import com.lenovohit.lartemis_api.views.LXHeaderView;
 import com.lenovohit.lartemis_api.views.RecycleViewDivider;
-import com.lenovohit.lrouter_api.base.LRouterAppcation;
-import com.lenovohit.lrouter_api.core.LRouterRequest;
-import com.lenovohit.lrouter_api.core.LocalRouter;
-import com.lenovohit.lrouter_api.core.callback.IRequestCallBack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -143,26 +139,7 @@ public class LX_HospitalsActivity extends CoreActivity<MainController.MainUiCall
                         }
                     }
                 });
-                try{
-                    LocalRouter.getInstance(LRouterAppcation.getInstance())
-                            .navigation(CoreActivity.currentActivity, LRouterRequest.getInstance(CoreActivity.currentActivity)
-                                    .processName("com.lenovohit.hospitalgroup:module_appointment")
-                                    .provider("AppoinmentProvider")
-                                    .action("DoctorAction")
-                                    .param("TAG","zxyy")
-                                    .requestObject(hospital))
-
-                            .setCallBack(new IRequestCallBack() {
-                                @Override
-                                public void onSuccess(final String result) {
-                                }
-                                @Override
-                                public void onFailure(Exception e) {
-                                }
-                            });
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
+               LX_MainHospitalActivity.startMainHospitalActivity(LX_HospitalsActivity.this,hospital);
             }
         });
     }
