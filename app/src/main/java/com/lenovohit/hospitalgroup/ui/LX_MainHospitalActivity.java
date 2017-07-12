@@ -81,6 +81,7 @@ public class LX_MainHospitalActivity extends CoreActivity<MainController.MainUiC
         rvModule.addItemDecoration(new RecyclerViewGridDivider(rvModule.getContext()));
         mModuleAdapter = new HospitalModuleAdapter(R.layout.lx_app_hospital_module_item);
         emptyView = new EmptyView(rvModule.getContext(), (ViewGroup) rvModule.getParent());
+        emptyView.setBottomViewUnVisuable();
         emptyView.setType(EmptyView.TYPE_LOADING);
         emptyView.setRefreshListener(new View.OnClickListener() {
             @Override
