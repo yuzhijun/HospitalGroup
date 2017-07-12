@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey_normal_bg"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_margin="5dp"
+        android:padding="10dip"
+        android:background="@drawable/base_fillet_frame"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="你的意见"
+            android:textSize="@dimen/font_size_B"/>
+
+        <!-- 输入意见 -->
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="170dp">
+            <EditText
+                android:id="@+id/et_advice_opinion"
+                android:layout_width="fill_parent"
+                android:layout_height="170dip"
+                android:gravity="top"
+                android:hint="请输入你要反馈的意见"
+                android:background="@drawable/white_black_frame"
+                android:maxLength="100"
+                android:padding="5dp"/>
+            <TextView
+                android:id="@+id/tvRestNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:textColor="@color/gray_1"
+                android:textSize="@dimen/font_size_A"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="8dp"/>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tvPhone"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="联系方式"
+            android:textSize="@dimen/font_size_B"
+            android:layout_marginTop="10dip"/>
+
+        <!-- 联系方式 -->
+
+        <EditText
+            android:id="@+id/et_advice_phone"
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:hint="邮箱或手机号码"
+            android:padding="5dp"
+            android:singleLine="true" />
+
+        <Button
+            android:id="@+id/btn_advice_commit"
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dip"
+            android:background="@drawable/lx_btn_complete_select"
+            android:text="提交"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_size_D" />
+    </LinearLayout>
+
+</LinearLayout>

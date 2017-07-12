@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lenovohit.hospitalgroup.R;
@@ -40,8 +41,10 @@ import static com.lenovohit.hospitalgroup.R.id.recycleView;
 public class LX_MyAdviceListActivity extends CoreActivity<MainController.MainUiCallbacks> implements MainController.MyAdviceListUi {
     @BindView(recycleView)
     RecyclerView mRecycleView;
+    @BindView(R.id.btnCommitAdvice)
+    Button mBtnCommitAdvice;
     private Unbinder mBind;
-    private List<MyAdvice>mMyAdviceList=new ArrayList<>();
+    private List<MyAdvice> mMyAdviceList = new ArrayList<>();
     private MyAdviceAdapter mMyAdviceAdapter;
     private EmptyView emptyView;
 
@@ -55,21 +58,20 @@ public class LX_MyAdviceListActivity extends CoreActivity<MainController.MainUiC
         isShowToolBar(true);
         setCenterTitle("我的反馈");
         mBind = ButterKnife.bind(this);
-        mMyAdviceAdapter = new MyAdviceAdapter(R.layout.lx_mine_advice_list_row,mMyAdviceList);
+        mMyAdviceAdapter = new MyAdviceAdapter(R.layout.lx_mine_advice_list_row, mMyAdviceList);
         emptyView = new EmptyView(mRecycleView.getContext(), (ViewGroup) mRecycleView.getParent());
         emptyView.setType(EmptyView.TYPE_LOADING);
         emptyView.setRefreshListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 emptyView.setType(EmptyView.TYPE_LOADING);
-               getMyAdviceList();
+                getMyAdviceList();
             }
         });
         mMyAdviceAdapter.setEmptyView(emptyView.getView());
-        mRecycleView.setLayoutManager(new LinearLayoutManager(mRecycleView.getContext(),LinearLayoutManager.VERTICAL,false));
+        mRecycleView.setLayoutManager(new LinearLayoutManager(mRecycleView.getContext(), LinearLayoutManager.VERTICAL, false));
         mRecycleView.addItemDecoration(new RecycleViewDivider(mRecycleView.getContext(), LinearLayoutManager.VERTICAL));
         mRecycleView.setAdapter(mMyAdviceAdapter);
-        getMyAdviceList();
     }
 
     @Override
@@ -77,14 +79,20 @@ public class LX_MyAdviceListActivity extends CoreActivity<MainController.MainUiC
         mMyAdviceAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-
+                LX_MyAdviceDetailActivity.startMyAdviceDetailActivity(LX_MyAdviceListActivity.this, mMyAdviceList.get(position));
+            }
+        });
+        mBtnCommitAdvice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LX_MyAdviceAddActivity.startMyAdviceAddActivity(LX_MyAdviceListActivity.this);
             }
         });
     }
 
     @Override
     public void getMyAdviceListCallBack(List<MyAdvice> advice) {
-        if (advice!=null && advice.size()>=0){
+        if (advice != null && advice.size() >= 0) {
             mMyAdviceAdapter.getData().clear();
             mMyAdviceList.clear();
             mMyAdviceList.addAll(advice);
@@ -99,9 +107,10 @@ public class LX_MyAdviceListActivity extends CoreActivity<MainController.MainUiC
         super.onDestroy();
         mBind.unbind();
     }
-    public void getMyAdviceList(){
-        if (UserData.getTempUser()!=null && UserData.getTempUser().getBaseInfo()!=null && !CommonUtil.isStrEmpty(UserData.getTempUser().getPhoneNumber())){
-            getCallbacks().getMyAdvice(UserData.getTempUser().getPhoneNumber());
+
+    public void getMyAdviceList() {
+        if (UserData.getTempUser() != null && UserData.getTempUser().getBaseInfo() != null && !CommonUtil.isStrEmpty(UserData.getTempUser().getBaseInfo().getPhoneNumber())) {
+            getCallbacks().getMyAdvice(UserData.getTempUser().getBaseInfo().getPhoneNumber());
         }
     }
 
@@ -111,7 +120,14 @@ public class LX_MyAdviceListActivity extends CoreActivity<MainController.MainUiC
         emptyView.setType(EmptyView.TYPE_ERROR);
         emptyView.setMessage(error.getMessage());
     }
-    public static void startMyAdviceListActivity(Context context){
-        context.startActivity(new Intent(context,LX_MyAdviceListActivity.class));
+
+    public static void startMyAdviceListActivity(Context context) {
+        context.startActivity(new Intent(context, LX_MyAdviceListActivity.class));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getMyAdviceList();
     }
 }

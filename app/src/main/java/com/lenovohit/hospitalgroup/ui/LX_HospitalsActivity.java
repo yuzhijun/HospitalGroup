@@ -112,14 +112,15 @@ public class LX_HospitalsActivity extends CoreActivity<MainController.MainUiCall
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, final int position) {
+                final User tempUser = UserData.getTempUser();
+                hospital = tempUser.getCollectHospitals().get(position);
                 TextView btnUnFocus = (TextView)view.findViewById(R.id.btnCancel);
                 btnUnFocus.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        final User tempUser = UserData.getTempUser();
+
                         if (tempUser!=null&&tempUser.getBaseInfo()!=null){
                             tvHosPitalCount.setText(tempUser.getCollectHospitals().size()+"");
-                            hospital = tempUser.getCollectHospitals().get(position);
                             new AlertDialog(CoreActivity.currentActivity).builder()
                                     .setTitle("提示")
                                     .setMsg("确定要取消关注[" + hospital.getHospitalName() + "]吗?")
@@ -138,6 +139,7 @@ public class LX_HospitalsActivity extends CoreActivity<MainController.MainUiCall
                         }
                     }
                 });
+               LX_MainHospitalActivity.startMainHospitalActivity(LX_HospitalsActivity.this,hospital);
             }
         });
     }

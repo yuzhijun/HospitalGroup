@@ -103,7 +103,7 @@ public class LX_AppointmentHistoryActivity extends CoreActivity<MainController.M
     public void getAppointmentHistoryList(){
         User tempUser = UserData.getTempUser();
         if (tempUser != null && tempUser.getBaseInfo()!= null && !CommonUtil.isStrEmpty(tempUser.getBaseInfo().getUID())){
-            getCallbacks().getAppointmentHistory(tempUser.getBaseInfo().getUID(),"0");
+            getCallbacks().getAppointmentHistory(tempUser.getBaseInfo().getUID(),"0", "0");
         }
     }
 

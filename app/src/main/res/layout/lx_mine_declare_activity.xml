@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center"
+    android:background="@color/grey_normal_bg"
+    android:orientation="vertical" >
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:fadingEdge="none"
+        android:background="@drawable/base_fillet_frame"
+        android:padding="5dip"
+        android:layout_margin="5dp">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <!-- 法律声明 -->
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/declare_title1"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_size_C" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/declare_details1"
+                android:textSize="@dimen/font_size_B" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/declare_details2"
+                android:textSize="@dimen/font_size_B" />
+            <!-- 版本声明 -->
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/declare_title2"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_size_C" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/declare_details3"
+                android:textSize="@dimen/font_size_B" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/declare_details4"
+                android:textSize="@dimen/font_size_B" />
+            <!-- 隐私保护 -->
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/declare_title3"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_size_C" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/declare_details5"
+                android:textSize="@dimen/font_size_B" />
+            <!-- 免责声明 -->
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/declare_title4"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_size_C" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/declare_details6"
+                android:textSize="@dimen/font_size_B" />
+            <!-- 法律责任 -->
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/declare_title5"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_size_C" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/declare_details7"
+                android:textSize="@dimen/font_size_B" />
+            <!-- 法律适用与司法管辖 -->
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/declare_title6"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_size_C" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/declare_details8"
+                android:textSize="@dimen/font_size_B" />
+            <!-- 填充数据 -->
+
+
+            <!--
+             <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="50dp"
+            android:text="@string/declare_details9"
+            android:textSize="@dimen/font_size_B" />
+            -->
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

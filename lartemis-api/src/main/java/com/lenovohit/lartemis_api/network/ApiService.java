@@ -1,5 +1,6 @@
 package com.lenovohit.lartemis_api.network;
 
+import com.lenovohit.lartemis_api.model.AppVersion;
 import com.lenovohit.lartemis_api.model.Appoint;
 import com.lenovohit.lartemis_api.model.CommonObj;
 import com.lenovohit.lartemis_api.model.CommonUser;
@@ -79,11 +80,16 @@ public interface ApiService {
     @GET("NeweHealthServices/api/User/DeleteCommonUser/{patientID}")
     Observable<HttpResult<Result>>deleteCommonUser(@Path("patientID")String patientID);
     @GET("NeweHealthServices/api/Appointment/AppointmentHistorys")
-    Observable<HttpResult<List<Appoint>>>getAppointmentHistory(@Query("uID") String uid,@Query("pID") String pid);
+    Observable<HttpResult<List<Appoint>>>getAppointmentHistory(@Query("uID") String uid,@Query("pID") String pid,@Query("hID") String hid);
     @GET("NeweHealthServices/api/Appointment/AppointmentHistory")
     Observable<HttpResult<Appoint>>getAppointDetail(@Query("AID") String aid);
     @GET("eHealthPlatformService/api/Appointment/UnAppointment/{aID}/{appointmentCode}/{HID}")
     Observable<HttpResult<Result>>unAppoint(@Path("aID")String aid,@Path("appointmentCode")String appointmentCode ,@Path("HID")String hid);
     @GET("NeweHealthServices/api/System/GetUserFeedback/{phoneNumber}")
-   Observable<HttpResult<List<MyAdvice>>>getMyAdviceList(@Path("phoneNumber")String phoneNumber);
+    Observable<HttpResult<List<MyAdvice>>>getMyAdviceList(@Path("phoneNumber") String phoneNumber);
+    @FormUrlEncoded
+    @POST("NeweHealthServices/api/System/AddUserFeedback")
+    Observable<HttpResult<Result>> sendMyAdvice(@Field("email") String email,@Field("contact")String contact,@Field("content") String content);
+    @GET("NeweHealthServices/api/System/CheckAppVersion/{appType}/{appTag}")
+    Observable<HttpResult<AppVersion>>CheckAppVersion(@Path("appType")String appType, @Path("appTag")String appTag);
 }

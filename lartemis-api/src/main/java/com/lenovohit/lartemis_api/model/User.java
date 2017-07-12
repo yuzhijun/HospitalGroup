@@ -7,19 +7,11 @@ import java.util.List;
  * 用户类
  * */
 public class User {
-	private String PhoneNumber;
 	private UserBaseInfo UserBaseInfo;
 	private List<Hospitals> CollectHospitals = new ArrayList<>();
 	private List<Doctor> CollectDoctors = new ArrayList<>();
 	private List<CommonUser> CommonUsers;
 
-	public String getPhoneNumber() {
-		return PhoneNumber;
-	}
-
-	public void setPhoneNumber(String phoneNumber) {
-		PhoneNumber = phoneNumber;
-	}
 
 	public UserBaseInfo getBaseInfo() {
 		return UserBaseInfo;

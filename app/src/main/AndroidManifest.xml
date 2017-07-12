@@ -66,6 +66,30 @@
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:launchMode="singleTask"/>
+        <activity android:name=".ui.LX_MyAdviceDetailActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"/>
+        <activity android:name=".ui.LX_MyAdviceAddActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"/>
+        <activity android:name=".ui.LX_SetUpActivity"
+                  android:configChanges="orientation|keyboardHidden"
+                  android:screenOrientation="portrait"
+                  android:launchMode="singleTask"/>
+        <activity android:name=".ui.LX_MoreShareActivity"
+                  android:configChanges="orientation|keyboardHidden"
+                  android:screenOrientation="portrait"
+                  android:launchMode="singleTask"/>
+        <activity android:name=".ui.LX_DeclareActivity"
+                  android:configChanges="orientation|keyboardHidden"
+                  android:screenOrientation="portrait"
+                  android:launchMode="singleTask"/>
+        <activity android:name=".ui.LX_AboutUsActivity"
+                  android:configChanges="orientation|keyboardHidden"
+                  android:screenOrientation="portrait"
+                  android:launchMode="singleTask"/>
     </application>
 
 </manifest>
