@@ -1,5 +1,6 @@
 package com.lenovohit.lartemis_api.network;
 
+import com.lenovohit.lartemis_api.model.AppVersion;
 import com.lenovohit.lartemis_api.model.Appoint;
 import com.lenovohit.lartemis_api.model.CommonObj;
 import com.lenovohit.lartemis_api.model.CommonUser;
@@ -89,4 +90,6 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("NeweHealthServices/api/System/AddUserFeedback")
     Observable<HttpResult<Result>> sendMyAdvice(@Field("email") String email,@Field("contact")String contact,@Field("content") String content);
+    @GET("NeweHealthServices/api/System/CheckAppVersion/{appType}/{appTag}")
+    Observable<HttpResult<AppVersion>>CheckAppVersion(@Path("appType")String appType, @Path("appTag")String appTag);
 }

@@ -14,6 +14,7 @@ import com.lenovohit.hospitalgroup.ui.LX_DoctorActivity;
 import com.lenovohit.hospitalgroup.ui.LX_HospitalsActivity;
 import com.lenovohit.hospitalgroup.ui.LX_LoginActivity;
 import com.lenovohit.hospitalgroup.ui.LX_MyAdviceListActivity;
+import com.lenovohit.hospitalgroup.ui.LX_SetUpActivity;
 import com.lenovohit.hospitalgroup.ui.LX_SwitchPatientActivity;
 import com.lenovohit.hospitalgroup.ui.LX_UserInfoActivity;
 import com.lenovohit.lartemis_api.annotation.ContentView;
@@ -144,6 +145,12 @@ public class MineFragment extends CoreFragment<MainController.MainUiCallbacks> i
                 }
             }
         });
+       btnConfig.setItemClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               LX_SetUpActivity.startSetupActivity(getActivity());
+           }
+       });
     }
 
     @Override

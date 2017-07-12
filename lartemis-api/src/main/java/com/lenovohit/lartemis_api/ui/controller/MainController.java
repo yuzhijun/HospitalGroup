@@ -3,6 +3,7 @@ package com.lenovohit.lartemis_api.ui.controller;
 import com.google.common.base.Preconditions;
 import com.lenovohit.lartemis_api.base.BaseController;
 import com.lenovohit.lartemis_api.base.CoreActivity;
+import com.lenovohit.lartemis_api.model.AppVersion;
 import com.lenovohit.lartemis_api.model.Appoint;
 import com.lenovohit.lartemis_api.model.CommonUser;
 import com.lenovohit.lartemis_api.model.Doctor;
@@ -166,6 +167,11 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
             @Override
             public void sendMyAdvice( String contact, String content) {
                 sendMyAdviceData(ui,contact,content);
+            }
+
+            @Override
+            public void checkAppVersion(String type, String tag) {
+                checkAppVersionData(ui,type,tag);
             }
         };
     }
@@ -633,6 +639,29 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
                     });
         }
     }
+    //检查版本更新
+    public void checkAppVersionData(final MainUi ui,String appType,String tag){
+        if (ui instanceof SettingUi){
+            CoreActivity.currentActivity.showProgressDialog();
+            mApiService.CheckAppVersion(appType,tag)
+                    .map(new HttpResultFunc<AppVersion>())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new RequestCallBack<AppVersion>() {
+                        @Override
+                        public void onResponse(AppVersion response) {
+                            CoreActivity.currentActivity.hideProgressDialog();
+                            ((SettingUi) ui).getCheckVersionCallBack(response);
+                        }
+
+                        @Override
+                        public void onFailure(ResponseError error) {
+                            CoreActivity.currentActivity.hideProgressDialog();
+                            ui.onResponseError(error);
+                        }
+                    });
+        }
+    }
     public interface MainUiCallbacks{//给UI界面调用
         void getIndexRecommendInfo();
         void getHospitalsList();
@@ -658,6 +687,7 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
         void  unAppoint(String aID,String appointmentCode,String hid);
         void getMyAdvice(String phoneNumber);
         void  sendMyAdvice(String contact,String content);
+        void checkAppVersion(String type,String tag);
     }
 
     public interface MainUi extends BaseController.Ui<MainUiCallbacks> {
@@ -722,6 +752,9 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
     }
     public interface  MyAdviceAddUi extends  MainUi{
         void getMyAdviceSendCallBack(Result result);
+    }
+    public interface  SettingUi extends MainUi{
+        void getCheckVersionCallBack(AppVersion result);
     }
     public AppointmentController getAppointmentController() {
         return mAppointmentController;
