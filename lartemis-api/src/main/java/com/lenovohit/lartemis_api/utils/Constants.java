@@ -13,6 +13,17 @@ public class Constants {
         public static final int HTTP_NETWORK_ERROR = 700;
         public static final int HTTP_UNKNOWN_ERROR = 800;
     }
+
+    public interface Type {
+        int LEFT_MENU = 0;
+        int RIGHT_MENU = 1;
+        int LEFT_AND_RIGHT_MENU = 2;
+        int LEFT_LONG_MENU = 3;
+        int RIGHT_LONG_MENU = 4;
+        int LEFT_AND_RIGHT_LONG_MENU = 5;
+        int DISABLE_SWIPE_MENU = 6;
+    }
+
     //短信模板编号默认模板001，003为验证现在的手机号码002验证原来的手机号码004新增就诊者
     public static final String SMS_TEMP_CODE = "001";
     public static final String SMS_NOW_CODE = "003";
