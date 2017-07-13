@@ -21,7 +21,7 @@ public class HospitalData {
         if (hospital !=null){
             try {
                 DiskLruCacheHelper helper=new DiskLruCacheHelper(LArtemis.getInstance().getApplication());
-                helper.put("HospitalData",new Gson().toJson(currentHospital));
+                helper.put("HospitalData",new Gson().toJson(hospital));
             } catch (IOException e) {
                 e.printStackTrace();
             }
