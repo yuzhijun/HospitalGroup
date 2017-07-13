@@ -2,18 +2,13 @@ package com.lenovohit.hospitalgroup.ui;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback;
-import com.chad.library.adapter.base.listener.OnItemSwipeListener;
 import com.google.gson.Gson;
 import com.lenovohit.hospitalgroup.R;
 import com.lenovohit.hospitalgroup.ui.adapter.SwitchPatientAdapter;
@@ -30,6 +25,7 @@ import com.lenovohit.lartemis_api.utils.CommonUtil;
 import com.lenovohit.lartemis_api.utils.Constants;
 import com.lenovohit.lartemis_api.views.EmptyView;
 import com.lenovohit.lartemis_api.views.RecycleViewDivider;
+import com.lenovohit.lartemis_api.views.swiperecyclerview.ItemTouchListener;
 import com.lenovohit.lrouter_api.base.LRouterAppcation;
 import com.lenovohit.lrouter_api.core.LRouterRequest;
 import com.lenovohit.lrouter_api.core.LocalRouter;
@@ -89,7 +85,7 @@ public class LX_SwitchPatientActivity extends CoreActivity<MainController.MainUi
             }
         });
         bind = ButterKnife.bind(this);
-        adapter = new SwitchPatientAdapter(R.layout.lx_mine_switchpaint_row,commonUsers);
+        adapter = new SwitchPatientAdapter(R.layout.lx_mine_switchpatient_swipe_row,commonUsers,mItemTouchListener);
 
         emptyView = new EmptyView(recycleView.getContext(), (ViewGroup) recycleView.getParent());
         emptyView.setType(EmptyView.TYPE_LOADING);
@@ -110,41 +106,7 @@ public class LX_SwitchPatientActivity extends CoreActivity<MainController.MainUi
 
     @Override
     public void initEvent() {
-        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                commonUsers.get(selectedIndex).setSelected(false);
-                commonUsers.get(position).setSelected(true);
-                selectedIndex=position;
-                adapter.notifyDataSetChanged();
-                CommonUtil.setShardPString(Constants.COMM_USER_JSON,new Gson().toJson(commonUsers.get(position)));
-                finish();
-            }
-        });
-        ItemDragAndSwipeCallback mItemDragAndSwipeCallback = new ItemDragAndSwipeCallback(adapter);
-        mItemDragAndSwipeCallback.setSwipeMoveFlags( ItemTouchHelper.START);
-        ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(mItemDragAndSwipeCallback );
-        mItemTouchHelper.attachToRecyclerView(recycleView);
 
-        adapter.enableSwipeItem();
-//        adapter.enableDragItem(mItemTouchHelper);
-
-        adapter.setOnItemSwipeListener(new OnItemSwipeListener() {
-            @Override
-            public void onItemSwipeStart(RecyclerView.ViewHolder viewHolder, int pos) {
-            }
-            @Override
-            public void clearView(RecyclerView.ViewHolder viewHolder, int pos) {
-            }
-            @Override
-            public void onItemSwiped(RecyclerView.ViewHolder viewHolder, int pos) {
-                getCallbacks().deleteCommonUser(commonUsers.get(pos).getPID());
-            }
-            @Override
-            public void onItemSwipeMoving(Canvas canvas, RecyclerView.ViewHolder viewHolder, float dX, float dY, boolean isCurrentlyActive) {
-
-            }
-        });
     }
 
     @Override
@@ -152,6 +114,24 @@ public class LX_SwitchPatientActivity extends CoreActivity<MainController.MainUi
         super.onDestroy();
         bind.unbind();
     }
+
+    ItemTouchListener mItemTouchListener = new ItemTouchListener() {
+        @Override
+        public void onItemClick(Object item,int position) {
+            commonUsers.get(selectedIndex).setSelected(false);
+            commonUsers.get(position).setSelected(true);
+            selectedIndex=position;
+            adapter.notifyDataSetChanged();
+            CommonUtil.setShardPString(Constants.COMM_USER_JSON,new Gson().toJson(commonUsers.get(position)));
+            finish();
+        }
+
+        @Override
+        public void onRightMenuClick(int position) {
+            getCallbacks().deleteCommonUser(adapter.getData().get(position).getPID());
+        }
+    };
+
     private void getPatientListData(){
         if (UserData.getTempUser()!=null && UserData.getTempUser().getBaseInfo()!=null && !CommonUtil.isStrEmpty(UserData.getTempUser().getBaseInfo().getUID())){
             getCallbacks().getSwitchPatientList(UserData.getTempUser().getBaseInfo().getUID());
@@ -176,7 +156,7 @@ public class LX_SwitchPatientActivity extends CoreActivity<MainController.MainUi
     @Override
     public void deleteCommonUserCallBack(Result result) {
         if (result!=null && result.getState()>0){
-            CommonUtil.showSnackBar(emptyView,"删除就诊者成功");
+            getPatientListData();
         }
     }
 

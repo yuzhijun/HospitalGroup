@@ -26,6 +26,7 @@ public class EmptyView extends View{
     public static final  String TYPE_NO_DATA = "002";
     private  TextView tvTitle;
     private  ImageView ivEmpty;
+    private View bottomView;
     private  ProgressBar progressBar;
     private OnClickListener listener;
     private PercentLinearLayout plLayout;
@@ -45,6 +46,7 @@ public class EmptyView extends View{
         tvTitle = (TextView) view.findViewById(R.id.tvTitle);
         plLayout= (PercentLinearLayout) view.findViewById(R.id.plLayout);
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+        bottomView = view.findViewById(R.id.bottomView);
     }
 
     public  void setType(String type){
@@ -76,5 +78,9 @@ public class EmptyView extends View{
     }
     public View getView(){
         return  view;
+    }
+
+    public void setBottomViewUnVisuable(){
+        bottomView.setVisibility(GONE);
     }
 }

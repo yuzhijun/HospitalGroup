@@ -6,13 +6,13 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_interval_40"
-        android:text="长按列表可以查看或者删除选中的患者的基本信息"
+        android:text="滑动删除绑定患者的卡号信息"
         android:gravity="center"/>
-    <android.support.v7.widget.RecyclerView
+    <com.lenovohit.lartemis_api.views.swiperecyclerview.SwipeMenuRecyclerView
         android:id="@+id/recycleView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </android.support.v7.widget.RecyclerView>
+    </com.lenovohit.lartemis_api.views.swiperecyclerview.SwipeMenuRecyclerView>
 
 </LinearLayout>

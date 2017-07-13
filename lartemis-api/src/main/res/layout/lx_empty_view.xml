@@ -52,6 +52,7 @@
                     />
 
         <View
+            android:id="@+id/bottomView"
             android:layout_width="match_parent"
             android:layout_height="500dp"
             android:background="@color/grey_normal_bg"/>

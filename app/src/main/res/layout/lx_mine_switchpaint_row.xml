@@ -1,70 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:id="@+id/rlLayout"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:padding="10dp">
-    <LinearLayout
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:id="@+id/rlLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/tvHosName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="大庆龙南医院"
-            style="@style/blackTextStyleLarge"/>
+        android:background="@color/white"
+        android:padding="10dp"
+        >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
             <TextView
-                android:id="@+id/tvPatientName"
-                android:layout_width="wrap_content"
+                android:id="@+id/tvHosName"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:text="郑小钗"
+                tools:text="大庆龙南医院"
+                style="@style/blackTextStyleLarge"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tvPatientName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="郑小钗"
+                    style="@style/greyTextStyleNormal"/>
+                <TextView
+                    android:id="@+id/tvPatientSex"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="女"
+                    style="@style/greyTextStyleNormal"/>
+                <TextView
+                    android:id="@+id/tvPatientPhoneNumber"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="13205879676"
+                    style="@style/greyTextStyleNormal"/>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/tvPatientJZCard"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="就诊卡号:0000119887"
                 style="@style/greyTextStyleNormal"/>
             <TextView
-                android:id="@+id/tvPatientSex"
-                android:layout_marginLeft="10dp"
-                android:layout_width="wrap_content"
+                android:id="@+id/tvPatientIDCard"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:text="女"
-                style="@style/greyTextStyleNormal"/>
-            <TextView
-                android:id="@+id/tvPatientPhoneNumber"
-                android:layout_marginLeft="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="13205879676"
+                tools:text="身份证号:330323196209051242"
                 style="@style/greyTextStyleNormal"/>
         </LinearLayout>
-        <TextView
-            android:id="@+id/tvPatientJZCard"
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="就诊卡号:0000119887"
-            style="@style/greyTextStyleNormal"/>
-        <TextView
-            android:id="@+id/tvPatientIDCard"
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="身份证号:330323196209051242"
-            style="@style/greyTextStyleNormal"/>
-    </LinearLayout>
-    <ImageView
-        android:id="@+id/ivCheckedBox"
-        android:layout_width="@dimen/app_interval_20"
-        android:layout_height="@dimen/app_interval_20"
-        android:src="@mipmap/lx_iv_check_on"
-        android:layout_gravity="center"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        />
+        <ImageView
+            android:id="@+id/ivCheckedBox"
+            android:layout_width="@dimen/app_interval_20"
+            android:layout_height="@dimen/app_interval_20"
+            android:src="@mipmap/lx_iv_check_on"
+            android:layout_gravity="center"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            />
 </RelativeLayout>
