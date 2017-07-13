@@ -176,7 +176,7 @@ public class LX_SwitchPatientActivity extends CoreActivity<MainController.MainUi
     @Override
     public void deleteCommonUserCallBack(Result result) {
         if (result!=null && result.getState()>0){
-                CommonUtil.showSnackBar(emptyView,"删除就诊者成功");
+            CommonUtil.showSnackBar(emptyView,"删除就诊者成功");
         }
     }
 

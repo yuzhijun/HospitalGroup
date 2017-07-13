@@ -19,6 +19,7 @@ import com.lenovohit.lartemis_api.model.CommonObj;
 import com.lenovohit.lartemis_api.model.Hospitals;
 import com.lenovohit.lartemis_api.model.ResponseError;
 import com.lenovohit.lartemis_api.ui.controller.AppointmentController;
+import com.lenovohit.lartemis_api.utils.CommonUtil;
 import com.lenovohit.lartemis_api.views.EmptyView;
 import com.lenovohit.lartemis_api.views.RecycleViewDivider;
 import com.lenovohit.module_appointment.R;
@@ -33,7 +34,6 @@ import java.util.List;
  * Created by yuzhijun on 2017/6/29.
  */
 public class LX_AppointmentMainActivity extends CoreActivity<AppointmentController.AppointmentUiCallbacks> implements AppointmentController.AppointmentMainUi {
-    private static final String HID = "hid";
     private RecyclerView rvParentDept;
     private RecyclerView rvSonDept;
     private EmptyView emptyView;
@@ -42,8 +42,8 @@ public class LX_AppointmentMainActivity extends CoreActivity<AppointmentControll
     private List<CommonObj> parentDept = new ArrayList<>();
     private List<CommonObj> sonDept = new ArrayList<>();
 
-    private String hid;
     private int recycleViewCanShowHeight;
+    private String mHid;
 
     @Override
     protected int getLayoutId() {
@@ -55,8 +55,10 @@ public class LX_AppointmentMainActivity extends CoreActivity<AppointmentControll
         isShowToolBar(true);
         setCenterTitle("手机预约");
 
-        hid = getIntent().getStringExtra(HID);
-
+        Hospitals currentHospital = HospitalData.getCurrentHospital();
+        if (currentHospital!=null && !CommonUtil.isStrEmpty(currentHospital.getHID())){
+            mHid = currentHospital.getHID();
+        }
         rvParentDept = (RecyclerView) findViewById(R.id.rvParentDept);
         rvParentDept.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
         rvParentDept.addItemDecoration(new RecycleViewDivider(this,LinearLayoutManager.VERTICAL));
@@ -74,11 +76,11 @@ public class LX_AppointmentMainActivity extends CoreActivity<AppointmentControll
         emptyView.setRefreshListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getCallbacks().getAllDep(hid);
+                getCallbacks().getAllDep(mHid);
             }
         });
 
-        getCallbacks().getAllDep(hid);
+        getCallbacks().getAllDep(mHid);
     }
 
     @Override
@@ -131,9 +133,8 @@ public class LX_AppointmentMainActivity extends CoreActivity<AppointmentControll
         return  LArtemis.getInstance().getMainController().getAppointmentController();
     }
 
-    public static void startAppointmentMain(Context context,String hid){
+    public static void startAppointmentMain(Context context){
         Intent intent = new Intent(context,LX_AppointmentMainActivity.class);
-        intent.putExtra(HID,hid);
         context.startActivity(intent);
     }
 

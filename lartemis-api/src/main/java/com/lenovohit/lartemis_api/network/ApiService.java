@@ -11,6 +11,7 @@ import com.lenovohit.lartemis_api.model.HospitalMainPage;
 import com.lenovohit.lartemis_api.model.Hospitals;
 import com.lenovohit.lartemis_api.model.HttpResult;
 import com.lenovohit.lartemis_api.model.MyAdvice;
+import com.lenovohit.lartemis_api.model.QueueUp;
 import com.lenovohit.lartemis_api.model.Result;
 import com.lenovohit.lartemis_api.model.User;
 
@@ -92,4 +93,7 @@ public interface ApiService {
     Observable<HttpResult<Result>> sendMyAdvice(@Field("email") String email,@Field("contact")String contact,@Field("content") String content);
     @GET("NeweHealthServices/api/System/CheckAppVersion/{appType}/{appTag}")
     Observable<HttpResult<AppVersion>>CheckAppVersion(@Path("appType")String appType, @Path("appTag")String appTag);
+    @FormUrlEncoded
+    @POST("eHealthPlatformService/api/QueueUp/GetUserQueueUp")
+    Observable<HttpResult<List<QueueUp>>>getUserQueueUp(@Field("hid")String hid,@Field("uid")String uid);
 }

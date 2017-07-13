@@ -30,6 +30,7 @@ public class Constants {
     public static final String LOGIN_SWITCH_PATIENT = "003";
     public static final String LOGIN_APPOINTMENT_HISTORY = "004";
     public static final String LOGIN_MINE_ADVICE = "005";
+    public static final String LOGIN_QUEUE_UP = "006";
 
     //关注，取消关注   医生或者医院
     //11关注医院；10取消关注医院 ；21关注医生；20取消关注医生
@@ -42,6 +43,7 @@ public class Constants {
     public static final String PUT_TYPE="PUT_TYPE";
     public static final String PUT_TYPE_SWITCH_PATIENT="PUT_TYPE_SWITCH_PATIENT";
     public static final String PUT_TYPE_APPOINTMENT="PUT_TYPE_APPOINTMENT";
+    public static final String PUT_TYPE_QUEUEUP="PUT_TYPE_QUEUEUP";
 
     //是否关注
     public static final  String IS_COLLECTION = "1";

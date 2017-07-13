@@ -34,13 +34,14 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
     private static final String IP = "63.223.108.42";
     private ApiService mApiService;
     private AppointmentController mAppointmentController;
+    private QueueUpController mQueueUpController;
 
     @Inject
-    public MainController(ApiService apiService, AppointmentController appointmentController){
+    public MainController(ApiService apiService, AppointmentController appointmentController,QueueUpController queueUpController){
         super();
-
         mApiService = Preconditions.checkNotNull(apiService, "ApiService cannot be null");
         mAppointmentController = Preconditions.checkNotNull(appointmentController, "secondController cannot be null");
+        mQueueUpController = Preconditions.checkNotNull(queueUpController,"queueUpController cannot be null");
     }
 
     @Override
@@ -48,6 +49,7 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
         super.onInited();
         //其他controller则在这里init
         mAppointmentController.init();
+        mQueueUpController.init();
     }
 
     @Override
@@ -55,6 +57,7 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
         super.onSuspended();
         //其他controller则在这里suspend
         mAppointmentController.suspend();
+        mQueueUpController.suspend();
     }
 
     @Override
@@ -758,5 +761,8 @@ public class MainController extends BaseController<MainController.MainUi,MainCon
     }
     public AppointmentController getAppointmentController() {
         return mAppointmentController;
+    }
+    public QueueUpController getQueueUpController(){
+        return mQueueUpController;
     }
 }

@@ -20,6 +20,7 @@ import com.lenovohit.lartemis_api.model.ResponseError;
 import com.lenovohit.lartemis_api.ui.controller.MainController;
 import com.lenovohit.lartemis_api.utils.CommonUtil;
 import com.lenovohit.lartemis_api.utils.DataCleanUtil;
+import com.lenovohit.lartemis_api.utils.UpdateUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -116,11 +117,11 @@ public class LX_SetUpActivity extends CoreActivity<MainController.MainUiCallback
     }
 
     @Override
-    public void getCheckVersionCallBack(AppVersion result) {
+    public void getCheckVersionCallBack(final AppVersion result) {
         int versionCode = CommonUtil.getVersionCode(LX_SetUpActivity.this);
         Log.e("tag",versionCode+result.toString());
         if (result !=null){
-            if (Integer.parseInt(result.getVersionCode())<=versionCode){
+            if (!UpdateUtil.isUpdate(LX_SetUpActivity.this,result)){
                 CommonUtil.showSnackBar(mTvTitleClean,"当前已经是最新版本!");
             }else {
                 //此时需要更新
@@ -131,6 +132,7 @@ public class LX_SetUpActivity extends CoreActivity<MainController.MainUiCallback
                 btnUpdate.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        UpdateUtil.showDownloadDialog(LX_SetUpActivity.this,result);
                         mDialog.dismiss();
                     }
                 });
@@ -140,12 +142,16 @@ public class LX_SetUpActivity extends CoreActivity<MainController.MainUiCallback
                         mDialog.dismiss();
                     }
                 });
+                if (!UpdateUtil.canCancle(result)){
+                    btnCancle.setVisibility(View.GONE);
+                }else {
+                    btnCancle.setVisibility(View.VISIBLE);
+                }
                 tvContent.setText(CommonUtil.isStrEmpty(result.getAppIntro())?"":result.getAppIntro());
                 mDialog = new AlertDialog.Builder(LX_SetUpActivity.this)
                         .setCancelable(false)
                         .setTitle("更新")
                         .setView(view).show();
-
             }
         }
     }

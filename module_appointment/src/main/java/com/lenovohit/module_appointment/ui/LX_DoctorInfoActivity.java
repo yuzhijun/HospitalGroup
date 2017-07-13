@@ -156,11 +156,6 @@ public class LX_DoctorInfoActivity extends CoreActivity<AppointmentController.Ap
 
     public static void startDoctorInfoActivity(Context context, Doctor doctor, String tag){
         Intent intent = new Intent(context,LX_DoctorInfoActivity.class);
-//        int myProcessId = ProcessUtil.getMyProcessId();
-//        String processName = ProcessUtil.getProcessName(context, myProcessId);
-//        if (processName.equals("com.lenovohit.hospitalgroup:module_appointment")){
-//        }
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Bundle bundle = new Bundle();
         bundle.putParcelable(DOCTOR,doctor);
         bundle.putSerializable(TAG,tag);

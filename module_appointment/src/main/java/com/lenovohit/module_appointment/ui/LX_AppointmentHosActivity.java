@@ -33,6 +33,7 @@ import java.util.List;
  */
 public class LX_AppointmentHosActivity extends CoreActivity<AppointmentController.AppointmentUiCallbacks> implements AppointmentController.AppointmentHosUi {
 
+    public  static final String PUT_TYPE="PUT_TYPE";
     private RecyclerView rvHosList;
     private AppointmentHosAdapter mHosAdapter;
     private View notDataView;
@@ -57,6 +58,8 @@ public class LX_AppointmentHosActivity extends CoreActivity<AppointmentControlle
             setCenterTitle("新增就诊者");
         }else if (stringExtra.equals(Constants.PUT_TYPE_APPOINTMENT)){
             setCenterTitle("手机预约");
+        }else if (stringExtra.equals(Constants.PUT_TYPE_QUEUEUP)){
+            setCenterTitle("排队叫号");
         }
         rvHosList = (RecyclerView) findViewById(R.id.rvHosList);
         rvHosList.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
@@ -80,9 +83,9 @@ public class LX_AppointmentHosActivity extends CoreActivity<AppointmentControlle
         mHosAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                HospitalData.setCurrentHospital((Hospitals)adapter.getData().get(position));
                 if (stringExtra.equals(Constants.PUT_TYPE_APPOINTMENT)){
-                    HospitalData.setCurrentHospital((Hospitals)adapter.getData().get(position));
-                    LX_AppointmentMainActivity.startAppointmentMain(LX_AppointmentHosActivity.this,((Hospitals)adapter.getData().get(position)).getHID());
+                    LX_AppointmentMainActivity.startAppointmentMain(LX_AppointmentHosActivity.this);
                 }else if (stringExtra.equals(Constants.PUT_TYPE_SWITCH_PATIENT)){
                     //跳转到对应的添加患者列表
                     try {
@@ -92,6 +95,26 @@ public class LX_AppointmentHosActivity extends CoreActivity<AppointmentControlle
                                         .provider("main")
                                         .action("MainEntranceAction")
                                         .param(Constants.PUT_TYPE, ((Hospitals)adapter.getData().get(position)).getHID()))
+                                .setCallBack(new IRequestCallBack() {
+                                    @Override
+                                    public void onSuccess(final String result) {
+                                    }
+                                    @Override
+                                    public void onFailure(Exception e) {
+                                    }
+                                });
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    finish();
+                }else if (stringExtra.equals(Constants.PUT_TYPE_QUEUEUP)){
+                    //跳转到排队叫号模块
+                    try {
+                        LocalRouter.getInstance(LRouterAppcation.getInstance())
+                                .navigation(CoreActivity.currentActivity, LRouterRequest.getInstance(CoreActivity.currentActivity)
+                                        .processName("com.lenovohit.hospitalgroup:module_queue")
+                                        .provider("QueueProvider")
+                                        .action("QueueAction"))
                                 .setCallBack(new IRequestCallBack() {
                                     @Override
                                     public void onSuccess(final String result) {

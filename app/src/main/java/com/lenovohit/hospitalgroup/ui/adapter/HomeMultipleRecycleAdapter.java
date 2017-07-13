@@ -12,7 +12,10 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.lenovohit.hospitalgroup.R;
+import com.lenovohit.hospitalgroup.ui.LX_LoginActivity;
 import com.lenovohit.lartemis_api.base.CoreActivity;
+import com.lenovohit.lartemis_api.data.HospitalData;
+import com.lenovohit.lartemis_api.data.UserData;
 import com.lenovohit.lartemis_api.model.HomePage;
 import com.lenovohit.lartemis_api.model.TopNew;
 import com.lenovohit.lartemis_api.utils.Constants;
@@ -126,25 +129,84 @@ public class HomeMultipleRecycleAdapter extends BaseMultiItemQuickAdapter<HomePa
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
         switch (view.getId()) {
             case R.id.llAppointment:
-                try{
-                    LocalRouter.getInstance(LRouterAppcation.getInstance())
-                            .navigation(CoreActivity.currentActivity, LRouterRequest.getInstance(CoreActivity.currentActivity)
-                                    .processName("com.lenovohit.hospitalgroup:module_appointment")
-                                    .provider("AppoinmentProvider")
-                                    .action("EntranceAction")
-                                    .param(Constants.PUT_TYPE,Constants.PUT_TYPE_APPOINTMENT))
-                            .setCallBack(new IRequestCallBack() {
-                                @Override
-                                public void onSuccess(final String result) {
-                                }
-                                @Override
-                                public void onFailure(Exception e) {
-                                }
-                            });
-                }catch (Exception e){
-                    e.printStackTrace();
+                if (UserData.getTempUser() == null){
+                    //首先去登录
+                    LX_LoginActivity.startLoginActivity(CoreActivity.currentActivity,Constants.LOGIN_QUEUE_UP);
+                }else {
+                    if (HospitalData.getCurrentHospital() == null){
+                        switchHospital(Constants.PUT_TYPE_APPOINTMENT);
+                    }else {
+                        //直接跳转到手机预约界面
+                        try {
+                            LocalRouter.getInstance(LRouterAppcation.getInstance())
+                                    .navigation(CoreActivity.currentActivity, LRouterRequest.getInstance(CoreActivity.currentActivity)
+                                            .processName("com.lenovohit.hospitalgroup:module_appointment")
+                                            .provider("AppoinmentProvider")
+                                            .action("AppointmentAction"))
+                                    .setCallBack(new IRequestCallBack() {
+                                        @Override
+                                        public void onSuccess(final String result) {
+                                        }
+                                        @Override
+                                        public void onFailure(Exception e) {
+                                        }
+                                    });
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
                 break;
+            case R.id.llMobileTreatment:
+                if (UserData.getTempUser() == null){
+                    //首先去登录
+                    LX_LoginActivity.startLoginActivity(CoreActivity.currentActivity,Constants.LOGIN_QUEUE_UP);
+                }else {
+                    if (HospitalData.getCurrentHospital() == null){
+                        //如果没有当前医院的话,跳转到选择医院界面。
+                        switchHospital(Constants.PUT_TYPE_QUEUEUP);
+                    }else {
+                        //跳转到排队叫号模块
+                        try {
+                            LocalRouter.getInstance(LRouterAppcation.getInstance())
+                                    .navigation(CoreActivity.currentActivity, LRouterRequest.getInstance(CoreActivity.currentActivity)
+                                            .processName("com.lenovohit.hospitalgroup:module_queue")
+                                            .provider("QueueProvider")
+                                            .action("QueueAction"))
+                                    .setCallBack(new IRequestCallBack() {
+                                        @Override
+                                        public void onSuccess(final String result) {
+                                        }
+                                        @Override
+                                        public void onFailure(Exception e) {
+                                        }
+                                    });
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                break;
+        }
+    }
+    private void switchHospital(String type){
+        try{
+            LocalRouter.getInstance(LRouterAppcation.getInstance())
+                    .navigation(CoreActivity.currentActivity, LRouterRequest.getInstance(CoreActivity.currentActivity)
+                            .processName("com.lenovohit.hospitalgroup:module_appointment")
+                            .provider("AppoinmentProvider")
+                            .action("EntranceAction")
+                            .param(Constants.PUT_TYPE, type))
+                    .setCallBack(new IRequestCallBack() {
+                        @Override
+                        public void onSuccess(final String result) {
+                        }
+                        @Override
+                        public void onFailure(Exception e) {
+                        }
+                    });
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 }

@@ -1,6 +1,8 @@
 package com.lenovohit.module_appointment.exposure;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 
 import com.lenovohit.annotation.Action;
 import com.lenovohit.lartemis_api.model.Doctor;
@@ -22,7 +24,15 @@ public class DoctorAction extends LRAction {
     @Override
     public LRActionResult invoke(Context context, LRouterRequest requestData) {
         Doctor doctor = (Doctor) requestData.getRequestObject();
-        LX_DoctorInfoActivity.startDoctorInfoActivity(context,doctor,"zxyy");
+
+        Intent intent = new Intent(context,LX_DoctorInfoActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(LX_DoctorInfoActivity.DOCTOR,doctor);
+        bundle.putSerializable(LX_DoctorInfoActivity.TAG,"zxyy");
+        intent.putExtras(bundle);
+        context.startActivity(intent);
+
         LRActionResult result = new LRActionResult.Builder()
                 .code(LRActionResult.RESULT_SUCESS)
                 .msg("success")

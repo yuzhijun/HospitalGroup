@@ -46,7 +46,7 @@ public class LX_LoginActivity extends CoreActivity<MainController.MainUiCallback
     private Unbinder bind;
     //type代表从哪个界面跳转到登录页面
     private String type;
-
+    public  static final String LOGIN_TYPE="login_info";
     @Override
     protected BaseController getController() {
         return LArtemis.getInstance().getMainController();
@@ -67,7 +67,7 @@ public class LX_LoginActivity extends CoreActivity<MainController.MainUiCallback
         edtCode.setText("999999");
         //初始化时间控件
         initTime();
-        type = getIntent().getStringExtra("login_info");
+        type = getIntent().getStringExtra(LOGIN_TYPE);
     }
 
     @Override
@@ -105,7 +105,7 @@ public class LX_LoginActivity extends CoreActivity<MainController.MainUiCallback
 
     public static void startLoginActivity(Context context,String type) {
        Intent intent=new Intent(context, LX_LoginActivity.class);
-        intent.putExtra("login_info",type);
+        intent.putExtra(LOGIN_TYPE,type);
         context.startActivity(intent);
     }
 
@@ -178,6 +178,8 @@ public class LX_LoginActivity extends CoreActivity<MainController.MainUiCallback
                     break;
                 case Constants.LOGIN_MINE_ADVICE:
                     LX_MyAdviceListActivity.startMyAdviceListActivity(LX_LoginActivity.this);
+                    finish();
+                case  Constants.LOGIN_QUEUE_UP:
                     finish();
                     break;
             }
