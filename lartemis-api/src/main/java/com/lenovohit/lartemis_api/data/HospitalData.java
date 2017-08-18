@@ -3,9 +3,8 @@ package com.lenovohit.lartemis_api.data;
 import com.google.gson.Gson;
 import com.lenovohit.lartemis_api.core.LArtemis;
 import com.lenovohit.lartemis_api.model.Hospitals;
-import com.lenovohit.lartemis_api.utils.DiskLruCacheHelper;
 
-import java.io.IOException;
+import net.grandcentrix.tray.AppPreferences;
 
 /**
  * Created by yuzhijun on 2017/7/6.
@@ -14,33 +13,22 @@ import java.io.IOException;
 public class HospitalData {
     public static final String DEFAULT_HOSPITAL = "DefaultHospital"; // 默认选中医院
     private static Hospitals currentHospital;//当前操作的医院
-    private static Hospitals sHospitals;
-
     public static void setCurrentHospital(Hospitals hospital){
         HospitalData.currentHospital = hospital;
         if (hospital !=null){
-            try {
-                DiskLruCacheHelper helper=new DiskLruCacheHelper(LArtemis.getInstance().getApplication());
-                helper.put("HospitalData",new Gson().toJson(hospital));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            AppPreferences sp=new AppPreferences(LArtemis.getInstance().getApplication());
+            sp.put("HospitalData",new Gson().toJson(hospital));
         }
     }
 
     public static Hospitals getCurrentHospital(){
         if (null == currentHospital){
-            DiskLruCacheHelper helper= null;
-            try {
-                helper = new DiskLruCacheHelper(LArtemis.getInstance().getApplication());
-                String json = helper.getAsString("HospitalData");
-                sHospitals = new Gson().fromJson(json, Hospitals.class);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            if (sHospitals !=null){
-                HospitalData.currentHospital=sHospitals;
-                HospitalData.setCurrentHospital(currentHospital);
+            AppPreferences sp=new AppPreferences(LArtemis.getInstance().getApplication());
+            String json = sp.getString("HospitalData", "");
+            Hospitals hospitals = new Gson().fromJson(json, Hospitals.class);
+            if (hospitals !=null){
+                HospitalData.currentHospital=hospitals;
+                HospitalData.setCurrentHospital(hospitals);
                 return HospitalData.currentHospital;
             }
         }

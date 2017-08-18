@@ -60,6 +60,8 @@ public class LX_AppointmentHosActivity extends CoreActivity<AppointmentControlle
             setCenterTitle("手机预约");
         }else if (stringExtra.equals(Constants.PUT_TYPE_QUEUEUP)){
             setCenterTitle("排队叫号");
+        }else if (stringExtra.equals(Constants.PUT_TYPE_QUEUEUP_DETAIL)){
+            setCenterTitle("排队叫号");
         }
         rvHosList = (RecyclerView) findViewById(R.id.rvHosList);
         rvHosList.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
@@ -126,6 +128,9 @@ public class LX_AppointmentHosActivity extends CoreActivity<AppointmentControlle
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                    finish();
+                }else if (stringExtra.equals(Constants.PUT_TYPE_QUEUEUP_DETAIL)){
+                    //跳转到排队叫号的大科室 ，小科室。
                     finish();
                 }
             }

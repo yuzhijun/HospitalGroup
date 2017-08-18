@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="80dp"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="10dp">
+    <TextView
+        android:id="@+id/tvMyQueueNo"
+        android:layout_width="35dp"
+        android:layout_height="wrap_content"
+        android:text="600"
+        android:textSize="@dimen/font_large"
+        android:textColor="@color/white"
+        android:background="@drawable/lx_orange_circle_frame"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:gravity="center"
+        />
+    <TextView
+        android:id="@+id/tvPatientName"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:text="晨诗怡"
+        android:textColor="@color/description_gray"
+        android:textSize="@dimen/font_large"
+        android:layout_marginLeft="4dp"
+       />
+</LinearLayout>

@@ -98,6 +98,7 @@ public class HomeMultipleRecycleAdapter extends BaseMultiItemQuickAdapter<HomePa
         helper.setText(R.id.tvReportSearchDes,item.getIndexPageModels().get(3).getDes());
 
         helper.addOnClickListener(R.id.llAppointment);
+        helper.addOnClickListener(R.id.llMobileTreatment);
         setOnItemChildClickListener(this);
     }
 

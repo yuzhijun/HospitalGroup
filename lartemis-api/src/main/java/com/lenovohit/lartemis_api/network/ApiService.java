@@ -6,12 +6,14 @@ import com.lenovohit.lartemis_api.model.CommonObj;
 import com.lenovohit.lartemis_api.model.CommonUser;
 import com.lenovohit.lartemis_api.model.Doctor;
 import com.lenovohit.lartemis_api.model.DoctorAppoint;
+import com.lenovohit.lartemis_api.model.DoctorQueueUp;
 import com.lenovohit.lartemis_api.model.HomePage;
 import com.lenovohit.lartemis_api.model.HospitalMainPage;
 import com.lenovohit.lartemis_api.model.Hospitals;
 import com.lenovohit.lartemis_api.model.HttpResult;
 import com.lenovohit.lartemis_api.model.MyAdvice;
 import com.lenovohit.lartemis_api.model.QueueUp;
+import com.lenovohit.lartemis_api.model.QueueUpModel;
 import com.lenovohit.lartemis_api.model.Result;
 import com.lenovohit.lartemis_api.model.User;
 
@@ -96,4 +98,10 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("eHealthPlatformService/api/QueueUp/GetUserQueueUp")
     Observable<HttpResult<List<QueueUp>>>getUserQueueUp(@Field("hid")String hid,@Field("uid")String uid);
+    @FormUrlEncoded
+    @POST("eHealthPlatformService/api/QueueUp/GetDoctorsQueueUp")
+    Observable<HttpResult<List<DoctorQueueUp>>>getAllDoctorQueue(@Field("hid")String hid,@Field("depCode")String depCode);
+    @FormUrlEncoded
+    @POST("eHealthPlatformService/api/QueueUp/GetDoctorsQueueUp")
+    Observable<HttpResult<QueueUpModel>>getOneQueue(@Field("hid")String hid, @Field("ScheduleCode")String depCode);
 }

@@ -40,15 +40,18 @@ import javax.tools.Diagnostic;
 public class ProviderActionProcessor extends AbstractProcessor{
     private static final String PACKAGE_NAME = "com.lenovohit";
     private static final String METHOD_NAME = "inject";
+
     private Filer mFileUtils;
     private Elements mElementUtils;
     private Messager mMessager;
+
     private Map<String, ProxyInfo> mProviderMap = new HashMap<>();
     private Map<String, ProxyInfo> mActionMap = new HashMap<>();
     private Map<String, ProxyInfo> mServiceMap = new HashMap<>();
     private Map<String, ProxyInfo> mApplicaitonMap = new HashMap<>();
     private Map<String, ProxyInfo> mIntentInterceptMap = new HashMap<>();
     private Map<String, ProxyInfo> mInterceptMap = new HashMap<>();
+
     private static final ClassName LRouterClass = ClassName.get("com.lenovohit.lrouter_api.core", "LocalRouter");
     private static final ClassName RemoteRouterClass = ClassName.get("com.lenovohit.lrouter_api.core", "RemoteRouter");
     private static final ClassName LRouterApplicationClass = ClassName.get("com.lenovohit.lrouter_api.base", "LRouterAppcation");

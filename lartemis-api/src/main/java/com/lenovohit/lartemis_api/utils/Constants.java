@@ -55,6 +55,7 @@ public class Constants {
     public static final String PUT_TYPE_SWITCH_PATIENT="PUT_TYPE_SWITCH_PATIENT";
     public static final String PUT_TYPE_APPOINTMENT="PUT_TYPE_APPOINTMENT";
     public static final String PUT_TYPE_QUEUEUP="PUT_TYPE_QUEUEUP";
+    public static final String PUT_TYPE_QUEUEUP_DETAIL="PUT_TYPE_QUEUEUP_DETAIL";
 
     //是否关注
     public static final  String IS_COLLECTION = "1";

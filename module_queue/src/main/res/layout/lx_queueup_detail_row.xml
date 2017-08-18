@@ -3,8 +3,7 @@
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@color/white">
+              android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -13,13 +12,13 @@
         android:paddingLeft="15dp"
         android:paddingBottom="15dp">
         <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/ivHospitalImg"
+            android:id="@+id/ivDoctorAvatar"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            app:placeholderImage="@mipmap/lx_iv_icon_doctor"
-            app:placeholderImageScaleType="fitXY"
-           />
+            android:src="@mipmap/lx_iv_icon_doctor"
+            android:scaleType="fitXY"/>
         <LinearLayout
+            android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -31,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:text=""
                 android:textColor="@color/black"
-                android:textSize="@dimen/font_normal"/>
+                android:textSize="@dimen/font_small"/>
             <TextView
                 android:id="@+id/tvDoctorOffice"
                 android:layout_width="wrap_content"
@@ -49,6 +48,13 @@
                 android:textColor="@color/description_gray"
                 android:layout_marginTop="5dp"/>
         </LinearLayout>
+        <ImageView
+            android:id="@+id/ivExpandArrow"
+            android:layout_width="15dp"
+            android:layout_height="9dp"
+            android:background="@mipmap/lx_iv_arrow_down"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="10dp"/>
     </LinearLayout>
     <ImageView
         android:layout_width="match_parent"
@@ -56,42 +62,50 @@
         android:background="@color/app_line_colors"
         android:layout_marginLeft="10dp"/>
     <LinearLayout
+        android:id="@+id/llDoctorQueueUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp">
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp">
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_weight="5">
-            <LinearLayout
-                android:layout_width="80dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@color/grey_normal_bg"
-                >
+                android:text="当前就诊"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_normal"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
                 <TextView
                     android:id="@+id/tvLastQueueNo"
-                    android:layout_width="match_parent"
+                    android:layout_width="35dp"
                     android:layout_height="wrap_content"
                     android:text="600"
-                    android:background="@drawable/lx_green_circle_frame"
-                    android:textSize="@dimen/font_normal"
+                    android:textSize="@dimen/font_small"
                     android:textColor="@color/white"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
+                    android:background="@drawable/lx_green_circle_frame"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    android:layout_marginTop="2dp"
                     android:gravity="center"
                     />
                 <TextView
+                    android:id="@+id/tvLastQueueName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="当前叫号"
-                    android:textSize="@dimen/font_normal"
+                    android:text="晨诗怡"
+                    android:textSize="@dimen/font_small"
                     android:textColor="@color/description_gray"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
@@ -101,54 +115,26 @@
                     />
             </LinearLayout>
         </LinearLayout>
-
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="7"
-            android:orientation="vertical">
-
+            android:orientation="vertical"
+            android:layout_marginLeft="5dp">
             <TextView
-                android:id="@+id/tvQueueUpDes"
+                android:id="@+id/tvPatientQueueDes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="你的排班号为700号,前面还有123位患者"
+                android:text="当前候诊 共0位"
+                android:textSize="@dimen/font_normal"
                 android:textColor="@color/black"
-                android:textSize="@dimen/font_normal"/>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
+                />
+            <com.zhy.view.flowlayout.TagFlowLayout
+                android:id="@+id/tfQueueUpPatient"
+                app:max_select="0"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:orientation="horizontal"
-                >
-
-                <TextView
-                    android:id="@+id/tvMyQueueNo"
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/lx_orange_circle_frame"
-                    android:gravity="center"
-                    android:paddingBottom="5dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="5dp"
-                    android:text="600"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/font_normal"/>
-
-                <TextView
-                    android:id="@+id/tvMyQueueName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="10dp"
-                    android:text=""
-                    android:textColor="@color/description_gray"
-                    android:textSize="@dimen/font_normal"
-                    />
-            </LinearLayout>
+               >
+            </com.zhy.view.flowlayout.TagFlowLayout>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

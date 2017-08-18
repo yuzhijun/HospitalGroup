@@ -61,6 +61,7 @@ public class LX_SwitchPatientActivity extends CoreActivity<MainController.MainUi
     public void initView(@Nullable Bundle savedInstanceState) {
         isShowToolBar(true);
         setCenterTitle("切换患者");
+
         setRightTitleAndIcon("", R.mipmap.lx_iv_top_add, new View.OnClickListener() {
             @Override
             public void onClick(View v) {

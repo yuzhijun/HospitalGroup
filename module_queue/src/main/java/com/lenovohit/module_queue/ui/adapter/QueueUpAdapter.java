@@ -1,13 +1,10 @@
 package com.lenovohit.module_queue.ui.adapter;
 
-import android.net.Uri;
 import android.support.annotation.LayoutRes;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.lenovohit.lartemis_api.model.QueueUp;
-import com.lenovohit.lartemis_api.utils.CommonUtil;
 import com.lenovohit.module_queue.R;
 
 /**
@@ -23,7 +20,7 @@ public class QueueUpAdapter extends BaseQuickAdapter<QueueUp,BaseViewHolder>{
 
     @Override
     protected void convert(BaseViewHolder helper, QueueUp item) {
-       SimpleDraweeView img =  helper.getView(R.id.ivHospitalImg);
+     /*  SimpleDraweeView img =  helper.getView(R.id.ivHospitalImg);
         helper.setText(R.id.tvDoctorName,CommonUtil.isStrEmpty(item.getDoctorName())?"未知医生":item.getDoctorName());
         helper.setText(R.id.tvDoctorOffice,item.getDepName()+"-"+item.getDoctorJobName()+"-"+item.getAppTypeName());
         helper.setText(R.id.tvTime,CommonUtil.isStrEmpty(item.getExecuteTime())?"":item.getExecuteTime());
@@ -33,6 +30,14 @@ public class QueueUpAdapter extends BaseQuickAdapter<QueueUp,BaseViewHolder>{
         helper.setText(R.id.tvMyQueueName,CommonUtil.isStrEmpty(item.getPatientName())?"":item.getPatientName());
         if (!CommonUtil.isStrEmpty(item.getDoctorOutPhotoUrl())){
             img.setImageURI(Uri.parse(item.getDoctorOutPhotoUrl()));
-        }
+        }*/
+        helper.setText(R.id.tvDoctorName, "未知");
+        helper.setText(R.id.tvDoctorOffice,"未知");
+        helper.setText(R.id.tvTime,"未知");
+        helper.setText(R.id.tvLastQueueNo,"未知");
+        helper.setText(R.id.tvQueueUpDes,"你的排班号为"+"100"+"号,前面还有"+"20"+"位患者");
+        helper.setText(R.id.tvMyQueueNo,"未知");
+        helper.setText(R.id.tvMyQueueName,"未知");
+
     }
 }

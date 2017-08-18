@@ -178,7 +178,6 @@ public class LX_DoctorInfoActivity extends CoreActivity<AppointmentController.Ap
     @Override
     public void getDoctorBaseCallBack(Doctor doctor) {
         if (null == doctor)return;
-
         tvFocus.setText(CommonUtil.isStrEmpty(doctor.getFocus())?"0":doctor.getFocus());
         tvAppointNum.setText(CommonUtil.isStrEmpty(doctor.getAppointmentNum())?"0":doctor.getAppointmentNum());
         tvMoney.setText(CommonUtil.isStrEmpty(doctor.getOnlineMoney())?"":doctor.getOnlineMoney());
